@@ -18,3 +18,5 @@ To run this app on your local Server Please follow the instructions below.
 - python manage.py makemigrations
 - python manage.py migrate
 - python manage.py runserver
+- To use the AI chatbot get a google Gemini API Key
+- Also import the Google Cloud SDK file into the project
