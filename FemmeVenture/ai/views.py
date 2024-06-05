@@ -6,7 +6,7 @@ import google.generativeai as genai
 
 # Create your views here.
 # add here to your generated API key
-genai.configure(api_key="AIzaSyBcOefjg9KG4hg7nOE6k8Ek_JlrFJsEb9w")
+genai.configure(api_key="Enter google gemini API KEY")
 
 
 @login_required
