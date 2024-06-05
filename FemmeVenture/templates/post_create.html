@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+{% load static %}
+{% include 'nav.html' %}
+<html>
+
+<head>
+  
+ 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/site.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
+    <title>FemmeVenture - Forum</title>
+    <style>
+       
+
+        
+
+        
+
+        
+        section {
+            background-color: #dabfa1;
+            color: #383d64;
+            padding: 4rem 0;
+        }
+
+        h2 {
+            color: #944c6b;
+        }
+
+        a.btn {
+            display: inline-block;
+            background-color: #944c6b;
+            color: #dabfa1;
+            padding: 0.75rem 1.5rem;
+            margin-top: 1rem;
+            text-decoration: none;
+            border-radius: 2rem;
+            transition: background-color 0.3s ease-in-out;
+        }
+       
+        
+        .nav-button {
+            background: #a675a1;
+            color: #dabfa1;
+            padding: 10px 20px;
+            margin: 0 10px;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 20px;
+        }
+        .nav-button.active {
+            background: #7c2a82;
+        }
+        .sidebar {
+            background: #fff;
+            padding: 20px;
+            width: 200px;
+            height: 100vh;
+            position: fixed;
+
+        }
+        .content {
+            margin-left: 220px;
+            padding: 20px;
+        }
+        .post {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .post h2 {
+            color: #333;
+        }
+        .post img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        
+        /* Center align the form */
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+  
+         /* Style for form elements */
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+  
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+  
+        button[type="submit"] {
+            background-color: #944c6b;
+             color: #fff;
+             padding: 10px 20px;
+             border: none;
+             border-radius: 5px;
+             cursor: pointer;
+             transition: background-color 0.3s ease-in-out;
+         }
+  
+         button[type="submit"]:hover {
+             background-color: #7c2a82;
+        }
+    </style>
+</head>
+{% block content %}
+<h1 style="text-align: center;">Create a New Post</h1>
+
+<form id="post-form" method="POST" action="{% url 'post_create' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    
+  <label for="date_month">Date:</label>
+  <select id="date" name="date" required>
+  <option value="1">1</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
+  <option value="4">4</option>
+  <option value="5">5</option>
+  <option value="6">6</option>
+  <option value="7">7</option>
+  <option value="8">8</option>
+  <option value="9">9</option>
+  <option value="10">10</option>
+  <option value="11">11</option>
+  <option value="12">12</option>
+  <option value="13">13</option>
+  <option value="14">14</option>
+  <option value="15">15</option>
+  <option value="16">16</option>
+  <option value="17">17</option>
+  <option value="18">18</option>
+  <option value="19">19</option>
+  <option value="20">20</option>
+  <option value="21">21</option>
+  <option value="22">22</option>
+  <option value="23">23</option>
+  <option value="24">24</option>
+  <option value="25">25</option>
+  <option value="26">26</option>
+  <option value="27">27</option>
+  <option value="28">28</option>
+  <option value="29">29</option>
+  <option value="30">30</option>
+  <option value="31">31</option>
+</select>
+
+<select id="month" name="month" required>
+  <option value="1">January</option>
+  <option value="2">February</option>
+  <option value="3">March</option>
+  <option value="4">April</option>
+  <option value="5">May</option>
+  <option value="6">June</option>
+  <option value="7">July</option>
+  <option value="8">August</option>
+  <option value="9">September</option>
+  <option value="10">October</option>
+  <option value="11">November</option>
+  <option value="12">December</option>
+  <!-- Add options for other months -->
+</select>
+
+<select id="year" name="year" required>
+  <option value="1">2009</option>
+  <option value="2">2010</option>
+  <option value="3">2011</option>
+  <option value="4">2012</option>
+  <option value="5">2013</option>
+  <option value="6">2014</option>
+  <option value="7">2015</option>
+  <option value="8">2016</option>
+  <option value="9">2017</option>
+  <option value="10">2018</option>
+  <option value="11">2019</option>
+  <option value="12">2020</option>
+  <option value="13">2021</option>
+  <option value="14">2022</option>
+  <option value="15">2023</option>
+  <option value="16">2024</option>
+  <option value="17">2025</option>
+
+</select>
+  
+  <label for="city_country">Location:</label>
+  <input type="text" id="city_country" name="city_country" required><br><br>
+  
+  <label for="title">Title:</label>
+  <input type="text" id="title" name="title" required><br><br>
+  <label for="content">Content:</label><br>
+  <textarea id="content" name="content" rows="10" cols="30" required></textarea><br><br>
+  <button type="submit">Create Post</button>
+</form>
+{% include 'footer.html' %}
+{% endblock %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#post-form').submit(function(e) {
+            // Let the form submit naturally
+        });
+
+            function handleKeyboardNavigation(event) {
+            var keyCode = event.keyCode || event.which;
+
+            // Check if the pressed key is the arrow up or down key
+            if (keyCode === 38 || keyCode === 40) {
+                event.preventDefault();
+
+                // Find all posts
+                var posts = $('.post');
+                var focusedPost = $(document.activeElement);
+
+                // Find the index of the focused post
+                var index = posts.index(focusedPost);
+
+                // Determine the index of the next post based on the key pressed
+                var nextIndex = keyCode === 38 ? index - 1 : index + 1;
+
+                // Ensure the next index is within bounds
+                if (nextIndex >= 0 && nextIndex < posts.length) {
+                    // Focus on the next post
+                    posts.eq(nextIndex).focus();
+                }
+            }
+        }
+        
+        // Bind keydown event listener to the document
+        $(document).keydown(function(event) {
+            handleKeyboardNavigation(event);
+        });
+
+        });
+    </script>
+   
+<!-- JavaScripts -->
+<script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script src="{% static 'js/custom.js' %}"></script>
+</body>
+
+</html>

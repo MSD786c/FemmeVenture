@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+{% load static %}
+<title> {{ventObj.title}},{{ventObj.city.title}} | FemmeVenture </title> 
+{% include 'nav.html' %}
+
+<html>
+
+<head> 
+      <style>
+
+        .content-container {
+          display: flex; /* Enables flexbox */
+          gap: 15px;
+      }
+      
+      .content-container button {
+          font-size: 24px; /* Adjust the size of the icon as needed */
+          margin-top: 15px; /* Pull the icon closer to the text by giving it a negative margin */
+
+      }
+      
+      .content-container h2 {
+          margin: 0; /* Removes default margin from h2 */
+      }
+
+      button.fa-solid {
+        background: none; /* Remove background */
+        border: none; /* Remove border */
+        padding: 0; /* Remove padding */
+        margin: 0; /* Remove margin */
+        outline: none; /* Remove focus outline */
+    }
+
+    .filled {
+      color: #f5b301; /* or the color for your filled stars */
+  }
+    
+   
+      </style> 
+
+    </head> 
+    <!-- end header section -->
+
+  
+    
+    <section class="py-4 destination-content">
+      <img src="{{ventObj.venture_img.url}}" alt="" class="img-fluid breadcrumbb-image">
+
+      
+      <div class="row my-4">
+        <div class="col-xl-12 mb-4 mb-xl-0">
+          
+              <div class="listen">
+                <div class="content-container">
+                <h1 class="font-weight-bold display-4  m-0">{{ventObj.title}}</h1>
+                <button class="one fa-sharp fa-solid fa-volume-high"> </button> 
+                </div>
+
+                <h5 >{{ventObj.city.title}}, {{ventObj.city.countryname}} </h5>      
+                
+              </div>
+         
+            </div>
+
+            
+            
+            
+       
+
+            
+
+
+          </div>
+          
+          <div class="listen2">
+
+            
+            <p>{{ ventObj.body|linebreaks }}</p>
+
+
+            </div>
+    </section>
+  </div>
+  <!-- end hero area -->
+
+ 
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  {% include 'footer.html' %}
+
+
+
+  <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script src="{% static 'js/custom.js' %}"></script>
+
+<script>
+  $(".empty-stars i").hover(function () {
+    $(this).prevAll().addClass('filled-star').removeClass('outlined-star');
+    $(this).addClass('filled-star').removeClass('outlined-star');
+    $(this).nextAll().addClass('outlined-star').removeClass('filled-star');
+  });
+</script>
+
+
+
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var closeButtons = document.querySelectorAll('.alert .close[data-dismiss="alert"]');
+    closeButtons.forEach(function (button) {
+      button.addEventListener('click', function (event) {
+        event.preventDefault();
+        var alert = button.closest('.alert');
+        alert.classList.remove('show');
+        alert.addEventListener('transitionend', function() {
+          alert.style.display = 'none';
+        });
+      });
+    });
+  });
+  </script>
+
+  <!-- text to speech feature for title --> 
+
+  <script> 
+    document.addEventListener('DOMContentLoaded', (event) => {
+      let speech = new SpeechSynthesisUtterance();
+      let voices = window.speechSynthesis.getVoices();
+  
+      // Set a flag to check if speech is currently playing
+      let speaking = false;
+  
+      // Set the female voice once the voices have loaded
+      window.speechSynthesis.onvoiceschanged = function() {
+        voices = window.speechSynthesis.getVoices();
+        speech.voice = voices.find(voice => voice.name.includes('Female'));
+      };
+  
+      document.querySelector(".one.fa-sharp.fa-solid.fa-volume-high").addEventListener("click", () => {
+        // Check if we're currently speaking
+        if (!speaking) {
+          let textToSpeak = '';
+          document.querySelectorAll(".listen , .listen2").forEach(element => {
+            textToSpeak += element.textContent + ' ';
+          });
+  
+          speech.text = textToSpeak;
+          window.speechSynthesis.speak(speech);
+          speaking = true; // Set the flag to true as we're now speaking
+        } else {
+          // If we are speaking, cancel the speech
+          window.speechSynthesis.cancel();
+          speaking = false; // Set the flag to false as we've stopped speaking
+        }
+      });
+  
+      // Reset the speaking flag when the speech ends
+      speech.onend = function() {
+        speaking = false;
+      };
+    });
+  </script>
+
+
+  <!-- text to speech feature for indivisual reviews --> 
+
+  
+
+  <script>
+    
+    // Function to reset the star display to the current rating
+    function resetRating() {
+        // Get the current rating from the hidden input
+        const currentRating = document.getElementById('star-value').value || 0;
+        setStars(currentRating);
+    }
+    
+    // Function to set the rating when a star is clicked
+    function setRating(rating) {
+        // Set the hidden input to the rating
+        document.getElementById('star-value').value = rating;
+        // Update the stars display
+        setStars(rating);
+    }
+    
+    // Helper function to update stars display
+    function setStars(rating) {
+        // Iterate over each star and fill it in if it's less than or equal to the rating
+        document.querySelectorAll('.fa-star').forEach((star, index) => {
+            star.classList.toggle('filled', index < rating);
+        });
+    }
+    
+    // Initial reset to show default rating
+    resetRating();
+    </script>
+    
+  
+  
+
+  
+  
+
+  
+</body>
+
+</html>

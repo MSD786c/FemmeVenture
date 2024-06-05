@@ -1,0 +1,563 @@
+{% load static %}
+<title>All Cities | FemmeVenture </title> 
+{% include 'nav.html' %}
+
+
+<html>
+
+
+
+
+    <head>
+
+      <style>
+
+        .content-container {
+          display: flex; /* Enables flexbox */
+          gap: 15px;
+      }
+      
+      .content-container button {
+          font-size: 24px; /* Adjust the size of the icon as needed */
+          margin-top: 15px; /* Pull the icon closer to the text by giving it a negative margin */
+
+      }
+      
+      .content-container h2 {
+          margin: 0; /* Removes default margin from h2 */
+      }
+
+      button.fa-solid {
+        background: none; /* Remove background */
+        border: none; /* Remove border */
+        padding: 0; /* Remove padding */
+        margin: 0; /* Remove margin */
+        outline: none; /* Remove focus outline */
+    }
+
+    .safetyavg {
+      display: inline-block;
+      padding: 10px 25px;
+      background-color: #db4566;
+      color: #ffffff;
+      border: 1px solid #db4566;
+      border-radius: 30px;
+      -webkit-transition: all .3s;
+      transition: all .3s;
+      margin-top: 3px;
+    }
+    
+    .safetyavg .stars-wrapper {
+      display: flex;
+      align-items: center; /* This will vertically center the items in the list */
+      list-style-type: none; /* Remove default list styling */
+      padding: 0; /* Remove default padding */
+      margin: 0; /* Remove default margin */
+    }
+    
+    .safetyavg .stars-wrapper .star-item,
+    .safetyavg .stars-wrapper .rating-number {
+      display: inline-block; /* Display items inline */
+      margin-right: 5px; /* Add some space between the star and the number */
+      font-size: 15px;
+    }
+    
+    .review-count-align {
+      display: block; /* May not be necessary if already a block due to the d-flex class */
+      margin-bottom: -12px; /* Adjust this value to align the text with the pink box */
+    }
+    
+
+    .card-buttonn{
+      position: absolute;
+    bottom: 0;
+    left: 0;
+    margin: 20px;
+    }
+   
+      </style> 
+
+
+
+
+
+
+
+
+      <style> 
+
+        /* General form styling */
+      .form {
+          padding: 0px;
+          margin: 20px
+      }
+      
+      /* Styling for all input elements, including textarea, within the form */
+      .form-control {
+          width: 100%; /* Full width */
+          padding: 8px 10px; /* Padding inside the text fields */
+          margin-bottom: 10px; /* Space between each field */
+          box-sizing: border-box; /* Include padding and border in the element's total width and height */
+          border: 1px solid #ccc; /* Light gray border */
+          border-radius: 4px; /* Slightly rounded borders for the input fields */
+      }
+      
+      /* Placeholder color customization */
+      ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+          color: #888; /* Dark grey placeholder text */
+          opacity: 1; /* Firefox */
+      }
+      
+      :-ms-input-placeholder { /* Internet Explorer 10-11 */
+          color: #888;
+      }
+      
+      ::-ms-input-placeholder { /* Microsoft Edge */
+          color: #888;
+      }
+      
+      /* Hover effect for inputs */
+      .form-control:hover {
+          border-color: #db4566; /* Change border color when hovering */
+      }
+      
+      /* Styling for the submit button */
+      .submit-button {
+          background-color: #db4566; /* Bootstrap primary color */
+          color: white;
+          padding: 10px 15px;
+          border-radius: 5px;
+          cursor: pointer; /* Cursor indicates clickable button */
+          transition: background-color 0.3s ease; /* Smooth transition for background color */
+          
+      }
+      
+      /* Hover effect for the submit button */
+      .submit-button:hover {
+          background-color: #ffffff; /* Darker blue when hovering */
+          color: db4566;
+          border-color: #db4566; /* Change border color when hovering */
+      
+      
+      }
+      
+      /* Error message styling */
+      .error-message {
+          color: #dc3545; /* Bootstrap danger color for errors */
+          font-size: 0.875em; /* Smaller font size for error messages */
+          margin-top: -8px; /* Position closer to the input field */
+          margin-bottom: 10px; /* Space after the error message */
+      }
+      
+      .feedback{
+        margin: 50px 50px;
+      
+        padding-left: 45px; 
+        padding-right: 45px; 
+        margin-bottom: 0; 
+        margin-top: 0; 
+      
+      
+      }
+      
+      .volume-button{
+        position: absolute; /* Position the button absolutely within the review box */
+        right: 0; /* Align to the right of the review box */
+        border: none; /* Remove border */
+        background: none; /* Remove background if desired */
+        margin: 8px;
+        transform: translateY(-150%); /* Moves the button up by half its height */
+      
+      }
+        
+      .fa-heart.pls.fa-solid{
+        position: absolute; /* Position the button absolutely within the review box */
+        border: none; /* Remove border */
+        background: none; /* Remove background if desired */
+        margin: 8px;
+        transform: translateY(20%) translateX(1025%);
+
+        font-size: 25px;
+      }
+        
+      .fa-heart.fa-regular{
+        position: absolute; /* Position the button absolutely within the review box */
+        border: none; /* Remove border */
+        background: none; /* Remove background if desired */
+        margin: 8px;
+        transform: translateY(15%) translateX(676%);
+
+        font-size: 25px;
+      }
+
+      .pad{
+        padding-top: 30px;
+        padding-left: 45px;
+        padding-right: 45px;
+
+
+       
+        
+        
+      }
+      .submit-buttonn {
+        display: inline-block;
+        padding: 5px 35px;
+        background-color: #db4566;
+        color: #ffffff;
+        border: 1px solid #db4566;
+        border-radius: 0 0 0 0;
+        display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center;     /* Center vertically */
+      }
+
+      .submit-buttonnn {
+        display: inline-block;
+        padding: 5px 35px;
+        background-color: #db4566;
+        color: #ffffff;
+        border: 1px solid #db4566;
+        border-radius: 0 5px 5px 0;
+        display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center;     /* Center vertically */
+      }
+      .fa-solid.fa-microphone{
+
+        color: #ffffff;
+        font-size: 20px;
+
+
+      }
+
+      .fa-microphone.active {
+        color: blue; // Change to red when active
+      }
+      
+      </style> 
+
+
+      
+
+    </head>
+
+
+    <!-- end slider section -->
+  </div>
+  <!-- end hero area -->
+
+
+
+<section class="shop_section layout_padding">
+  
+  <div class="pad">
+    <div class="input-group">
+      <input type="text" id="search" name="search" class="form-control" placeholder="Search All Destinations..." aria-label="Recipient's username with two button addons">
+      <div class="submit-buttonn" > <button type="button" onclick="voice()" id="toggleVoice" class="fa-solid fa-microphone"></div>
+        <button class="submit-buttonnn" type="button" onclick="filterCities()">Search</button>
+
+      </div>
+    </div> 
+  </div>
+
+  <div class="card-container">
+    {% for city in allcities %}
+    <div class="card" data-city-name="{{ city.title | lower }}" data-country-name="{{ city.countryname | lower }}">
+      <img src="{{city.card_img.url}}" alt="" />
+      <div class="card-content">
+        <h1 id="title-{{ forloop.counter }}">{{ city.title }}</h1>
+        {% if city.is_favorited %}
+        
+        <button class="fa-solid pls fa-heart" onclick="location.href='{% url 'remove_from_favorites' city.id %}'"></button>
+
+        {%else%}
+        <button class="fa-regular fa-heart" onclick="location.href='{% url 'add_to_favorites' city.id %}'"></button>
+        {%endif%}
+          <button class="volume-button">
+            <i class="fa fa-volume-up" style="color: #000000;" data-id="{{ forloop.counter }}"></i>
+        </button>
+
+          <p id="countryname-{{ forloop.counter }}">{{ city.countryname }}</p>
+
+          <div class="card-buttonn" id="safety-index-{{ forloop.counter }}">
+                  <h7>Safety Index</h7>
+                  <div class="text-sm-center d-flex align-items-end gap-5">
+                  <div class="safetyavg">
+                      <ul class="list-unstyled stars-wrapper">
+                          <li class="star-item"><i class="fa fa-star" style="color: #ffffff;"></i></li>
+                          <li class="rating-number">{{ city.rate_average|floatformat:1 }}</li>
+                      </ul>
+                  </div>
+             
+              <span class="review-count-align"> <p> ({{ city.rate_total }}) </p></span>
+          </div>
+        </div> 
+        
+
+        <div class="card-button">
+          <a href="/city/{{city.id}}">
+            View More
+          </a>
+        </div>
+        
+    
+      </div>
+      
+    </div>
+    <p id="no-cities-found" style="display: none;">No cities found.</p>
+
+    {% endfor %}
+    
+
+  </div>
+  
+  
+
+    
+  </div>
+</section>
+
+
+  
+
+
+  
+
+
+  
+  <!-- end feedback section -->
+
+  <!-- info section -->
+
+  {% include 'footer.html' %}
+
+
+  <!-- end info section -->
+
+  <!-- search --> 
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const searchInput = document.getElementById('search');
+        const searchButton = document.querySelector('.submit-buttonnn'); // Ensure the class name matches your button
+    
+        // Function to handle the search and filter process
+        function filterCities() {
+            // Remove spaces and convert to lowercase
+            const query = searchInput.value.toLowerCase().replace(/\s+/g, '');
+            const cards = document.querySelectorAll('.card');
+            let found = false;
+    
+            cards.forEach(card => {
+                // Remove spaces and convert to lowercase for title and country name
+                const title = card.getAttribute('data-city-name').replace(/\s+/g, '');
+                const countryName = card.getAttribute('data-country-name').replace(/\s+/g, '');
+    
+                if (title.includes(query) || countryName.includes(query)) {
+                    card.style.display = '';
+                    found = true;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+    
+            document.getElementById('no-cities-found').style.display = found ? 'none' : 'block';
+        }
+    
+        // Attach event listener to input for real-time filtering
+        searchInput.addEventListener('input', filterCities);
+    
+        // Attach event listener for pressing 'Enter' key
+        searchInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent the default form submit behavior
+                filterCities();  // Call the filter function when Enter is pressed
+            }
+        });
+    
+        // Attach event listener to button for click events
+        if (searchButton) { // Check if button exists to avoid null errors
+            searchButton.addEventListener('click', filterCities);
+        } else {
+            console.error("Search button not found!"); // Console error if button is not found
+        }
+    });
+    </script>
+    
+
+
+
+<!-- Assuming additional HTML and CSS setup from previous examples -->
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    function getQueryParameterByName(name, url = window.location.href) {
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+
+    // Get the search query from URL parameters
+    var query = getQueryParameterByName('query');  
+
+    if (query) {
+        const searchInput = document.getElementById('search');
+        searchInput.value = query;  // Set the search input to the value of the query
+
+        // Assume filterCities is a function that triggers the search based on the current value of `searchInput`
+        filterCities();  // Perform search immediately
+    }
+
+    function filterCities() {
+        const searchInput = document.getElementById('search');
+        const query = searchInput.value.toLowerCase().replace(/\s+/g, '');
+        const cards = document.querySelectorAll('.card');
+        let found = false;
+    
+        cards.forEach(card => {
+            const title = card.getAttribute('data-city-name').replace(/\s+/g, '');
+            const countryName = card.getAttribute('data-country-name').replace(/\s+/g, '');
+    
+            if (title.includes(query) || countryName.includes(query)) {
+                card.style.display = '';
+                found = true;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    
+        document.getElementById('no-cities-found').style.display = found ? 'none' : 'block';
+    }
+});
+</script>
+
+<!-- Rest of your HTML and scripts -->
+
+      <!-- speech to text feature --> 
+
+    
+    <script>
+      var recognition;
+      var isListening = false;
+      var finalTranscript = ''; // Stores final recognized text
+      var textField = document.getElementById("search"); // Reference to the textarea
+    
+      window.onload = function() {
+        recognition = new webkitSpeechRecognition();
+        recognition.continuous = true;
+        recognition.interimResults = true;
+        recognition.lang = "en-GB";
+    
+        recognition.onresult = function(event) {
+          var interimTranscript = ' ';
+    
+          // Loop through results
+          for (var i = event.resultIndex; i < event.results.length; ++i) {
+            if (event.results[i].isFinal) {
+              finalTranscript += event.results[i][0].transcript;
+            } else {
+              interimTranscript += event.results[i][0].transcript;
+            }
+          }
+    
+          // Update the textarea with final and interim results
+          textField.value = finalTranscript + interimTranscript;
+        };
+    
+        var toggleButton = document.getElementById("toggleVoice");
+        toggleButton.addEventListener('click', function() {
+          if (isListening) {
+            recognition.stop();
+            toggleButton.classList.remove('active');
+            // Reset the transcript only if the button is clicked to turn off voice recognition
+            finalTranscript = textField.value; // Update the final transcript to the current text field content
+          } else {
+            recognition.start();
+            toggleButton.classList.add('active');
+            finalTranscript = textField.value; // Start with current text, allowing edits to be retained
+          }
+          isListening = !isListening;
+        });
+      }
+    
+      // Optional: Add an event listener to track changes in the textarea
+      textField.addEventListener('input', function() {
+        // Update finalTranscript every time the user makes changes to the text
+        finalTranscript = this.value;
+      });
+    </script>
+    
+
+
+  <!-- text to speech feature --> 
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var synth = window.speechSynthesis;
+        var voices = [];
+        var femaleVoice, googleUSEnglishVoice;
+        var speaking = false; // Correctly initialize the speaking flag
+    
+        function populateVoiceList() {
+            voices = synth.getVoices();
+            femaleVoice = voices.find(voice => voice.name.includes('Female')) || voices[0];
+            googleUSEnglishVoice = voices.find(voice => voice.name.includes('Google US English')) || voices[0];
+        }
+    
+        // Delay voice list population to ensure voices are loaded
+        if (synth.onvoiceschanged !== undefined) {
+            synth.onvoiceschanged = populateVoiceList;
+        } else {
+            populateVoiceList();
+        }
+    
+        // Additional check to populate voices if not already loaded
+        if (voices.length === 0) {
+            populateVoiceList();
+        }
+    
+        var speech = new SpeechSynthesisUtterance(); // Define the speech instance here for global use
+    
+        
+    
+        // Event listener for the second set of buttons
+        document.querySelectorAll('.volume-button i').forEach(function(button) {
+            button.addEventListener('click', function() {
+                var id = this.getAttribute('data-id');
+                var titleText = document.getElementById('title-' + id).textContent;
+                var countryName = document.getElementById('countryname-' + id).textContent;
+                var safetyIndex = document.getElementById('safety-index-' + id).textContent;
+    
+                var textToSpeak = titleText + ", " + countryName + ". " + safetyIndex + " reviews";
+                var utterance = new SpeechSynthesisUtterance(textToSpeak);
+                utterance.voice = googleUSEnglishVoice;
+                utterance.pitch = 1;
+                utterance.rate = 1;
+    
+                if (!synth.speaking) {
+                    synth.speak(utterance);
+                } else {
+                    synth.cancel();
+                }
+            });
+        });
+    });
+    </script>
+
+      <!-- speech to text feature --> 
+
+    
+    
+</body>
+
+</html>
+
+
+
+
+
+

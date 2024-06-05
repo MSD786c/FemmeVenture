@@ -1,0 +1,925 @@
+
+<!DOCTYPE html>
+{% load static %}
+<title> Profile | FemmeVenture </title> 
+
+{% include 'nav.html' %}
+
+<html>
+
+<head>
+  
+
+
+
+  <style>
+{% comment %} NEW STUFF {% endcomment %}
+
+body.dark-mode {
+  background-color: #2e2429;
+  color: #fff;
+}
+
+/* Define dark mode styles for your elements here */
+/* For example: */
+.profile-info {
+  color: #fff;
+}
+
+/* Toggle Button Styles */
+#dark-mode-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  background-color: transparent ;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  
+}
+
+{% comment %} NEW STUFF ENDED {% endcomment %}
+
+
+
+
+
+
+    label {
+     
+      color: black;
+      border: none;
+      font-size: 12px;
+      padding: 15px 20px;
+      text-align: center;
+      display: inline-block;
+      margin: 4px 2px;
+      border-radius: 20%;
+      background-color: #f9ece6;
+      white-space: nowrap; 
+     
+    }
+
+    /* Define dark mode styles for your elements here */
+/* For example: */
+body.dark-mode .navbar-brand span {
+  color: #fff; /* Change the color to white */
+}
+
+.font-size-button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: black
+}
+
+
+    button{
+      background-color: #f9ece6;
+      color: black;
+      border: none;
+      font-size:12px;
+      padding: 15px 20px;
+      text-align: center;
+      display:inline-block;
+      margin: 4px 2px;
+      height: 10px;
+      white-space: nowrap; 
+      width: auto;
+      border-radius: 20%;
+
+    }
+
+    .follow-button {
+      background-color: #f9ece6; /* Your desired background color */
+      font-size: 12px;
+      width:100px;
+      display:inline-block;
+     
+      margin-left: 140px; /* Horizontally centers the element */
+      margin-right: auto; 
+      font-weight: bold; 
+      white-space: nowrap; 
+
+
+    }
+
+    .followers-button,
+.following-button {
+  background-color: #f9ece6; /* Your desired background color */
+  font-size: 12px;
+  color: black;
+  display: inline-block;
+  white-space: nowrap; 
+  font-weight: bold; 
+  margin-left:65px;
+  padding: 10px 10px; 
+}
+
+.following-button {
+  {% comment %} margin-left: 20px; /* Adjust as needed */ {% endcomment %}
+ 
+  margin-left:37px;
+}
+
+{% comment %} 
+    .following-button{
+      background-color: #f9ece6; /* Your desired background color */
+      font-size: 12px;
+      color: black;
+     
+      display:inline-block;
+    margin-left: 170px;
+    margin-top: -20px;
+  
+      white-space: nowrap; 
+   
+      font-weight: bold; 
+
+      padding: 10px 10px; 
+   
+}
+    .followers-button{
+      background-color: #f9ece6; /* Your desired background color */
+      font-size: 12px;
+      color: black;
+     
+      display:inline-block;
+      margin-bottom: -20px;
+      white-space: nowrap; 
+      margin-left: 20px;
+      font-weight: bold; 
+
+      padding: 10px 10px; 
+   
+
+    } {% endcomment %}
+    .edit-button{
+      background-color: #f9ece6; /* Your desired background color */
+      font-size: 12px;
+      color: black;
+     
+      display:inline-block;
+      
+      white-space: nowrap; 
+      margin-left: 140px; 
+      margin-right: 158px;
+      font-weight: bold; 
+
+      padding: 10px 10px; 
+   
+    }
+
+    /* Hover effect */
+.followers-button:hover,
+.following-button:hover,
+.edit-button:hover {
+  {% comment %} transform: translate(5px, -5px); {% endcomment %}
+}
+    
+
+    .row{
+      font-size:12px;
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    
+
+    .contained {
+      display: flex;
+  
+
+
+     
+    }
+
+    .contained-left{
+      float: left;
+      margin-left: 100px;
+      margin-right: 280 px;
+      flex-wrap: wrap;
+
+    }
+
+    
+    .contained-right{
+     
+      float: right;
+      font-weight: bold;
+      margin-left: 250px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+     
+    
+    }
+
+    .vl{
+      border-left: 6px grey;
+      height: 500px;
+    }
+
+    .profile-info {
+      width: 20%;
+    }
+
+    .prompt {
+    width: 80%;
+    }
+
+    .footer_section {
+      clear: both;
+      margin-top: 20px; /* Adjust as needed */
+      text-align: center;
+    }
+
+    .profile-img{
+      
+      width:100px;
+      height:100px;
+      border-radius: 50%;
+      margin-left: 90px;
+      margin-right: 200px;
+      margin-top: 6px;
+
+      align-items: right; /* Center align items horizontally */
+  
+    }
+
+    .profimg{
+     margin-left: 88px;
+      align-items: right; /* Center align items horizontally */
+  
+    }
+
+    .profile-imgs{
+      margin-right: 0px;
+    }
+
+    .followersfollowing{
+      display: flex;
+      align-items: center;
+      margin-right: 100px;
+      justify-content: space-between;
+    }
+    .labelled{
+      margin-top: 20px;
+      margin-left: 120px;
+      font-size: 16px;
+      font-weight: bold;
+     
+      background-color: #f9ece6;
+      color: black;
+      border: none;
+   
+      padding: 15px 20px;
+      text-align: center;
+      display: inline-block;
+
+      border-radius: 20%;
+      white-space: nowrap; 
+    
+    }
+
+    .info{
+      margin-left:20px;
+    }
+
+    .nav-info-table{
+      font-size: 12px;
+      font-weight: bold;
+      margin-left: 05px;
+      
+    }
+
+    .profile-nav-info{
+    
+      margin-left: 20px;
+    }
+
+
+    .card-options{
+      background-color: #f9ece6;
+    }
+
+
+
+    {% comment %} POP UP WINDOWS {% endcomment %}
+
+    /* The Modal (background) */
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      z-index: 1; /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      overflow: auto; /* Enable scroll if needed */
+      background-color: rgb(0,0,0); /* Fallback color */
+      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+    
+    /* Modal Content/Box */
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto; /* 15% from the top and centered */
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%; /* Could be more or less, depending on screen size */
+    }
+    
+    /* The Close Button */
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    {% comment %} .heading {
+      width: 100%; /* Set the width to 100% */
+      text-align: center;
+      color: white;
+      padding: 100px 50px;
+      background-image: url('{% static "images/buddylogo.png" %}');
+      background-size: 120%;
+      background-position: center;
+      background-repeat: no-repeat;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border-radius: 0 0 15px 15px;
+      margin-bottom: 20px;
+   } {% endcomment %}
+   
+  </style>
+  
+
+</head>
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% comment %} <body> 
+  <button class="font-size-button" onclick="increaseFontSize()">+</button>
+<button class="font-size-button" onclick="decreaseFontSize()">-</button> {% endcomment %}
+
+{% comment %} <button id="dark-mode-toggle">  &#127769;</button>  {% endcomment %}
+ 
+
+  {% comment %} &#127769; Half mooon {% endcomment %}
+  
+
+  
+
+  <!-- krishna your frontend for your feature goes here -->
+
+{% comment %} 
+  <div class="heading">
+   
+  
+</div> {% endcomment %}
+
+  <div class="contained">
+
+
+  
+    
+
+<a class = "navnavnav" href = "{% url 'profCust:profile' request.user.id %}" > </a>
+
+{% comment %} {% if acc %}
+<
+{% comment %} {% endif %} 
+<h1> this wroks dw  {{ acc.profile.first_name }}</h1> {% endcomment %}
+
+
+    <div class="contained-left"   >
+      
+      
+      <label style="opacity: 0;"></label>
+    <br>
+      <img class = "profimg" src="{{ acc.profile.profile_image.url }}" alt ="Profile_Image" width="200" alt="">
+         
+      
+      <div class="profile-imgs">
+         
+      </div>
+        {% comment %} <img class = "profile-img"  src="{{ acc.profile.profile_image.url }}" alt ="Profile_Image" width="200" alt="">
+          {% endcomment %}
+       <hr></hr>
+
+<div class = "followersfollowing">
+       {% comment %} <div class="popup" onclick="myFunction()"> {% endcomment %}
+       <a href="#modal" id="followers-button" class="followers-button">Followers: {{ acc.profile.followers.count }}</a>
+       <a href="#modal" id ="following-button" class="following-button">Following: {{ acc.profile.following.count }}</a>
+       
+       </div>
+
+       
+
+
+      
+        
+{% comment %}      
+        <span class="popuptext" id="myPopup">
+          {%for followers in acc.profile.followers.all%} 
+          <ul>{{followers}}</ul>
+          {%endfor%}
+        </span>
+      </div> {% endcomment %}
+
+     
+       
+
+        
+        <!-- commented out css for this: /* <   .buttons-info {
+  padding: 5px 5px; /* Adjust as needed */
+
+  border-radius: 10px; /* Rounded corners */
+  cursor: pointer; /* Show pointer cursor on hover */
+  margin-top: 20px;
+
+  display: flex; /* 
+
+}-->
+ 
+         <hr></hr>
+
+       
+
+       
+{% comment %}         
+      </div> {% endcomment %}
+      <div class = "buttons-info">
+
+        <form method = POST> {% csrf_token%} 
+        {% comment %} <a href="/profilecustom.html" class="edit-button"> Unfollow</a> {% endcomment %}
+      
+
+        {% if acc.profile in request.user.profile.following.all %}
+    <!-- If the logged-in user is following the current profile user -->
+    {% comment %} <a href="" class="edit-button">Unfollow</a> {% endcomment %}
+
+    <button class = "follow-button" value= "unfollow" name = "follow" type = "submit"> Unfollow </button>
+{% else %}
+    <!-- If the logged-in user is not following the current profile user -->
+    {% comment %} <a href="" class="edit-button">Follow</a> {% endcomment %}
+    <button class = "follow-button" value= "follow" name = "follow" type = "submit"> Follow </button>
+{% endif %}
+    
+      </div>
+      
+    </form>
+      <hr></hr>
+    
+      
+     
+      <div class="profile-nav-info">
+       
+        <div class = "listen">
+          <button class="fa-sharp fa-solid fa-volume-high" style="margin-left: 333px;  color: #db4f66; background-color: transparent;"> </button> 
+            
+        <table class = "nav-info-table">
+
+          <tr> <td> <!-- Displaying user's name -->
+
+             
+           
+             </td> </tr>
+         
+          <tr>
+              <td >First name : {{  acc.profile.first_name }}  <br>   <hr></hr> </br> </td>
+              
+          </tr>
+          <tr>
+            <td>Last name : {{ acc.profile.last_name }}  <br>    <hr></hr></br> </td>
+           
+          </tr>
+          <tr>
+           
+              <td>Occupation : {{ acc.profile.occupation }} <br>   <hr></hr> </br> </td>
+
+              
+          </tr>
+          <tr>
+            <td>Location : {{acc.profile.location }} <br>   <hr></hr> </br></td> 
+          
+        </tr>
+        <tr>
+          <td> Description: {{ acc.profile.bio }} </td>
+        </tr>
+        <tr> <td colspan="2"> 
+         
+         </td> </tr>
+        
+
+       
+      </table>
+    </div>
+
+    
+      <hr></hr>
+
+
+
+
+
+
+      </div>
+    </div>
+
+  
+
+    <div class="vl"></div>
+
+    <div class="contained-right">
+      <hr> </hr>
+
+      <div class = "listen2">
+      <h4> {{ acc.profile.first_name}}'s Page  </h4>
+      </div>
+      <hr> </hr> 
+
+
+      <div class="prompt">
+        
+      
+          <div class="question-prompt">
+            Favorite outdoor Activities: {{acc.profile.first_question_option|title}}
+          </div>
+          <div class="options">
+
+
+         
+            <label><input type="radio" name="outdoor-activity" value="hiking" {% if acc.profile.first_question_option == 'hiking' %}checked{% endif %} disabled> Hiking </label>
+    <label><input type="radio" name="outdoor-activity" value="water_sports" {% if acc.profile.first_question_option == 'water_sports' %}checked{% endif %} disabled> Water sports </label>
+    <label><input type="radio" name="outdoor-activity" value="camping" {% if acc.profile.first_question_option == 'camping' %}checked{% endif %} disabled> Camping </label>
+    <label><input type="radio" name="outdoor-activity" value="wildlife_safari" {% if acc.profile.first_question_option == 'wildlife_safari' %}checked{% endif %} disabled> Wildlife Safari </label>
+    <label><input type="radio" name="outdoor-activity" value="skating" {% if acc.profile.first_question_option == 'skating' %}checked{% endif %} disabled> Skating </label>
+    <label><input type="radio" name="outdoor-activity" value="yoga_retreats" {% if acc.profile.first_question_option == 'yoga_retreats' %}checked{% endif %} disabled> Yoga retreats </label>
+    <label><input type="radio" name="outdoor-activity" value="sunset_seeker" {% if acc.profile.first_question_option == 'sunset_seeker' %}checked{% endif %} disabled> Sunset seeker </label>
+    <label><input type="radio" name="outdoor-activity" value="snow_boarding" {% if acc.profile.first_question_option == 'snow_boarding' %}checked{% endif %} disabled> Snow Boarding </label>
+
+            
+          </div>
+          
+        </div>
+
+        <hr> </hr>
+        <div class="prompt">
+          <div class="question-prompt">
+            Preferred travel destinations: {{acc.profile.second_question_option |title }}
+          </div>
+          <div class="options">
+          
+
+
+
+          
+            <label><input type="radio" name="travel-destination" value="beach_destinations" {% if acc.profile.second_question_option == 'beach_destinations' %}checked{% endif %} disabled> Beach Destinations </label>
+            <label><input type="radio" name="travel-destination" value="mountains_nature_retreats" {% if acc.profile.second_question_option == 'mountains_nature_retreats' %}checked{% endif %} disabled> Mountains and Nature Retreats </label>
+            <label><input type="radio" name="travel-destination" value="urban_city_exploration" {% if acc.profile.second_question_option == 'urban_city_exploration' %}checked{% endif %} disabled> Urban City Exploration </label>
+            <label><input type="radio" name="travel-destination" value="historical_cultural_sites" {% if acc.profile.second_question_option == 'historical_cultural_sites' %}checked{% endif %} disabled> Historical and Cultural Sites </label>
+            <label><input type="radio" name="travel-destination" value="unique_cuisine" {% if acc.profile.second_question_option == 'unique_cuisine' %}checked{% endif %} disabled> Anywhere with Unique Cuisine </label>
+            <label><input type="radio" name="travel-destination" value="tropical_island" {% if acc.profile.second_question_option == 'tropical_island' %}checked{% endif %} disabled> Tropical Island </label>
+             
+          </div>
+        </div>
+
+<hr></hr>
+
+        <div class="prompt">
+          <div class="question-prompt">
+            Preferred solo travel goals: {{acc.profile.third_question_option |title }}
+          </div>
+          <div class="options">
+
+            <label><input type="radio" name="pref-solo-goals" value="self_discovery" {% if acc.profile.third_question_option == 'self_discovery' %}checked{% endif %} disabled> Self discovery </label>
+            <label><input type="radio" name="pref-solo-goals" value="making_new_friends" {% if acc.profile.third_question_option == 'making_new_friends' %}checked{% endif %} disabled> Making new friends </label>
+            <label><input type="radio" name="pref-solo-goals" value="learning_about_cultures" {% if acc.profile.third_question_option == 'learning_about_cultures' %}checked{% endif %} disabled> Learning about different cultures </label>
+            <label><input type="radio" name="pref-solo-goals" value="relaxation_reflection" {% if acc.profile.third_question_option == 'relaxation_reflection' %}checked{% endif %} disabled> Relaxation and Reflection </label>
+            <label><input type="radio" name="pref-solo-goals" value="self_discipline" {% if acc.profile.third_question_option == 'self_discipline' %}checked{% endif %} disabled> Self discipline </label>
+            <label><input type="radio" name="pref-solo-goals" value="practicing_meditation" {% if acc.profile.third_question_option == 'practicing_meditation' %}checked{% endif %} disabled> Practicing meditation </label>
+        
+
+
+          </div>
+        </div>
+        
+
+
+
+        <hr></hr>
+
+        <div class="prompt">
+          <div class="question-prompt">
+           Interests and hobbies: {{acc.profile.fourth_question_option |title}}
+          </div>
+          <div class="options">
+
+            <label><input type="radio" name="interest" value="Backpacking" {% if acc.profile.fourth_question_option == 'backpacking' %}checked{% endif %} disabled> Backpacking </label>
+<label><input type="radio" name="interest" value="surfing" {% if acc.profile.fourth_question_option == 'surfing' %}checked{% endif %} disabled> Surfing </label>
+<label><input type="radio" name="interest" value="marathons" {% if acc.profile.fourth_question_option == 'marathons' %}checked{% endif %} disabled> Marathons </label>
+<label><input type="radio" name="interest" value="food-cuisines" {% if acc.profile.fourth_question_option == 'food-cuisines' %}checked{% endif %} disabled> Food cuisines </label>
+<label><input type="radio" name="interest" value="journalling" {% if acc.profile.fourth_question_option == 'journalling' %}checked{% endif %} disabled> Journalling </label>
+
+         
+          </div>
+        </div>
+        
+
+
+
+        <hr></hr>
+
+        
+
+      </div>
+    </div>
+  </div>
+
+  
+
+
+
+  <!-- End of contained -->
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  {%include 'footer.html'%}
+
+  <!-- end info section -->
+
+
+
+  
+
+
+<script>
+
+  // Get the modal
+var modal = document.getElementById("myModal");
+var modall = document.getElementById("mymmodal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("followers-button");
+var btnn = document.getElementById("following-button");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+var spann = document.getElementsByClassName("closed")[0];
+
+// When the user clicks on the button, open the modal
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+btnn.onclick = function() {
+  modall.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+spann.onclick = function() {
+  modall.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+  if (event.target == modall) {
+    modall.style.display = "none";
+  }
+}
+
+</script>
+
+
+
+{% comment %} 
+  <script>
+    // Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("followers-button");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+  </script>
+
+
+
+  <script>
+    // Get the modal
+var modall = document.getElementById("mymmodal");
+
+// Get the button that opens the modal
+var btnn = document.getElementById("following-button");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("closed")[0];
+
+// When the user clicks on the button, open the modal
+btnn.onclick = function() {
+  modall.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+spann.onclick = function() {
+  modall.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modall.style.display = "none";
+  }
+}
+  </script> {% endcomment %}
+  {% comment %} <script>
+    // When the user clicks on <div>, open the popup
+    function myFunction() {
+      var popup = document.getElementById("myPopup");
+      popup.classList.toggle("show");
+    }
+    </script> {% endcomment %}
+
+{% comment %} <script>
+  // JavaScript to toggle dark mode
+  const darkModeToggle = document.getElementById('dark-mode-toggle');
+  const body = document.body;
+  
+  darkModeToggle.addEventListener('click', () => {
+    body.classList.toggle('dark-mode');
+
+    // Store dark mode preference in local storage
+    if (body.classList.contains('dark-mode')) {
+      localStorage.setItem('darkMode', 'enabled');
+      darkModeToggle.textContent = '☀️'; 
+      
+    } else {
+      localStorage.setItem('darkMode', 'disabled');
+      darkModeToggle.textContent = '🌙';
+      
+    }
+  });
+
+  // Check for dark mode preference in local storage
+  const darkMode = localStorage.getItem('darkMode');
+
+  if (darkMode === 'enabled') {
+    body.classList.add('dark-mode');
+    
+    darkModeToggle.textContent = '☀️'; // Set sun symbol when dark mode is on
+  } else {
+    darkModeToggle.textContent = '🌙'; 
+   // Set moon symbol when dark mode is off
+  }
+</script>  {% endcomment %}
+
+
+<!-- Your HTML code here -->
+
+<script> 
+  document.addEventListener('DOMContentLoaded', (event) => {
+    let speech = new SpeechSynthesisUtterance();
+    let voices = window.speechSynthesis.getVoices();
+
+    // Set a flag to check if speech is currently playing
+    let speaking = false;
+
+    // Set the female voice once the voices have loaded
+    window.speechSynthesis.onvoiceschanged = function() {
+      voices = window.speechSynthesis.getVoices();
+      speech.voice = voices.find(voice => voice.name.includes('Female'));
+    };
+
+    document.querySelector(".fa-sharp.fa-solid.fa-volume-high") .addEventListener("click", () => {
+      // Check if we're currently speaking
+      if (!speaking) {
+        let textToSpeak = '';
+
+        document.querySelectorAll(".listen2").forEach(element => {
+          textToSpeak += element.textContent + ' ';
+        });
+        // Then, get the text content of labels associated with checked radio buttons
+       // Then, get the text content of labels associated with checked radio buttons
+
+        // Finally, get the text content of other elements you want to include
+        document.querySelectorAll(".listen").forEach(element => {
+          textToSpeak += element.textContent + ' ';
+        });
+
+        textToSpeak += "Favorite outdoor Activities: " + "{{acc.profile.first_question_option|title }}" + ' ';         
+textToSpeak += "Preferred travel destinations: " + "{{ acc.profile.second_question_option|title }}" + ' ';
+textToSpeak += "Preferred solo travel goals: " + "{{ acc.profile.third_question_option|title }}" + ' ';
+textToSpeak += "Interests and hobbies: " + "{{ acc.profile.fourth_question_option|title }}" + ' ';
+
+
+
+    
+        speech.text = textToSpeak;
+        window.speechSynthesis.speak(speech);
+        speaking = true; // Set the flag to true as we're now speaking
+      } else {
+        // If we are speaking, cancel the speech
+        window.speechSynthesis.cancel();
+        speaking = false; // Set the flag to false as we've stopped speaking
+      }
+    });
+
+    // Reset the speaking flag when the speech ends
+    speech.onend = function() {
+      speaking = false;
+    };
+  });
+</script>
+{% comment %} 
+<script>
+  // Increase font size function
+  function increaseFontSize() {
+    // Get the current font size of the body element
+    var currentSize = parseFloat(window.getComputedStyle(document.body).fontSize);
+    // Increase the font size by 2 pixels
+    var newSize = currentSize + 2;
+    // Set the new font size to the body element
+    document.body.style.fontSize = newSize + 'px';
+  }
+
+  // Decrease font size function
+  function decreaseFontSize() {
+    // Get the current font size of the body element
+    var currentSize = parseFloat(window.getComputedStyle(document.body).fontSize);
+    // Decrease the font size by 2 pixels
+    var newSize = currentSize - 2;
+    // Set the new font size to the body element
+    document.body.style.fontSize = newSize + 'px';
+  }
+</script> {% endcomment %}
+
+
+</body>
+</html>
+
+
+</body>
+
+</html>

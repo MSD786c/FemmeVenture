@@ -1,0 +1,492 @@
+ 
+
+<!DOCTYPE html>
+{% load static %}
+<title>HerSaftey | FemmeVenture</title>
+{% include 'nav.html' %}
+
+<html>
+
+
+  <!-- Hero Area Ends -->
+
+
+  
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/site.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
+    <style>
+
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    background-color: white;
+    margin: 1rem;
+    text-align: center;
+}
+
+.card img {
+    width: 100%; /* Make sure this is the only rule that sets the width of the images */
+    height: 200px; /* Ensure that this height is sufficient and that no other rules are overriding it */
+    object-fit: cover; /* Cover can cut off parts of the image, ensure it's acceptable for your design */
+    border-radius: 0.5rem;
+}
+
+/* Make sure that this .card h3 is not conflicting with another .card h3 elsewhere */
+.card h3 {
+    margin: 0;
+    padding: 0;
+    color: #944c6b; /* Ensure this color is what you want */
+    margin-bottom: 15px; /* Adjust the bottom margin if necessary */
+}
+
+/* Remove any other .card p styles that might be conflicting */
+.card p {
+    margin-bottom: 20px;
+}
+
+/* The .card-button might be conflicting if you have it defined elsewhere with different styles */
+.card-button a {
+    display: flex;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    background-color: #E53935;
+    border-radius: 5px;
+    font-weight: bold;
+    width: 100%;
+    justify-content: center;
+}
+
+/* Additional global styles */
+body {
+    background-color: #dabfa1;
+    color: #383d64;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Ensure all h2 elements use this style */
+h2 {
+    color: #000000;
+    text-align: center;
+}
+
+
+
+.title-container {
+    text-align: center; /* Center align the contents */
+    padding: 20px; /* Add some padding */
+}
+      
+
+        section {
+            background-color: #dabfa1;
+            color: #383d64;
+            padding: 4rem 0;
+        }
+
+        h2 {
+            color: #000000;
+        }
+
+        a.btn {
+            display: inline-block;
+            background-color: #944c6b;
+            color: #dabfa1;
+            padding: 0.75rem 1.5rem;
+            margin-top: 1rem;
+            text-decoration: none;
+            border-radius: 2rem;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        a.btn:hover {
+            background-color: #383d64;
+        }
+
+        
+
+       
+
+        .safety-index {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .star {
+            color: #FFD700;
+            margin-right: 0.2rem;
+            cursor: pointer;
+        }
+
+        .card img {
+  width: 100%; /* makes image take full width of the card */
+  height: 200px; /* set a fixed height */
+  object-fit: cover; /* this will make sure images cover the area without stretching */
+  border-radius: 0.5rem; /* optional: to have rounded corners for images */
+}
+
+.fa-volume-up {
+    cursor: pointer; /* Change cursor to indicate it's clickable */
+    margin-left: 10px; /* Add some space from the title text */
+    color: #333; /* Set a color */
+}
+
+
+/* Dark theme styles */
+body.dark-mode {
+    background-color: #484848;
+    color: #fff;
+}
+
+/* Styles for other elements in dark mode */
+.dark-mode .card {
+    background-color: #424242;
+    color: #e0e0e0;
+}
+
+.dark-mode a {
+    color: #bb86fc;
+}
+
+#theme-toggle {
+    background-color: #d81b60; /* Dark pink color */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 30px; /* Fully rounded corners */
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.3s;
+    outline: none; /* Remove the outline on focus for a cleaner look */
+    margin: 10px; /* Add space around the button */
+}
+
+#theme-toggle:hover {
+    background-color: #ad1457; /* Slightly darker pink on hover */
+    transform: scale(1.05); /* Slightly increase the size on hover */
+}
+
+#theme-toggle:focus {
+    display: inline-block; /* Make the button an inline block element */
+    margin-top: 20px; /* Add space between the title and the button */
+    /* ...other styles... */}
+
+
+
+    .city-image {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 1rem;
+            border-radius: 0.5rem;
+        }
+
+        /* Enable horizontal scrolling */
+        .container {
+            overflow-x: auto;
+        }
+
+        /* Search feature styles */
+        .search-container {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .search-input {
+            width: 70%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border-radius: 1.5rem; /* More rounded */
+            border: 1px solid #944c6b; /* Border color */
+        }
+
+        .search-btn {
+            background-color: #944c6b;
+            color: #dabfa1;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            border-radius: 1.5rem; /* More rounded */
+            transition: background-color 0.3s ease-in-out;
+            border: 1px solid #944c6b; /* Border color */
+        }
+
+        .search-btn:hover {
+            background-color: #383d64;
+        }
+
+        /* Review Form styles */
+        /* .review-form {
+            mt: 8;
+            p: 4;
+        } */
+        /* .review-form label {
+            block:
+            mb: 2;
+        } */
+
+        .review-form input,
+        .review-form textarea,
+        /* .review-form button {
+            w-full;
+            p: 2;
+            border;
+            mb: 4;
+        } */
+
+        /* .review-form button {
+            btn;
+        } */
+
+        /* Rating Stars styles */
+        .rating-container {
+            display: flex;
+            align-items: center;
+            /* mb: 4; */
+        }
+
+        .rating-container .star {
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .rating-container .star:hover {
+            color: #FFD700;
+        }
+
+        /* Selected Rating styles */
+        .selected-rating {
+            /* ml: 2; */
+            font-weight: bold;
+        }
+
+        h3 {
+            
+      font-family: 'Roboto Slab', serif; /* This is the font family you chose */
+      font-style: italic; /* This will make the text italic */
+      font-size: 2.5rem; /* Adjust the size as necessary */
+      font-weight: 400; /* Choose the desired font weight, 400 is normal, 700 is bold */
+      color: #383d64; /* Adjust the color as necessary */
+      text-align: center; /* Center the text */
+      margin-bottom: 1rem; /* Adjust spacing as needed */
+    }
+
+
+    </style>
+    <title>FemmeVenture - safetyresource</title>
+
+
+</head>
+
+<body>
+
+    
+    <section>
+
+        <div class="title-container">
+            <h2 class="text-4xl font-semibold my-8">Safety Resources</h2>
+            <h3 class="text-4xl font-semibold my-8">Empowering you with the knowledge to navigate the world securely and confidently.</h3>
+            
+        </div>
+        
+    
+        <div class="container mx-auto text-center">
+
+            <div class="card-container">
+                <!-- Safety Basics -->
+                <div class="card">
+                  <img src="{% static 'images/SR1.png' %}" alt="Safety Basics">
+                  <h3 class="text-2xl font-semibold mb-2">
+                    Essential Safety Basics:
+                    <i class="fa fa-volume-up" onclick="speakTitle('Essential Safety Basics')"></i>
+                  </h3>
+                  <p>Your essential guide to staying secure while on solo adventures.</p>
+                  <div class="card-button">
+                    <a href="{% url 'safetybasics' %}">
+                      View More
+                    </a>
+                  </div>
+                </div>
+                <!-- ... other cards ... -->
+              
+              
+
+                <!-- Destination-Specific Safety Guides -->
+                <div class="card">
+                    <img src="{% static 'images/SR2.png' %}" alt="Destination Guides">
+                    <h3 class="text-2xl font-semibold mb-2">Destination-Specific Guides:
+                        <i class="fa fa-volume-up" onclick="speakTitle('Destination-Specific Guides')"></i>
+                    </h3>
+                    <p>Navigate the world confidently with tailored safety considerations.</p>
+                    <div class="card-button">
+                      <a href="{% url 'destinationguides' %}">
+                        View More
+                      </a>
+                    </div>
+                </div>
+
+                <!-- Emergency Contacts and Resources -->
+                <div class="card">
+                    <img src="{% static 'images/SR3.png' %}" alt="Emergency Contacts">
+                    <h3 class="text-2xl font-semibold mb-2">Emergency Contacts:
+                        <i class="fa fa-volume-up" onclick="speakTitle('Emergency Contacts')"></i>
+                    </h3>
+                    <p>Your go-to reference for essential help when needed.</p>
+                    <div class="card-button">
+                      <a href="{% url 'emergcontacts' %}">
+                        View More
+                      </a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <img src="{% static 'images/SR4.png' %}" alt="Transportation Safety Tips">
+                    <h3 class="text-2xl font-semibold mb-2">Transportation Safety Tips:
+                        <i class="fa fa-volume-up" onclick="speakTitle('Transportation Safety Tips')"></i>
+                    </h3>
+                    <p>Guidance on making safe choices, like using reputable services and local systems.</p>
+                    <div class="card-button">
+                      <a href="{% url 'Transportation' %}">
+                        View More
+                      </a>
+                    </div>
+                </div>
+
+                <div class="card">
+                  <img src="{% static 'images/OIP_7mtcU8q.jpg' %}" alt="Community Safety Stories">
+                  <h3 class="text-2xl font-semibold mb-2">Community Safety Stories:
+                    <i class="fa fa-volume-up" onclick="speakTitle('Community Safety Stories')"></i>
+                  </h3>
+                  <p>Join our supportive community by exploring some shared, vlogged safety experiences.</p>
+                  <div class="card-button">
+                    <a href="{% url 'CommunitySafety' %}">
+                      View More
+                    </a>
+                  </div>
+              </div>
+
+              <div class="card">
+                <img src="{% static 'images/SR6.png' %}" alt="Safety Gears and Gadgets">
+                <h3 class="text-2xl font-semibold mb-2">Safety Gears and Gadgets:
+                    <i class="fa fa-volume-up" onclick="speakTitle('Safety Gears and Gadgets')"></i>
+                </h3>
+                <p>Elevate your safety measures with our showcase of the latest safety investments.</p>
+                <div class="card-button">
+                  <a href="{% url 'safetygear' %}">
+                    View More
+                  </a>
+                </div>
+            </div>
+
+                <!-- Add other cards as necessary for your sections -->
+            </div>
+        </div>
+    </section>
+
+    
+
+    <!-- Review Form Script -->
+    <script>
+
+function speakTitle(textToSpeak) {
+    const synth = window.speechSynthesis; // Get the speech synthesis interface
+    const utterance = new SpeechSynthesisUtterance(textToSpeak); // Create an utterance object
+    synth.speak(utterance); // Speak the text
+}
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const themeToggle = document.getElementById('theme-toggle');
+    const currentTheme = localStorage.getItem('theme');
+
+    if (currentTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+    }
+
+    themeToggle.addEventListener('click', function () {
+        document.body.classList.toggle('dark-mode');
+        
+        let theme = 'light';
+        if (document.body.classList.contains('dark-mode')) {
+            theme = 'dark';
+        }
+        localStorage.setItem('theme', theme);
+    });
+});
+
+
+        let selectedRating = 0;
+
+        function setRating(rating, containerId) {
+            selectedRating = rating;
+
+            // Update star colors based on rating
+            const container = document.getElementById(containerId);
+            for (let i = 1; i <= 5; i++) {
+                const starElement = container.querySelector(`.star:nth-child(${i})`);
+                if (i <= rating) {
+                    starElement.style.color = '#FFD700';
+                } else {
+                    starElement.style.color = '#ccc';
+                }
+            }
+
+            // Display the selected rating
+            document.getElementById('selectedRatingText').innerText = `Selected Rating: ${selectedRating}`;
+        }
+
+        function submitReview() {
+            const title = document.getElementById('reviewTitle').value;
+            const content = document.getElementById('reviewContent').value;
+
+            if (selectedRating === 0) {
+                alert('Please select a rating before submitting the review.');
+                return;
+            }
+
+            // Display a simple alert for demonstration purposes
+            alert(`Review Submitted!\nTitle: ${title}\nContent: ${content}\nRating: ${selectedRating}`);
+            
+            // You can also send the data to your server using AJAX or other methods
+            // Example:
+            // const formData = { title, content, rating: selectedRating };
+            // fetch('your-api-endpoint', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //     },
+            //     body: JSON.stringify(formData),
+            // })
+            // .then(response => response.json())
+            // .then(data => console.log(data))
+            // .catch(error => console.error('Error:', error));
+        }
+    </script>
+
+</body>
+
+
+
+
+
+
+
+
+</body>
+
+</html>
+
+</div>
+
+{% include 'footer.html' %}

@@ -1,0 +1,789 @@
+
+<!DOCTYPE html>
+{% load static %}
+<title> Profile Edit | FemmeVenture </title> 
+
+{% include 'nav.html' %}
+
+<html>
+
+
+
+<head>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+
+
+    {% comment %} NEW STUFF {% endcomment %}
+    
+    body.dark-mode {
+      background-color: #2e2429;
+      color: #fff;
+    }
+    
+    
+    /* Define dark mode styles for your elements here */
+    /* For example: */
+    .profile-info {
+      color: #fff;
+    }
+    
+    /* Toggle Button Styles */
+    #dark-mode-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+      background-color: transparent ;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      
+    }
+    
+    {% comment %} NEW STUFF ENDED {% endcomment %}
+    
+     {% comment %} changes in :
+    
+    
+      {% endcomment %}
+    
+    
+    
+      .discard-button {
+        background-color: #f9ece6; /* Your desired background color */
+        font-size: 12px;
+        color: inherit; /* Inherit color from parent */
+        color : #000000;
+        display:inline-block;
+        margin-left: 28px; 
+        font-weight: bold; 
+        white-space: nowrap; 
+        border-radius: 20%;
+        padding: 10px 10px; 
+        cursor: pointer;
+        margin-top: 10px;
+        
+        margin-bottom: -15px;
+      }
+    
+      .save-button{
+        background-color: #f9ece6; /* Your desired background color */
+        color: inherit; /* Inherit color from parent */
+        font-size: 12px;
+        color : #000000;
+        display:inline-block;
+        white-space: nowrap; 
+        margin-left: 159px; 
+        margin-top: -25px;
+        border-radius: 20%;
+        font-weight: bold; 
+    
+        padding: 18px 15px; 
+        cursor: pointer;
+     
+      }
+      {% comment %} change in over {% endcomment %}
+    
+    
+        label {
+          background-color: #f9ece6;
+          color: black;
+          border: none;
+          font-size: 12px;
+          padding: 15px 20px;
+          text-align: center;
+          display: inline-block;
+          margin: 4px 2px;
+          border-radius: 20%;
+          white-space: nowrap; 
+         
+        }
+    
+        button{
+          background-color: #f9ece6;
+          color: black;
+          border: none;
+          font-size:12px;
+          padding: 15px 20px;
+          text-align: center;
+          display:inline-block;
+          margin: 4px 2px;
+          height: 10px;
+          white-space: nowrap; 
+          width: auto;
+          border-radius: 20%;
+    
+        }
+    
+        
+        
+    
+        .row{
+          font-size:12px;
+          display: flex;
+          align-items: center;
+          margin-bottom: 10px;
+        }
+        
+    
+        .contained {
+          display: flex;
+    
+         
+        }
+
+        {% comment %} hk {% endcomment %}
+    
+        .contained-left{
+          float: left;
+          margin-left: 25px;     flex-wrap: wrap;
+          {% comment %} margin-right: 20 px; {% endcomment %}
+        }
+    
+        
+        .contained-right{
+         
+          {% comment %} hk {% endcomment %}
+          {% comment %} float: right; {% endcomment %}
+          font-weight: bold;
+          margin-left: 250px;     flex-wrap: wrap;
+          border-right: 6px grey;
+          {% comment %} justify-content: center;
+          align-items: center; {% endcomment %}
+        
+        }
+    
+        
+    
+        .vl{
+          border-left: 6px grey;
+          height: 500px;
+        }
+    
+        .profile-info {
+          width: 50%;
+        }
+    
+        .prompt {
+          width: 80%;
+        }
+    
+        .footer_section {
+          clear: both;
+          margin-top: 20px; /* Adjust as needed */
+          text-align: center;
+        }
+    
+       
+        #image-upload-input {
+          display: none; /* Hide the file input */
+      }
+    
+    
+      .buttons-info{
+     display: inline-block; 
+      }
+    
+        .labelled{
+          margin-top: 20px;
+          margin-left: 170px;
+          font-size: 16px;
+          font-weight: bold;
+    
+          background-color: #f9ece6;
+          color: black;
+          border: none;
+       
+          padding: 15px 20px;
+          text-align: center;
+          display: inline-block;
+    
+          border-radius: 20%;
+          white-space: nowrap; 
+        
+        }
+    
+        .info{
+          margin-left:20px;
+        }
+    
+        .nav-info-table{
+          font-size: 12px;
+          margin-top: 02px;
+          margin-left: 05px;
+          margin-right:00px;
+          font-weight: bold;
+        }
+    
+        .profile-nav-info{
+          margin-top: 40px;
+          margin-left: 20px;
+          margin-right:0px;
+          
+        }
+    
+        .profile-imgs{
+          position: relative;
+          width: 50%;
+        }
+    
+        .profile-img{
+         width:200px;
+         height 150px;
+          opacity: 1;
+          
+          margin-left: 115px;
+          margin-top: 6px;
+          cursor: pointer;
+        }
+        .hoverText {
+          transition: .5s ease;
+          opacity: 0;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          -ms-transform: translate(-50%, -50%);
+          text-align: center;
+        }
+    
+        .profile-imgs:hover .profile-img {
+      opacity: 0.3;
+    }
+    
+    .profile-imgs:hover .hoverText{
+      opacity: 1;
+    }
+    
+    .text {
+      
+      color: white;
+      font-size: 16px;
+      padding: 16px 32px;
+    
+      display: flex;
+      justify-content: center; /* Horizontally center */
+      align-items: center; /*
+    }
+    
+    .success {
+      color: green;
+    }
+    
+    .error {
+      color: red;
+    }
+
+    .fa-solid.fa-microphone {
+      position: absolute; /* This is absolute in relation to its parent, thanks to the parent's relative position */
+      right: 40px; /* Adjust this as needed to align the icon to the right edge of its parent container */
+      top: 50%; /* Centers it vertically */
+      transform: translateY(-85%); /* Corrects the vertical position to truly center */
+      font-size: 20px;
+      color: black; 
+  }
+  .fa-microphone.active {
+      color: red; // Change to red when active
+  }
+  
+    
+    
+        {% comment %} .edit-icon {
+          display: none;
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          color: #ffffff; /* Color of the edit icon */
+          cursor: pointer;
+        }
+        
+        .hoverText{
+          position: absolute;
+          display:flex;
+          justify-content: center;
+          align-items:center;
+          flex-direction:column;
+          opacity:0;
+          transition:0.6s;
+        }
+    
+        .hoverText:hover{
+          opacity:1;
+        } {% endcomment %}
+        {% comment %} .profile-img:hover +  .edit-icon {
+          display: block;
+        } {% endcomment %}
+    
+    {% comment %} 
+        .profile-imgs{
+          position: relative;
+          display: inline-block;
+      }
+    
+      .overlay {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .profile-imgs:hover .overlay {
+      opacity: 1;
+    }
+    
+    .text {
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+    } {% endcomment %}
+    
+       
+{% comment %} 
+
+    .heading {
+      width: 100%; /* Set the width to 100% */
+      text-align: center;
+      color: white;
+      padding: 100px 50px;
+      background-image: url('{% static "images/buddylogo.png" %}');
+      background-size: 120%;
+      background-position: center;
+      background-repeat: no-repeat;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border-radius: 0 0 15px 15px;
+      margin-bottom: 20px;
+   } {% endcomment %}
+      </style> 
+      
+
+</head>
+
+
+  <!-- Hero Area Ends -->
+
+  
+
+  <!-- krishna your frontend for your feature goes here -->
+
+{% comment %} <button id="dark-mode-toggle">  &#127769;</button> {% endcomment %}
+ 
+  <!-- krishna your frontend for your feature goes here -->
+
+  {% comment %} <div class="heading">
+   
+    
+  </div> {% endcomment %}
+
+  <div class="contained">
+
+
+
+    <div class="contained-left">
+
+<form method="POST" enctype="multipart/form-data" action="/profileEdit.html/">
+  {% csrf_token %}
+     <label class = "labelled"> Profile </label>
+   
+
+     
+      <div class="profile-imgs">
+
+        <img class = "profile-img"  src="{{ request.user.profile.profile_image.url }}" width="200" alt="">
+      
+        {% if request.user.profile.profile_image %}
+
+        {%else%} 
+        <img class = "profile-img"  src="static/images/profiles/user-default.png" width="200" alt="">
+
+        {%endif%}
+       
+        <div class = "hoverText" >
+         
+          <input type="file" id="image-upload-input" name="profile_image" style="display: none;"> 
+         <p> Edit </p> 
+          </div> 
+          
+          
+         
+{% comment %} 
+        <div class="overlay">
+          <div class="text">Click to edit</div>
+      </div> {% endcomment %}
+
+
+{% comment %}        
+      
+        <input type="file" id="image-upload-input" name="profile_image" style="display: none;">
+     
+         {% endcomment %}
+        
+      </div>
+
+    
+
+      <hr></hr>
+      <div class = "buttons-info">
+        
+        <!-- commented out css for this: /* <   .buttons-info {
+  padding: 5px 5px; /* Adjust as needed */
+
+  border-radius: 10px; /* Rounded corners */
+  cursor: pointer; /* Show pointer cursor on hover */
+  margin-top: 20px;
+
+  display: flex; /* 
+
+
+     <button class="discard-button">Discard </button>
+      
+      <button class = "save-button"> Save  </button>
+      
+}-->
+
+
+
+
+<a href="{%url 'profilecustom' %}" class="discard-button"> Finish changes </a>  <button type="submit" class="save-button">Save changes</button> 
+
+{% comment %} <a type="submit"  href="/profilecustom.html" class="save-button"> Save </a>  {% endcomment %}
+
+ 
+      </div>
+     
+      <hr></hr>
+        <!--  <button class="saveButton" style="display: none;">Save</button>-->
+  
+      <div class="profile-nav-info">
+        
+        <table class = "nav-info-table">
+          <tr>
+              <td>First name: </td> 
+              <td>Last name: </td>
+          </tr>
+          <tr>
+              <td><input type="first_name"  name = "first_name" id="first_name" placeholder= {{request.user.profile.first_name}} ></td>
+              <td><input type="last_name"   name = "last_name" id="last_name" placeholder= {{request.user.profile.last_name}}> </td>
+             
+            </tr>
+          <tr>
+              <td>Occupation: </td>
+              <td>Location:  </td>
+          </tr>
+          <tr>
+            <td><input type="occupation"  name = "occupation" id="occupation" placeholder= {{request.user.profile.occupation}}></td>
+            <td><input type="location" name = "location" id="location" placeholder= {{request.user.profile.location}}></td>
+        </tr>
+        <tr>
+          <td> Description: </td>
+        </tr>
+        <tr> <td colspan="2"> 
+          <textarea id="bio" name = "bio" rows="4" cols="50" placeholder= {{request.user.profile.bio}}></textarea>
+
+        </td> </tr>
+        
+        <tr>
+         <td colspan="2">
+
+
+        
+          {% if messages %}
+          
+          <ul class="messages" style="list-style-type: none; margin: 0 auto;">
+            {% for message in messages %}
+              {% if message.tags == 'success' %}
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <li style="color: green;">{{ message }}</li>
+              {% elif message.tags == 'error' %}
+              <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <li style="color: red;">{{ message }}</li>
+              {% else %}
+                <li>{{ message }}</li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+        
+  
+        
+
+
+          {% comment %} {% if messages %}
+          <ul class="messages" style="list-style-type: none; color: red; margin: 0 auto;">
+            {% for message in messages %}
+              <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+
+           {% endcomment %}
+         
+      </table>
+
+    
+      <hr></hr>
+
+
+      </div>
+
+      
+    </div>
+
+
+  
+
+    <div class="vl"></div>
+
+    <div class="contained-right">
+      <hr> </hr>
+
+      <h4>Welcome, {{ user.username}}.  </h4>
+
+      <hr> </hr> 
+
+      <div class="prompt">
+        
+      
+          <div class="question-prompt">
+            Favorite outdoor Activities:
+          </div>
+          <div class="options">
+            
+{% comment %} outdoor-activity {% endcomment %}
+            <label><input type="radio" name="first_question_option" value="hiking" {% if request.user.profile.first_question_option == 'hiking' %}checked{% endif %}> Hiking </label>
+        <label><input type="radio" name="first_question_option" value="water_sports" {% if request.user.profile.first_question_option == 'water_sports' %}checked{% endif %}> Water sports </label>
+        <label><input type="radio" name="first_question_option" value="camping" {% if request.user.profile.first_question_option == 'camping' %}checked{% endif %}> Camping </label>
+        <label><input type="radio" name="first_question_option" value="wildlife_safari" {% if request.user.profile.first_question_option == 'wildlife_safari' %}checked{% endif %}> Wildlife Safari </label>
+        <label><input type="radio" name="first_question_option" value="skating" {% if request.user.profile.first_question_option == 'skating' %}checked{% endif %}> Skating </label>
+        <label><input type="radio" name="first_question_option" value="yoga_retreats" {% if request.user.profile.first_question_option == 'yoga_retreats' %}checked{% endif %}> Yoga retreats </label>
+        <label><input type="radio" name="first_question_option" value="sunset_seeker" {% if request.user.profile.first_question_option == 'sunset_seeker' %}checked{% endif %}> Sunset seeker </label>
+        <label><input type="radio" name="first_question_option" value="snow_boarding" {% if request.user.profile.first_question_option == 'snow_boarding' %}checked{% endif %}> Snow Boarding </label>
+
+          </div>
+          
+        </div>
+
+        <hr> </hr>
+        <div class="prompt">
+          <div class="question-prompt">
+            Preferred travel destinations:
+          </div>
+          <div class="options">
+           {% comment %} travel-destination {% endcomment %}
+            <label><input type="radio" name="second_question_option" value="beach_destinations" {% if request.user.profile.second_question_option == 'beach_destinations' %}checked{% endif %}> Beach Destinations </label>
+            <label><input type="radio" name="second_question_option" value="mountains_nature_retreats" {% if request.user.profile.second_question_option == 'mountains_nature_retreats' %}checked{% endif %}> Mountains and Nature Retreats </label>
+            <label><input type="radio" name="second_question_option" value="urban_city_exploration" {% if request.user.profile.second_question_option == 'urban_city_exploration' %}checked{% endif %}> Urban City Exploration </label>
+            <label><input type="radio" name="second_question_option" value="historical_cultural_sites" {% if request.user.profile.second_question_option == 'historical_cultural_sites' %}checked{% endif %}> Historical and Cultural Sites </label>
+            <label><input type="radio" name="second_question_option" value="unique_cuisine" {% if request.user.profile.second_question_option == 'unique_cuisine' %}checked{% endif %}> Anywhere with Unique Cuisine </label>
+            <label><input type="radio" name="second_question_option" value="tropical_island" {% if request.user.profile.second_question_option == 'tropical_island' %}checked{% endif %}> Tropical Island </label>
+   
+            
+         </div>
+        </div>
+       
+<hr></hr>
+
+        <div class="prompt">
+          <div class="question-prompt">
+            Preferred solo travel goals:
+          </div>
+          <div class="options">
+            {% comment %} pref-solo-goals {% endcomment %}
+            <label><input type="radio" name="third_question_option" value="self_discovery" {% if request.user.profile.third_question_option == 'self_discovery' %}checked{% endif %}> Self discovery </label>
+        <label><input type="radio" name="third_question_option" value="making_new_friends" {% if request.user.profile.third_question_option == 'making_new_friends' %}checked{% endif %}> Making new friends </label>
+        <label><input type="radio" name= "third_question_option" value="learning_about_cultures" {% if request.user.profile.third_question_option == 'learning_about_cultures' %}checked{% endif %}> Learning about different cultures </label>
+        <label><input type="radio" name="third_question_option" value="relaxation_reflection" {% if request.user.profile.third_question_option == 'relaxation_reflection' %}checked{% endif %}> Relaxation and Reflection </label>
+        <label><input type="radio" name="third_question_option" value="self_discipline" {% if request.user.profile.third_question_option == 'self_discipline' %}checked{% endif %}> Self discipline </label>
+        <label><input type="radio" name="third_question_option" value="practicing_meditation" {% if request.user.profile.third_question_option == 'practicing_meditation' %}checked{% endif %}> Practicing meditation </label>
+  
+
+          </div>
+        </div>
+        
+
+
+
+        <hr></hr>
+       
+        <div class="prompt">
+          <div class="question-prompt">
+           Interests and hobbies:
+          </div>
+          <div class="options">
+            {% comment %} interest {% endcomment %}
+            <label><input type="radio" name="fourth_question_option" value="backpacking" {% if request.user.profile.fourth_question_option == 'backpacking' %}checked{% endif %}> Backpacking </label>
+    <label><input type="radio" name="fourth_question_option" value="surfing" {% if request.user.profile.fourth_question_option == 'surfing' %}checked{% endif %}> Surfing </label>
+    <label><input type="radio" name="fourth_question_option" value="marathons" {% if request.user.profile.fourth_question_option == 'marathons' %}checked{% endif %}> Marathons </label>
+    <label><input type="radio" name="fourth_question_option" value="food-cuisines" {% if request.user.profile.fourth_question_option == 'food-cuisines' %}checked{% endif %}> Food cuisines </label>
+    <label><input type="radio" name="fourth_question_option" value="journalling" {% if request.user.profile.fourth_question_option == 'journalling' %}checked{% endif %}> Journalling </label>
+
+        
+
+            
+        </div>
+        
+
+
+
+        <hr></hr>
+
+        
+
+      </div>
+    </div>
+  </div>
+
+  
+  <!-- End of contained -->
+
+
+</form>
+
+
+
+
+  
+  
+
+  <!-- end info section -->
+
+  
+  <script>
+    const profileImageUpload = document.getElementById('image-upload-input'); // Corrected ID
+    // Get the profile image element
+    const profileImg = document.querySelector('.profile-img');
+
+    // When the profile image is clicked, trigger click event on file input
+    profileImg.addEventListener('click', () => {
+        profileImageUpload.click();
+    });
+
+    // When a file is selected, display the selected image
+    profileImageUpload.addEventListener('change', () => {
+        const file = profileImageUpload.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                profileImg.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const inputFields = document.querySelectorAll('#first_name, #last_name, #occupation, #location, #bio');
+  
+    inputFields.forEach(input => {
+      // Set the input value to its placeholder when the page loads
+      input.value = input.placeholder;
+  
+      // Add a 'keydown' event listener to each input field
+      input.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          this.value = this.placeholder;
+        }
+      });
+  
+      // Add a 'focus' event listener to each input field
+      input.addEventListener('focus', function() {
+        // Clear the input value when it matches the placeholder
+        if (this.value === this.placeholder) {
+          this.value = '';
+        }
+      });
+  
+      // Add a 'blur' event listener to each input field
+      input.addEventListener('blur', function() {
+        // Restore the placeholder if the input is left empty
+        if (this.value === '') {
+          this.value = this.placeholder;
+        }
+      });
+    });
+  });
+  
+</script>
+
+{% comment %} <script>
+  // JavaScript to toggle dark mode
+  const darkModeToggle = document.getElementById('dark-mode-toggle');
+  const body = document.body;
+  
+  darkModeToggle.addEventListener('click', () => {
+    body.classList.toggle('dark-mode');
+
+    // Store dark mode preference in local storage
+    if (body.classList.contains('dark-mode')) {
+      localStorage.setItem('darkMode', 'enabled');
+      darkModeToggle.textContent = '☀️'; 
+      
+      
+    } else {
+      localStorage.setItem('darkMode', 'disabled');
+      darkModeToggle.textContent = '🌙';
+      
+    }
+  });
+
+  // Check for dark mode preference in local storage
+  const darkMode = localStorage.getItem('darkMode');
+
+  if (darkMode === 'enabled') {
+    body.classList.add('dark-mode');
+    
+    darkModeToggle.textContent = '☀️'; // Set sun symbol when dark mode is on
+  } else {
+    darkModeToggle.textContent = '🌙'; 
+   // Set moon symbol when dark mode is off
+  }
+</script>  {% endcomment %}
+
+{% comment %} 
+<script>
+  // Get the profile image element
+  const profileImg = document.querySelector('.profile-img');
+  // Get the edit icon element
+  const editIcon = document.querySelector('.edit-icon');
+
+  // Show edit icon on hover
+  profileImg.addEventListener('mouseenter', () => {
+    editIcon.style.display = 'block';
+  });
+
+  // Hide edit icon when not hovering
+  profileImg.addEventListener('mouseleave', () => {
+    editIcon.style.display = 'none';
+  });
+</script> {% endcomment %}
+
+  
+{% comment %} </form> {% endcomment %}
+
+
+</body>
+
+</html>
+
+</div>
+
+{% include 'footer.html' %}

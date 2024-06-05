@@ -1,0 +1,649 @@
+
+<!DOCTYPE html>
+{% load static %}
+<title> BuddyFinder | FemmeVenture </title> 
+
+
+{% include 'nav.html' %}
+
+<html>
+
+
+
+
+  
+
+
+  <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        .heading {
+            width: 100%; /* Set the width to 100% */
+            text-align: center;
+            color: white;
+            padding: 100px 50px;
+            background-image: url('{% static "images/buddylogo.png" %}');
+            background-size: 120%;
+            background-position: center;
+            background-repeat: no-repeat;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 0 0 15px 15px;
+            margin-bottom: 20px;
+         }
+          
+          .heading h2 {
+            font-size: 36px; /* Adjust the size of the font for h2 as necessary */
+            font-weight: bold; /* Makes the font bold */
+            margin: 0 0 10px 0; /* Spacing between h2 and h3; adjust as necessary */
+          }
+          
+          .heading h3 {
+            font-size: 24px; /* Adjust the size of the font for h3 as necessary */
+            font-weight: normal; /* Normal weight for h3 */
+            margin: 0 0 20px 0; /* Spacing below h3; adjust as necessary */
+            color: #fff; /* Sets the text color to white */
+          }
+          
+        .card-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top : -10px
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin: 1rem;
+            text-align: center;
+            width: 300px;
+            position: relative;
+
+        }
+        
+       
+        
+        .card-content {
+            padding: 2rem;
+        }
+        
+        h3 {
+            color: #944c6b;
+            font-size: 1.5rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #383d64; /* Primary color used elsewhere in your site */
+            color: #fff;
+            padding: 10px 20px; /* Generous padding to make the button look more substantial */
+            text-decoration: none;
+            border-radius: 5px; /* Slight rounding of corners for a modern look */
+            margin-top: 10px; /* Space above the button */
+            transition: background-color 0.3s ease-in-out; /* Smooth transition for hover effect */
+            text-align: center; /* Ensures text is centered */
+            width: calc(50% - 20px); /* Sets the width of the button to half the container minus some margin */
+            margin-right: 10px; /* Right margin for the first button */
+            cursor: pointer; /* Changes the cursor to indicate it's clickable */
+            border: none; /* Removes any default border */
+        }
+        
+        
+        .btn:hover {
+            background-color: #383d64;
+        }
+        
+        .btn:last-child {
+            margin-right: 0; /* Removes the margin for the last button in the container */
+        }
+        .follow-btn {
+            background-color:#383d64;;
+            color: #fff;
+            margin-right: 0.25rem;
+        }
+        
+        .message-btn {
+            background-color: #383d64;
+            color: #fff;
+            margin-left: 0.25rem;
+        }
+        .title{
+            padding-top : 20px;
+            color: #944c6b;
+        }
+        .card-content img {
+            width: 150px !important;
+            height: 150px !important;
+            border-radius: 50% !important;
+            object-fit: cover !important;
+            display: block !important;
+            margin: 0 auto !important;
+        }
+        .speak {
+            padding: 8px;  // Adjusted for better visual balance
+            color: white;
+            border: none;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px; // Font size could be adjusted if the icon looks too big or small
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 50%; // Makes the button rounded
+            width: 40px; // Ensures the button is nicely circular
+            height: 40px; // Ensures the button is nicely circular
+            line-height: 24px; // Adjust this to vertically center the icon if needed
+            align-items: center;
+            justify-content: center;
+            display: flex;
+        }
+        
+        
+
+        {% comment %} font size Mode {% endcomment %}
+
+        .font-control-container {
+            position: fixed;   /* Fixed position relative to the viewport */
+            top: 1px;         /* 20 pixels from the top */
+            left: 20px;        /* 20 pixels from the left */
+            z-index: 1000;     /* High z-index to ensure it's on top of other content */
+        }
+        
+        .font-control {
+            background-color: #000000; /* Black background */
+            color: white;              /* White icon */
+            border: none;              /* No border */
+            padding: 5px;             /* Padding around the icons */
+            font-size: 16px;           /* Icon size */
+            cursor: pointer;           /* Pointer cursor on hover */
+            border-radius: 50%;        /* Circular buttons */
+            width: 30px;               /* Fixed width */
+            height: 30px;              /* Fixed height */
+            display: flex;             /* Flexbox for centering */
+            align-items: center;       /* Center alignment vertically */
+            justify-content: center;   /* Center alignment horizontally */
+            margin: 5px;               /* Margin around the button */
+        }
+        
+        
+        .font-control:hover {
+            background-color: #367c39; /* Darker green on hover */
+        }
+       
+        .filter {
+            padding: 10px;
+            border-radius: 10px; /* rounded corners */
+            align: right;
+          }
+
+        .filter select {
+            width: 180px; /* adjust width as needed */
+            margin: 10px 5px; /* add some spacing */
+            padding: 8px; /* padding for aesthetics */
+            border: 1px solid #ddd; /* subtle border */
+            border-radius: 4px; /* rounded corners */
+            background-color: #fff; /* background color */
+            color: #333; /* text color */
+            font-size: 13px;
+          }   
+        .search{
+            padding: 10px;
+        }
+        
+        .search-container{
+            width: 100%;
+          }
+        .filter input[type="text"] {
+            width: 180px; /* adjust width as needed */
+            margin: 10px 5px; /* add some spacing */
+            padding: 8px; /* padding for aesthetics */
+            border: 1px solid #ddd; /* subtle border */
+            border-radius: 8px; /* rounded corners */
+            background-color: #fff; /* background color */
+            color: #333; /* text color */
+            margin-top: 25px;
+            border-color: #383d64;
+            border-width: 2px;
+          }
+        
+        .filter button {
+            display: none;
+        }
+        .search-container {
+            display: flex;
+            justify-content: center; /* Center the children horizontally */
+            align-items: center; /* Center the children vertically */
+            flex-direction: column; /* Stack children vertically on smaller screens */
+            width: 100%; /* Full width to use all available space */
+        }
+        
+        .search {
+            width: 80%; /* Adjust width for mobile to be more responsive */
+            margin: 10px 0; /* Add some vertical margin */
+            padding: 8px; /* Adequate padding for tap targets */
+            border: 2px solid #383d64; /* Consistent with design */
+            border-radius: 12px; /* Rounded corners */
+            font-size: 16px; /* Readable font size */
+        }
+        
+        .search-container button {
+            display: none; /* Ensure the button is visible and can be styled */
+        }
+
+        @media (max-width: 600px) {
+            .search {
+                width: 90%; /* Increase width on smaller screens */
+            }
+        }
+          
+    
+        
+        {% comment %} NEW STUFF {% endcomment %}
+    
+    body.dark-mode {
+        background-color: #2e2429;
+        color: #fff;
+      }
+    body.dark-mode .title{
+        background-color: #2e2429;
+        color: #fff;
+      }
+
+    body.dark-mode .card{
+        background-color: #2e2429;
+        color: #fff;
+      }
+    body.dark-mode .card-content{
+        background-color: #2e2429;
+        color: #fff;
+      }
+
+    body.dark-mode .card-content h1,
+    body.dark-mode .card-content p,
+    body.dark-mode .card-content a {
+          color: inherit; /* Inherits the color from the parent, which is white in dark mode */
+      }
+      
+      /* Define dark mode styles for your elements here */
+      /* For example: */
+      .profile-info {
+        color: #fff;
+      }
+      /* For example: */
+    body.dark-mode .navbar-brand span {
+        color: #fff; /* Change the color to white */
+    }   
+      
+      /* Toggle Button Styles */
+      #dark-mode-toggle {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+        background-color: transparent ;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        
+      }
+      .btn.btn-warning{
+        color: #fff;
+        background-color: #383d64;
+        border-color: #383d64;
+      }
+      .btn.btn-info.follow-btn{
+        color: #fff;
+        background-color: #383d64;
+        border-color: #383d64;
+      }
+      .btn.btn-info.follow-btn:hover{
+        background-color: #cea0AA;
+      }
+      .btn.btn-warning:hover{
+        background-color: #cea0AA;
+      }
+ 
+        
+
+      
+    </style>
+    
+</head>
+
+<body>
+    {%comment%}
+    <div class="font-control-container">
+        <button id="decrease-font" class="font-control" title="Decrease font size"><i class="fas fa-minus"></i></button>
+        <button id="increase-font" class="font-control" title="Increase font size"><i class="fas fa-plus"></i></button>
+    </div>{%endcomment%}
+  <section>
+    
+    <div class ="heading">
+        {%comment%}<button id="dark-mode-toggle">  &#127769;</button>{%endcomment%}
+        <h2>Travel Buddy Finder</h2>
+        <h3>Find Your Perfect Travel Buddy with FemmeVentures.</h3>
+        <button class="speak" aria-label="Listen"><i class="fas fa-volume-up"></i></button>
+        <div class="search-container">
+            <input class="search" type="text" id="searchName" placeholder="Search Profiles" onkeyup="searchByName()">
+            <button onclick="searchByName()">Search</button>
+        </div>
+
+    </div>
+   
+    <div class="filter">
+        <h2 class="title">Filter Profiles</h2>
+        <select id="filterActivity" onchange="applyFilters()">
+            <option value="">Outdoor Activity</option>
+            <option value="hiking">Hiking</option>
+            <option value="water_sports">Water Sports</option>
+            <option value="camping">Camping</option>
+            <option value="wildlife_s.exitafari">Wildlife Safari</option>
+            <option value="skating">Skating</option>
+            <option value="yoga_retreats">Yoga Retreats</option>
+            <option value="sunset_seeker">Sunset Seeker</option>
+            <option value="snow_boarding">Snow Boarding</option>
+        </select>
+        <select id="filterTravel" onchange="applyFilters()">
+            <option value="">Preferred Destination</option>
+            <option value="beach_destinations">Beach Destinations</option>
+            <option value="mountains_nature_retreats">Mountains and Nature Retreats</option>
+            <option value="urban_city_exploration">Urban City Exploration</option>
+            <option value="historical_and_cultural_sites">Historical and Cultural Sites</option>
+            <option value="unique_cuisine">Anywhere with Unique Cuisine</option>
+            <option value="tropical_island">Tropical Island</option>
+        </select>
+        <select id="filterGoals" onchange="applyFilters()">
+            <option value="">Solo Travel Goal</option>
+            <option value="self_discovery">Self Discovery</option>
+            <option value="making_new_friends">Making New Friends</option>
+            <option value="learning_about_different cultures">Learning about Different Cultures</option>
+            <option value="relaxation_reflection">Relaxation and Reflection</option>
+            <option value="self_discipline">Self Discipline</option>
+            <option value="practicing_meditation">Practicing Meditation</option>
+        </select>
+        <select id="filterInterests" onchange="applyFilters()">
+            <option value="">Interests and Hobbies</option>
+            <option value="backpacking">Backpacking</option>
+            <option value="surfing">Surfing</option>
+            <option value="marathons">Marathons</option>
+            <option value="food-cuisines">Food Cuisines</option>
+            <option value="journalling">Journalling</option>
+        </select>
+    </div>
+     
+    </div>
+    <div class="card-container">
+        
+      {% block content %}
+      {% for profile in profiles %}
+      <div class="card">
+
+          <div class="card-content">
+            <img src="{{profile.profile_image.url}}" alt="Profile image of {{ profile.user.username }}" />
+            <button class="speak" aria-label="Listen"><i class="fas fa-volume-up"></i></button>
+            <h1>{{ profile.user.username }}</h1>
+              <p> Bio: {{ profile.bio }}</p>
+              <p> Job: {{ profile.occupation }}</p>
+              <p> Outdoor Activity: {{ profile.first_question_option }}</p>
+              <p> Preferred travel: {{ profile.second_question_option }}</p>
+              <p> Goals: {{ profile.third_question_option }}</p>
+              <p> Interests: {{ profile.fourth_question_option }}</p>
+
+              <!-- Check if the current user is following this profile and update button text accordingly -->
+<!--              <a href="{% url 'profCust:profile' pk=profile.user.id %}" class="btn follow-btn">View Profile</a>-->
+
+<!--              <a href="chat" class="btn custom-button">Message</a>-->
+
+
+              <a href="{% url 'profCust:profile' pk=profile.user.id %}" class="btn btn-info follow-btn">View Profile</a>
+
+              <form action="{% url 'thread_allocate' %}" method="POST">{% csrf_token %}
+                <input type="hidden" name="user_id" value="{{ profile.user.id }}">
+                <button class="btn btn-warning">Message</button>
+              </form>
+
+
+          </div>
+      </div>
+      {% endfor %}
+      {% endblock %}
+  </div>
+  
+</section>
+
+
+    
+
+
+    <script>
+      document.getElementById('follow-button').addEventListener('click', function () {
+        // Toggle button text between "Follow" and "Following"
+        this.textContent = this.textContent === 'Follow' ? 'Following' : 'Follow';
+      });
+    </script>
+  <script src="js/jquery-3.4.1.min.js"></script>
+  <script src="js/bootstrap.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+    $(window).scroll(function() {
+        if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+            loadMoreCards();
+        }
+    });
+    
+    function loadMoreCards() {
+        if (!loading) {
+            loading = true;
+            $.ajax({
+                url: '/path/to/your/data', // Adjust this URL to where your data is fetched
+                type: 'GET',
+                success: function(data) {
+                    $('.card-container').append(data);
+                    loading = false;
+                },
+                
+            });
+        }
+    }
+    
+    var loading = false; // To prevent multiple requests
+    </script>
+    
+    
+  <script src="js/custom.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var synth = window.speechSynthesis;
+        var currentUtterance = null; // Track the current speech
+    
+        // Function to toggle text speech
+        function toggleSpeech(text, element) {
+            // Check if already speaking
+            if (synth.speaking) {
+                if (currentUtterance && currentUtterance.text === text) {
+                    // If the same button is pressed while speaking, cancel the speech
+                    synth.cancel();
+                    element.setAttribute('aria-label', 'Listen'); // Reset the aria-label to 'Listen'
+                    return;
+                }
+                // If a different button was pressed, stop current and start new
+                synth.cancel();
+            }
+    
+            // Prepare new speech
+            currentUtterance = new SpeechSynthesisUtterance(text);
+            currentUtterance.onend = function() {
+                element.setAttribute('aria-label', 'Listen'); // Reset the aria-label when speech ends
+            };
+            currentUtterance.onerror = function() {
+                element.setAttribute('aria-label', 'Listen'); // Reset the aria-label on error
+            };
+    
+            // Start speaking
+            synth.speak(currentUtterance);
+            element.setAttribute('aria-label', 'Stop Listening'); // Change aria-label to 'Stop Listening'
+        }
+    
+        // Add event listeners to the 'speak' buttons
+        document.querySelectorAll('.card-content .speak, .heading .speak, .message.received .speak').forEach(button => {
+            button.addEventListener('click', function() {
+                var text = this.parentNode.textContent; // Get all text in the car div
+                toggleSpeech(text, this);
+            });
+        });
+    });
+    {% comment%}
+    // JavaScript to toggle dark mode
+  const darkModeToggle = document.getElementById('dark-mode-toggle');
+  const body = document.body;
+  
+  darkModeToggle.addEventListener('click', () => {
+    body.classList.toggle('dark-mode');
+
+    // Store dark mode preference in local storage
+    if (body.classList.contains('dark-mode')) {
+      localStorage.setItem('darkMode', 'enabled');
+      darkModeToggle.textContent = '☀️'; 
+      
+      
+    } else {
+      localStorage.setItem('darkMode', 'disabled');
+      darkModeToggle.textContent = '🌙';
+      
+    }
+  });
+
+  // Check for dark mode preference in local storage
+  const darkMode = localStorage.getItem('darkMode');
+
+  if (darkMode === 'enabled') {
+    body.classList.add('dark-mode');
+    
+    darkModeToggle.textContent = '☀️'; // Set sun symbol when dark mode is on
+  } else {
+    darkModeToggle.textContent = '🌙'; 
+   // Set moon symbol when dark mode is off
+  }
+  // font size control
+  document.addEventListener("DOMContentLoaded", function() {
+    var baseFontSize = 100; // Percentage of base size
+    const html = document.documentElement; // Target the root HTML element
+
+    document.getElementById('increase-font').addEventListener('click', function() {
+        baseFontSize = Math.min(baseFontSize + 10, 150); // Max size cap at 150%
+        html.style.fontSize = baseFontSize + '%';
+    });
+
+    document.getElementById('decrease-font').addEventListener('click', function() {
+        baseFontSize = Math.max(baseFontSize - 10, 50); // Min size cap at 50%
+        html.style.fontSize = baseFontSize + '%';
+    });
+});
+{% endcomment %}
+    </script>
+  
+<script>
+    function searchByName() {
+        const nameQuery = document.getElementById('searchName').value.toLowerCase();
+                document.querySelectorAll('.card').forEach(card => {
+                    const nameText = card.querySelector('h1').innerText.toLowerCase();
+                    card.style.display = nameText.includes(nameQuery) ? "block" : "none";
+                });
+            }
+</script>
+            
+<script>
+    function loadMoreProfiles() {
+            $.ajax({
+                url: '/api/profiles/',  // Updated to use the new API endpoint
+                type: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    if(response.profiles) {
+                        response.profiles.forEach(function(profile) {
+                            $('.card-container').append(createProfileCard(profile));
+                        });
+                    }
+                },
+                error: function() {
+                    console.log("Failed to load profiles");
+                }
+            });
+        }
+        
+        function createProfileCard(profile) {
+            return `<div class="card">
+                        <h1>${profile.username}</h1>
+                        <p>${profile.bio}</p>
+                    </div>`;
+        }
+</script>
+<script>
+    function applyFilters() {
+        const activity = document.getElementById('filterActivity').value;
+        const travel = document.getElementById('filterTravel').value;
+        const goals = document.getElementById('filterGoals').value;
+        const interests = document.getElementById('filterInterests').value;
+    
+        $.ajax({
+            url: '/api/profiles/',
+            type: 'GET',
+            data: {
+                activity: activity,
+                travel: travel,
+                goals: goals,
+                interests: interests
+            },
+            success: function(data) {
+                const container = document.querySelector('.card-container');
+                container.innerHTML = '';  // Clear existing profiles
+                data.forEach(profile => {
+                    container.innerHTML += createProfileCard(profile);
+                });
+            },
+            error: function() {
+                console.log("Error loading filtered profiles.");
+            }
+        });
+    }
+    
+    function createProfileCard(profile) {
+        const imageUrl = profile.profile_image || 'path_to_default_image.jpg';
+        const profileUrl = `/profile/${profile.user_id}`; // Assuming you have a route like this
+        const messageActionUrl = `/thread_allocate`; // Assuming you have a POST route for messages
+    
+        return `<div class="card">
+                    <img src="${imageUrl}" alt="Profile image of ${profile.username}" style="width:150px; height:150px; object-fit:cover; border-radius:50%;">
+                    <div class="card-content">
+                        <h1>${profile.username}</h1>
+                        <p>Bio: ${profile.bio}</p>
+                        <p>Activity: ${profile.first_question_option}</p>
+                        <p>Travel: ${profile.second_question_option}</p>
+                        <p>Goals: ${profile.third_question_option}</p>
+                        <p>Interests: ${profile.fourth_question_option}</p>
+                        <a href="${profileUrl}" class="btn btn-info follow-btn">View Profile</a>
+                        <form action="${messageActionUrl}" method="POST">
+                            <input type="hidden" name="user_id" value="${profile.user_id}">
+                            <button type="submit" class="btn btn-warning">Message</button>
+                        </form>
+                    </div>
+                </div>`;
+    }
+    
+    
+    
+</script>
+
+  
+</body>
+
+
+</html>
+
+</div>
+
+{% include 'footer.html' %}

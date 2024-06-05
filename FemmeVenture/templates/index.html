@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+{% load static %}
+
+{% block content %}
+{% if user.is_authenticated %}
+{% include 'nav.html' %}
+
+
+<html>
+
+
+
+
+    <head>
+      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+      <style>
+
+        .content-container {
+          display: flex; /* Enables flexbox */
+          gap: 15px;
+      }
+      
+      .content-container button {
+          font-size: 24px; /* Adjust the size of the icon as needed */
+          margin-top: 15px; /* Pull the icon closer to the text by giving it a negative margin */
+
+      }
+      
+      .content-container h2 {
+          margin: 0; /* Removes default margin from h2 */
+      }
+
+      button.fa-solid {
+        background: none; /* Remove background */
+        border: none; /* Remove border */
+        padding: 0; /* Remove padding */
+        margin: 0; /* Remove margin */
+        outline: none; /* Remove focus outline */
+    }
+
+    .safetyavg {
+      display: inline-block;
+      padding: 10px 25px;
+      background-color: #db4566;
+      color: #ffffff;
+      border: 1px solid #db4566;
+      border-radius: 30px;
+      -webkit-transition: all .3s;
+      transition: all .3s;
+      margin-top: 3px;
+    }
+    
+    .safetyavg .stars-wrapper {
+      display: flex;
+      align-items: center; /* This will vertically center the items in the list */
+      list-style-type: none; /* Remove default list styling */
+      padding: 0; /* Remove default padding */
+      margin: 0; /* Remove default margin */
+    }
+    
+    .safetyavg .stars-wrapper .star-item,
+    .safetyavg .stars-wrapper .rating-number {
+      display: inline-block; /* Display items inline */
+      margin-right: 5px; /* Add some space between the star and the number */
+      font-size: 15px;
+    }
+    
+    .review-count-align {
+      display: block; /* May not be necessary if already a block due to the d-flex class */
+      margin-bottom: -12px; /* Adjust this value to align the text with the pink box */
+    }
+    
+
+    .card-buttonn{
+      position: absolute;
+    bottom: 0;
+    left: 0;
+    margin: 20px;
+    }
+   
+      </style> 
+
+
+
+
+
+
+
+
+      <style> 
+
+        /* General form styling */
+      .form {
+          padding: 0px;
+          margin: 20px
+      }
+      
+      /* Styling for all input elements, including textarea, within the form */
+      .form-control {
+          width: 100%; /* Full width */
+          padding: 8px 10px; /* Padding inside the text fields */
+          margin-bottom: 10px; /* Space between each field */
+          box-sizing: border-box; /* Include padding and border in the element's total width and height */
+          border: 1px solid #ccc; /* Light gray border */
+          border-radius: 4px; /* Slightly rounded borders for the input fields */
+      }
+      
+      /* Placeholder color customization */
+      ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+          color: #888; /* Dark grey placeholder text */
+          opacity: 1; /* Firefox */
+      }
+      
+      :-ms-input-placeholder { /* Internet Explorer 10-11 */
+          color: #888;
+      }
+      
+      ::-ms-input-placeholder { /* Microsoft Edge */
+          color: #888;
+      }
+      
+      /* Hover effect for inputs */
+      .form-control:hover {
+          border-color: #db4566; /* Change border color when hovering */
+      }
+
+      .submit-button {
+        display: inline-block;
+        padding: 10px 35px;
+        background-color: #db4566;
+        color: #ffffff;
+        border: 1px solid #db4566;
+        border-radius: 5px;
+        -webkit-transition: all .3s;
+        transition: all .3s;
+        margin-top: 3px;
+      }
+      
+      .submit-button:hover {
+        background-color: transparent;
+        color: #db4566;
+      }
+      
+      
+      
+      
+      
+      
+      /* Error message styling */
+      .error-message {
+          color: #dc3545; /* Bootstrap danger color for errors */
+          font-size: 0.875em; /* Smaller font size for error messages */
+          margin-top: -8px; /* Position closer to the input field */
+          margin-bottom: 10px; /* Space after the error message */
+      }
+      
+      .feedback{
+        margin: 50px 50px;
+      
+        padding-left: 45px; 
+        padding-right: 45px; 
+        margin-bottom: 0; 
+        margin-top: 0; 
+      
+      
+      }
+      
+      .volume-button{
+        position: absolute; /* Position the button absolutely within the review box */
+        right: 0; /* Align to the right of the review box */
+        border: none; /* Remove border */
+        background: none; /* Remove background if desired */
+        margin: 8px;
+        transform: translateY(-150%); /* Moves the button up by half its height */
+      
+      }
+        
+      .fa-solid.fa-microphone {
+        position: absolute; /* This is absolute in relation to its parent, thanks to the parent's relative position */
+        right: 40px; /* Adjust this as needed to align the icon to the right edge of its parent container */
+        top: 50%; /* Centers it vertically */
+        transform: translateY(-85%); /* Corrects the vertical position to truly center */
+        font-size: 20px;
+        color: black; 
+    }
+      .fa-microphone.active {
+        color: red; // Change to red when active
+      }
+
+      .fa-heart.pls.fa-solid{
+        position: absolute; /* Position the button absolutely within the review box */
+        border: none; /* Remove border */
+        background: none; /* Remove background if desired */
+        margin: 8px;
+        transform: translateY(20%) translateX(1025%);
+
+        font-size: 25px;
+      }
+        
+      .fa-heart.fa-regular{
+        position: absolute; /* Position the button absolutely within the review box */
+        border: none; /* Remove border */
+        background: none; /* Remove background if desired */
+        margin: 8px;
+        transform: translateY(15%) translateX(676%);
+
+        font-size: 25px;
+      }
+        
+      
+      </style> 
+
+
+      
+
+    </head>
+
+
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endfor %}
+  {% endif %}
+    <!-- end header section -->
+    <!-- slider section -->
+
+    <section class="slider_section">
+      <div class="slider_container">
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md-7">
+                    <div class="detail-box">
+                      <div class="listen">
+
+                        <div class="content-container">
+  
+                          <h1>
+                            Hi {{ user.username }}, <br>
+                            
+                          </h1>
+  
+                         <button class="fa-sharp fa-solid fa-volume-high" style="color: #ffffff;"> </button> 
+                          
+                        
+                          
+                        </div>
+  
+                      <h2>Empowering solo women travelers. Safety, tips, community. <br> Start your fearless journey!</h2>
+  
+                    </div>
+
+                    
+
+                    <div class="search-container">
+                      <label for="search" class="sr-only">Where would you like to go?</label>
+                      <input type="text" id="search" name="search" class="search-input" placeholder="Where would you like to go?">
+                      <button type="button" onclick="voice()" id="toggleVoice" class="fa-solid fa-microphone"></button>                  </div>
+
+                 
+
+                  
+                      <a href="{% url 'logout' %}">
+                        {% csrf_token %}
+                        LogOut
+                      </a>
+                    </div>
+                    
+                    <!-- 
+                    <form action="{% url 'logout' %}" method="post">
+                      {% csrf_token %}
+                      <button type="submit">LogOut</button>
+                    </form>
+                    -->
+                    
+                    
+
+                  </div>
+                  <div class="col-md-5 ">
+                    <div class="img-box">
+                      <img src="{% static 'images/mainwoman1.png' %}" alt="" />
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            
+          </div>
+
+
+         <!-- search button
+          <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+              <button class="btn nav_search-btn" type="submit">
+                <i class="fa fa-search" aria-hidden="true"></i>
+              </button>
+          </a>
+
+        -->
+
+
+        
+        </div>
+      </div>
+
+      
+    </section>
+
+    <!-- end slider section -->
+  </div>
+  <!-- end hero area -->
+
+
+
+
+
+
+<section class="shop_section layout_padding">
+
+    
+    
+  <div class="card-container">
+    {% for city in cities %}
+    <div class="card" data-city-name="{{ city.title | lower }}" data-country-name="{{ city.countryname | lower }}">
+      <img src="{{city.card_img.url}}" alt="" />
+      <div class="card-content">
+        <h1 id="title-{{ forloop.counter }}">{{ city.title }}</h1>
+        {% if city.is_favorited %}
+        
+          <button class="fa-solid pls fa-heart" onclick="location.href='{% url 'remove_from_favorites' city.id %}'"></button>
+  
+          {%else%}
+          <button class="fa-regular fa-heart" onclick="location.href='{% url 'add_to_favorites' city.id %}'"></button>
+          {%endif%}
+          <button class="volume-button">
+            <i class="fa fa-volume-up" style="color: #000000;" data-id="{{ forloop.counter }}"></i>
+        </button>
+        
+
+          <p id="countryname-{{ forloop.counter }}">{{ city.countryname }}</p>
+          
+          
+
+          <div class="card-buttonn" id="safety-index-{{ forloop.counter }}">
+                  <h7>Safety Index</h7>
+                  <div class="text-sm-center d-flex align-items-end gap-5">
+                  <div class="safetyavg">
+                      <ul class="list-unstyled stars-wrapper">
+                          <li class="star-item"><i class="fa fa-star" style="color: #ffffff;"></i></li>
+                          <li class="rating-number">{{ city.rate_average|floatformat:1 }}</li>
+                      </ul>
+                  </div>
+             
+              <span class="review-count-align"> <p> ({{ city.rate_total }}) </p></span>
+          </div>
+        </div> 
+
+       
+
+
+        <div class="card-button">
+          <a href="/city/{{city.id}}">
+            View More
+          </a>
+        </div>
+        
+    
+      </div>
+      
+    </div>
+    <p id="no-cities-found" style="display: none;">No cities found.</p>
+
+    {% endfor %}
+    
+
+  </div>
+  
+  
+
+    <div class="btn-box">
+      <a href="{%url 'viewallcities' %}">
+        View All Cities
+      </a>
+    </div>
+  </div>
+</section>
+
+
+  
+
+
+  <!-- feedback section -->
+  <section class="client_section layout_padding">
+    <div class="container">
+      <div class="heading_container heading_center">
+        <h2>
+          User Reviews
+        </h2>
+      </div>
+    </div>
+
+    
+    <div class="container px-0">
+      <div id="customCarousel2" class="carousel  carousel-fade" data-ride="carousel">
+        
+        
+        <div class="carousel-inner">
+          {% for feedback in feedbacks %}
+          {% if feedback.body %}
+          <div class="carousel-item {% if forloop.first %}active{% endif %}">
+              <div class="box">
+                  <div class="client_info">
+                      <div class="client_name">
+                          <h5>
+                              {{ feedback.owner.first_name }} 
+                          </h5>
+                          <h6>
+                            {{ feedback.owner.location }} 
+                          </h6>
+                      </div>
+                      <i class="fa fa-quote-left" aria-hidden="true"></i>
+                  </div>
+                  <p>
+                      {{ feedback.body }}
+                  </p>
+              </div>
+          </div>
+          {% endif %}
+          {% endfor %}
+      </div>
+      
+        
+
+        <div class="carousel_btn-box">
+          <a class="carousel-control-prev" href="#customCarousel2" role="button" data-slide="prev">
+            <i class="fa fa-angle-left" aria-hidden="true"></i>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#customCarousel2" role="button" data-slide="next">
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="feedback">
+
+    
+      
+      
+<!-- Check if the user has already submitted feedback -->
+
+{% if user.is_authenticated %}
+    {% if not user.profile.first_name == "" %}
+        {% if not didfeedback %}
+            <!-- If feedback has not been submitted, show the form and the submit button -->
+            <form id="review-form" class="form" action="{% url 'index' %}" method="POST">
+                {% csrf_token %}
+                {% for field in form %}
+                    {% if field.name != 'body' %}
+                        <div class="form-group">
+                            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                            {{ field }} 
+                            {% if field.errors %}
+                                <div class="error-message">{{ field.errors.as_text }}</div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+
+                <div class="form-group">
+                    {{ form.body }}
+                    {% if form.body.errors %}
+                        <div class="error-message">{{ form.body.errors.as_text }}</div>
+                    {% endif %}
+                </div>
+
+                <input class="submit-button" type="submit" value="Submit Feedback"/>
+            </form>
+        {% endif %}
+    {% else %}
+        <!-- Prompt for profile update if no profile is detected -->
+        <div class="alert alert-danger" role="alert">
+            Please update your <a href="{%url 'profilecustom' %}" style="color: #A30000;"><b>profile</b></a> to leave your feedback.
+        </div>
+    {% endif %}
+{% endif %}
+
+  </div> 
+    
+  </section>
+
+  
+  <!-- end feedback section -->
+
+  <!-- info section -->
+
+  {% include 'footer.html' %}
+
+
+  <!-- end info section -->
+
+
+  <script>
+    function redirectToViewAllCities() {
+        var searchInput = document.getElementById('search');
+        var query = encodeURIComponent(searchInput.value);  // Ensure the string is URL-friendly
+        window.location.href = 'viewallcities?query=' + query;  // Redirect to viewallcities.html with the query
+    }
+    
+    // Adding event listener for 'Enter' key
+    document.getElementById('search').addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();  // Prevent the default form behavior
+            redirectToViewAllCities();  // Perform the redirect
+        }
+    });
+    </script>
+    
+
+
+  <!-- text to speech feature --> 
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var synth = window.speechSynthesis;
+        var voices = [];
+        var femaleVoice, googleUSEnglishVoice;
+        var speaking = false; // Correctly initialize the speaking flag
+    
+        function populateVoiceList() {
+            voices = synth.getVoices();
+            femaleVoice = voices.find(voice => voice.name.includes('Female')) || voices[0];
+            googleUSEnglishVoice = voices.find(voice => voice.name.includes('Google US English')) || voices[0];
+        }
+    
+        // Delay voice list population to ensure voices are loaded
+        if (synth.onvoiceschanged !== undefined) {
+            synth.onvoiceschanged = populateVoiceList;
+        } else {
+            populateVoiceList();
+        }
+    
+        // Additional check to populate voices if not already loaded
+        if (voices.length === 0) {
+            populateVoiceList();
+        }
+    
+        var speech = new SpeechSynthesisUtterance(); // Define the speech instance here for global use
+    
+        // Event listener for the first button
+        document.querySelector(".fa-sharp.fa-solid.fa-volume-high").addEventListener("click", () => {
+            if (!speaking) {
+                let textToSpeak = '';
+                document.querySelectorAll(".listen").forEach(element => {
+                    textToSpeak += element.textContent + ' ';
+                });
+    
+                speech.text = textToSpeak;
+                speech.voice = femaleVoice; // Ensure the female voice is used
+                synth.speak(speech);
+                speaking = true;
+            } else {
+                synth.cancel();
+                speaking = false;
+            }
+        });
+    
+        // Event listener for the second set of buttons
+        document.querySelectorAll('.volume-button i').forEach(function(button) {
+            button.addEventListener('click', function() {
+                var id = this.getAttribute('data-id');
+                var titleText = document.getElementById('title-' + id).textContent;
+                var countryName = document.getElementById('countryname-' + id).textContent;
+                var safetyIndex = document.getElementById('safety-index-' + id).textContent;
+    
+                var textToSpeak = titleText + ", " + countryName + ". " + safetyIndex + " reviews";
+                var utterance = new SpeechSynthesisUtterance(textToSpeak);
+                utterance.voice = googleUSEnglishVoice;
+                utterance.pitch = 1;
+                utterance.rate = 1;
+    
+                if (!synth.speaking) {
+                    synth.speak(utterance);
+                } else {
+                    synth.cancel();
+                }
+            });
+        });
+    });
+    </script>
+
+      <!-- speech to text feature --> 
+
+    <script>
+      var recognition;
+      var isListening = false;
+      var finalTranscript = ''; // Stores final recognized text
+      var textField = document.getElementById("search"); // Reference to the textarea
+    
+      window.onload = function() {
+        recognition = new webkitSpeechRecognition();
+        recognition.continuous = true;
+        recognition.interimResults = true;
+        recognition.lang = "en-GB";
+    
+        recognition.onresult = function(event) {
+          var interimTranscript = ' ';
+    
+          // Loop through results
+          for (var i = event.resultIndex; i < event.results.length; ++i) {
+            if (event.results[i].isFinal) {
+              finalTranscript += event.results[i][0].transcript;
+            } else {
+              interimTranscript += event.results[i][0].transcript;
+            }
+          }
+    
+          // Update the textarea with final and interim results
+          textField.value = finalTranscript + interimTranscript;
+        };
+    
+        var toggleButton = document.getElementById("toggleVoice");
+        toggleButton.addEventListener('click', function() {
+          if (isListening) {
+            recognition.stop();
+            toggleButton.classList.remove('active');
+            // Reset the transcript only if the button is clicked to turn off voice recognition
+            finalTranscript = textField.value; // Update the final transcript to the current text field content
+          } else {
+            recognition.start();
+            toggleButton.classList.add('active');
+            finalTranscript = textField.value; // Start with current text, allowing edits to be retained
+          }
+          isListening = !isListening;
+        });
+      }
+    
+      // Optional: Add an event listener to track changes in the textarea
+      textField.addEventListener('input', function() {
+        // Update finalTranscript every time the user makes changes to the text
+        finalTranscript = this.value;
+      });
+    </script>
+    
+    
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% else %}
+
+
+  <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Basic meta tags -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
+  
+    <title>FemmeVentures</title>
+  
+    <!-- External CSS libraries -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+  
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+  
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+  
+    <!-- Responsive style -->
+    <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+  </head>
+  
+    <!-- end header section -->
+
+    
+    <!-- slider section -->
+
+
+
+    <!-- header section strats -->
+  <div class="hero_area">
+    <header class="header_section">
+      <nav class="navbar navbar-expand-lg custom_nav-container ">
+        <a class="navbar-brand" href="{% url 'index' %}">
+          <span>
+            FemmeVenture
+          </span>
+        </a>
+        
+      </nav>
+    </header>
+
+
+
+
+
+    <style>
+
+      .content-container {
+        display: flex; /* Enables flexbox */
+        gap: 15px;
+    }
+    
+    .content-container button {
+        font-size: 24px; /* Adjust the size of the icon as needed */
+        margin-top: 15px; /* Pull the icon closer to the text by giving it a negative margin */
+
+    }
+    
+    .content-container h2 {
+        margin: 0; /* Removes default margin from h2 */
+    }
+
+    button.fa-solid {
+      background: none; /* Remove background */
+      border: none; /* Remove border */
+      padding: 0; /* Remove padding */
+      margin: 0; /* Remove margin */
+      outline: none; /* Remove focus outline */
+  }
+
+  .safetyavg {
+    display: inline-block;
+    padding: 10px 25px;
+    background-color: #db4566;
+    color: #ffffff;
+    border: 1px solid #db4566;
+    border-radius: 30px;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+    margin-top: 3px;
+  }
+  
+  .safetyavg .stars-wrapper {
+    display: flex;
+    align-items: center; /* This will vertically center the items in the list */
+    list-style-type: none; /* Remove default list styling */
+    padding: 0; /* Remove default padding */
+    margin: 0; /* Remove default margin */
+  }
+  
+  .safetyavg .stars-wrapper .star-item,
+  .safetyavg .stars-wrapper .rating-number {
+    display: inline-block; /* Display items inline */
+    margin-right: 5px; /* Add some space between the star and the number */
+    font-size: 15px;
+  }
+  
+  .review-count-align {
+    display: block; /* May not be necessary if already a block due to the d-flex class */
+    margin-bottom: -12px; /* Adjust this value to align the text with the pink box */
+  }
+  
+
+  .card-buttonn{
+    position: absolute;
+  bottom: 0;
+  left: 0;
+  margin: 20px;
+  }
+
+  .volume-button{
+    position: absolute; /* Position the button absolutely within the review box */
+    right: 0; /* Align to the right of the review box */
+    border: none; /* Remove border */
+    background: none; /* Remove background if desired */
+    margin: 8px;
+    transform: translateY(-150%); /* Moves the button up by half its height */
+  
+  }
+ 
+    </style> 
+
+    
+
+
+  
+
+    <section class="slider_section">
+      <div class="slider_containerr">
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md-7">
+                    <div class="detail-box">
+                      
+                      <div class="listen">
+
+                        <div class="content-container">
+  
+                          <h1>
+                            FemmeVenture <br>
+                            
+                          </h1>
+  
+                         <button class="fa-sharp fa-solid fa-volume-high" style="color: #ffffff;"> </button> 
+                          
+                        
+                          
+                        </div>
+  
+                      <h2>Empowering solo women travelers. Safety, tips, community. <br> Start your fearless journey!</h2>
+  
+                    </div>
+                      
+                      
+                      
+                    <a href="{% url 'login' %}" style="margin-right: 15px;">
+                        Login
+                      </a>
+
+
+                      
+
+                      <a href="{% url 'signup' %}">
+                        Signup
+                      </a>
+                    </div>
+
+                    
+                    
+
+                  </div>
+                  <div class="col-md-5 ">
+                    <div class="img-box">
+                      <img src="{% static 'images/mainwoman1.png' %}" alt="" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            
+          </div>
+
+
+<!-- search button
+          <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+              <button class="btn nav_search-btn" type="submit">
+                <i class="fa fa-search" aria-hidden="true"></i>
+              </button>
+          </a>
+
+        -->
+
+
+        </div>
+      </div>
+
+      
+    </section>
+
+    <!-- end slider section -->
+  </div>
+  <!-- end hero area -->
+
+  
+
+
+  <!-- client section -->
+  <section class="shop_section layout_padding">
+
+    
+    
+    <div class="card-container">
+      {% for city in cities %}
+      <div class="card">
+        <img src="{{city.card_img.url}}" alt="" />
+        <div class="card-content">
+          <h1 id="title-{{ forloop.counter }}">{{ city.title }}</h1>
+            <button class="volume-button">
+              <i class="fa fa-volume-up" style="color: #000000;" data-id="{{ forloop.counter }}"></i>
+          </button>
+  
+            <p id="countryname-{{ forloop.counter }}">{{ city.countryname }}</p>
+  
+            <div class="card-buttonn" id="safety-index-{{ forloop.counter }}">
+                    <h7>Safety Index</h7>
+                    <div class="text-sm-center d-flex align-items-end gap-5">
+                    <div class="safetyavg">
+                        <ul class="list-unstyled stars-wrapper">
+                            <li class="star-item"><i class="fa fa-star" style="color: #ffffff;"></i></li>
+                            <li class="rating-number">{{ city.rate_average|floatformat:1 }}</li>
+                        </ul>
+                    </div>
+               
+                <span class="review-count-align"> <p> ({{ city.rate_total }}) </p></span>
+            </div>
+          </div> 
+          
+  
+          <div class="card-button">
+            <a href="{% url 'login' %}">
+              View More
+            </a>
+          </div>
+          
+      
+        </div>
+        
+      </div>
+      {% endfor %}
+      
+  
+    </div>
+    
+    
+  
+      <div class="btn-box">
+        <a href="{% url 'login' %}">
+          View All Cities
+        </a>
+      </div>
+    </div>
+  </section>
+  
+  
+    
+  
+  
+    <!-- feedback section -->
+    <section class="client_section layout_padding">
+      <div class="container">
+        <div class="heading_container heading_center">
+          <h2>
+            User Reviews
+          </h2>
+        </div>
+      </div>
+  
+      
+      <div class="container px-0">
+        <div id="customCarousel2" class="carousel  carousel-fade" data-ride="carousel">
+          
+          
+          <div class="carousel-inner">
+            {% for feedback in feedbacks %}
+            {% if feedback.body %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                <div class="box">
+                    <div class="client_info">
+                        <div class="client_name">
+                            <h5>
+                                {{ feedback.owner.first_name }}
+                            </h5>
+                            <h6>
+                              {{ feedback.owner.location }} 
+                            </h6>
+                        </div>
+                        <i class="fa fa-quote-left" aria-hidden="true"></i>
+                    </div>
+                    <p>
+                        {{ feedback.body }}
+                    </p>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        
+          
+  
+          <div class="carousel_btn-box">
+            <a class="carousel-control-prev" href="#customCarousel2" role="button" data-slide="prev">
+              <i class="fa fa-angle-left" aria-hidden="true"></i>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#customCarousel2" role="button" data-slide="next">
+              <i class="fa fa-angle-right" aria-hidden="true"></i>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <br> 
+      <br> 
+
+  {% include 'footer.html' %}
+
+
+  <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.js' %}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+  <script src="{% static 'js/custom.js' %}"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var synth = window.speechSynthesis;
+        var voices = [];
+        var femaleVoice, googleUSEnglishVoice;
+        var speaking = false; // Correctly initialize the speaking flag
+    
+        function populateVoiceList() {
+            voices = synth.getVoices();
+            femaleVoice = voices.find(voice => voice.name.includes('Female')) || voices[0];
+            googleUSEnglishVoice = voices.find(voice => voice.name.includes('Google US English')) || voices[0];
+        }
+    
+        // Delay voice list population to ensure voices are loaded
+        if (synth.onvoiceschanged !== undefined) {
+            synth.onvoiceschanged = populateVoiceList;
+        } else {
+            populateVoiceList();
+        }
+    
+        // Additional check to populate voices if not already loaded
+        if (voices.length === 0) {
+            populateVoiceList();
+        }
+    
+        var speech = new SpeechSynthesisUtterance(); // Define the speech instance here for global use
+    
+        // Event listener for the first button
+        document.querySelector(".fa-sharp.fa-solid.fa-volume-high").addEventListener("click", () => {
+            if (!speaking) {
+                let textToSpeak = '';
+                document.querySelectorAll(".listen").forEach(element => {
+                    textToSpeak += element.textContent + ' ';
+                });
+    
+                speech.text = textToSpeak;
+                speech.voice = femaleVoice; // Ensure the female voice is used
+                synth.speak(speech);
+                speaking = true;
+            } else {
+                synth.cancel();
+                speaking = false;
+            }
+        });
+    
+        // Event listener for the second set of buttons
+        document.querySelectorAll('.volume-button i').forEach(function(button) {
+            button.addEventListener('click', function() {
+                var id = this.getAttribute('data-id');
+                var titleText = document.getElementById('title-' + id).textContent;
+                var countryName = document.getElementById('countryname-' + id).textContent;
+                var safetyIndex = document.getElementById('safety-index-' + id).textContent;
+    
+                var textToSpeak = titleText + ", " + countryName + ". " + safetyIndex + " reviews";
+                var utterance = new SpeechSynthesisUtterance(textToSpeak);
+                utterance.voice = googleUSEnglishVoice;
+                utterance.pitch = 1;
+                utterance.rate = 1;
+    
+                if (!synth.speaking) {
+                    synth.speak(utterance);
+                } else {
+                    synth.cancel();
+                }
+            });
+        });
+    });
+    </script>
+    
+ </body>
+
+</html>
+
+
+
+
+
+
+
+
+{% endif %}
+{% endblock %}

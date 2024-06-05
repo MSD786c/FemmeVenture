@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+{% load static %}
+<title> Favorites | FemmeVenture </title> 
+{% include 'nav.html' %}
+
+<html>
+
+<head>
+
+    <style>
+
+      .content-container {
+        display: flex; /* Enables flexbox */
+        gap: 15px;
+    }
+    
+    .content-container button {
+        font-size: 24px; /* Adjust the size of the icon as needed */
+        margin-top: 15px; /* Pull the icon closer to the text by giving it a negative margin */
+
+    }
+    
+    .content-container h2 {
+        margin: 0; /* Removes default margin from h2 */
+    }
+
+    button.fa-solid {
+      background: none; /* Remove background */
+      border: none; /* Remove border */
+      padding: 0; /* Remove padding */
+      margin: 0; /* Remove margin */
+      outline: none; /* Remove focus outline */
+  }
+
+  .safetyavg {
+    display: inline-block;
+    padding: 10px 25px;
+    background-color: #db4566;
+    color: #ffffff;
+    border: 1px solid #db4566;
+    border-radius: 30px;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+    margin-top: 3px;
+  }
+  
+  .safetyavg .stars-wrapper {
+    display: flex;
+    align-items: center; /* This will vertically center the items in the list */
+    list-style-type: none; /* Remove default list styling */
+    padding: 0; /* Remove default padding */
+    margin: 0; /* Remove default margin */
+  }
+  
+  .safetyavg .stars-wrapper .star-item,
+  .safetyavg .stars-wrapper .rating-number {
+    display: inline-block; /* Display items inline */
+    margin-right: 5px; /* Add some space between the star and the number */
+    font-size: 15px;
+  }
+  
+  .review-count-align {
+    display: block; /* May not be necessary if already a block due to the d-flex class */
+    margin-bottom: -12px; /* Adjust this value to align the text with the pink box */
+  }
+  
+
+  .card-buttonn{
+    position: absolute;
+  bottom: 0;
+  left: 0;
+  margin: 20px;
+  }
+ 
+    </style> 
+
+
+
+
+
+
+
+
+    <style> 
+
+      /* General form styling */
+    .form {
+        padding: 0px;
+        margin: 20px
+    }
+    
+    /* Styling for all input elements, including textarea, within the form */
+    .form-control {
+        width: 100%; /* Full width */
+        padding: 8px 10px; /* Padding inside the text fields */
+        margin-bottom: 10px; /* Space between each field */
+        box-sizing: border-box; /* Include padding and border in the element's total width and height */
+        border: 1px solid #ccc; /* Light gray border */
+        border-radius: 4px; /* Slightly rounded borders for the input fields */
+    }
+    
+    /* Placeholder color customization */
+    ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: #888; /* Dark grey placeholder text */
+        opacity: 1; /* Firefox */
+    }
+    
+    :-ms-input-placeholder { /* Internet Explorer 10-11 */
+        color: #888;
+    }
+    
+    ::-ms-input-placeholder { /* Microsoft Edge */
+        color: #888;
+    }
+    
+    /* Hover effect for inputs */
+    .form-control:hover {
+        border-color: #db4566; /* Change border color when hovering */
+    }
+
+    .submit-button {
+      display: inline-block;
+      padding: 10px 35px;
+      background-color: #db4566;
+      color: #ffffff;
+      border: 1px solid #db4566;
+      border-radius: 5px;
+      -webkit-transition: all .3s;
+      transition: all .3s;
+      margin-top: 3px;
+    }
+    
+    .submit-button:hover {
+      background-color: transparent;
+      color: #db4566;
+    }
+    
+    
+    
+    
+    
+    
+    /* Error message styling */
+    .error-message {
+        color: #dc3545; /* Bootstrap danger color for errors */
+        font-size: 0.875em; /* Smaller font size for error messages */
+        margin-top: -8px; /* Position closer to the input field */
+        margin-bottom: 10px; /* Space after the error message */
+    }
+    
+    .feedback{
+      margin: 50px 50px;
+    
+      padding-left: 45px; 
+      padding-right: 45px; 
+      margin-bottom: 0; 
+      margin-top: 0; 
+    
+    
+    }
+    
+    .volume-button{
+      position: absolute; /* Position the button absolutely within the review box */
+      right: 0; /* Align to the right of the review box */
+      border: none; /* Remove border */
+      background: none; /* Remove background if desired */
+      margin: 8px;
+      transform: translateY(-150%); /* Moves the button up by half its height */
+    
+    }
+      
+    .fa-solid.fa-microphone {
+      position: absolute; /* This is absolute in relation to its parent, thanks to the parent's relative position */
+      right: 40px; /* Adjust this as needed to align the icon to the right edge of its parent container */
+      top: 50%; /* Centers it vertically */
+      transform: translateY(-85%); /* Corrects the vertical position to truly center */
+      font-size: 20px;
+      color: black; 
+  }
+    .fa-microphone.active {
+      color: red; // Change to red when active
+    }
+    
+    .fa-heart.pls.fa-solid{
+        position: absolute; /* Position the button absolutely within the review box */
+        border: none; /* Remove border */
+        background: none; /* Remove background if desired */
+        margin: 8px;
+        transform: translateY(20%) translateX(1025%);
+
+        font-size: 25px;
+      }
+        
+      .fa-heart.fa-regular{
+        position: absolute; /* Position the button absolutely within the review box */
+        border: none; /* Remove border */
+        background: none; /* Remove background if desired */
+        margin: 8px;
+        transform: translateY(15%) translateX(676%);
+
+        font-size: 25px;
+      }
+    
+    </style> 
+
+
+    
+
+  </head>
+    <!-- end header section -->
+
+  <!-- end hero area -->
+
+ 
+  
+
+
+  
+  
+  {% block content %}
+  <section class="py-4 destination-content">
+    
+    <div class="destination-item" style="background: linear-gradient(to left, rgba(0, 0, 0, 0.2),rgba(0, 0, 0, 0.55)), url({% static 'images/fav.png' %});">
+        <h1 style="color: white; font-size: 60px;">Favorites</h1>
+    </div>
+       
+
+  </section>  
+
+<section class="shop_section layout_padding">
+
+    
+    
+    <div class="card-container">
+        {% for favorite in favorites %}
+      <div class="card">
+        <img src="{{favorite.city.card_img.url}}" alt="" />
+        <div class="card-content">
+          <h1 id="title-{{ forloop.counter }}">{{ favorite.city.title }}</h1>
+          
+        
+          <button class="fa-heart pls fa-solid" onclick="location.href='{% url 'remove_from_favorites' favorite.city.id %}'"></button>
+  
+          <button class="volume-button">
+              <i class="fa fa-volume-up" style="color: #000000;" data-id="{{ forloop.counter }}"></i>
+          </button>
+  
+            <p id="countryname-{{ forloop.counter }}">{{ favorite.city.countryname }}</p>
+  
+            <div class="card-buttonn" id="safety-index-{{ forloop.counter }}">
+                    <h7>Safety Index</h7>
+                    <div class="text-sm-center d-flex align-items-end gap-5">
+                    <div class="safetyavg">
+                        <ul class="list-unstyled stars-wrapper">
+                            <li class="star-item"><i class="fa fa-star" style="color: #ffffff;"></i></li>
+                            <li class="rating-number">{{ favorite.city.rate_average|floatformat:1 }}</li>
+                        </ul>
+                    </div>
+               
+                <span class="review-count-align"> <p> ({{ favorite.city.rate_total }}) </p></span>
+            </div>
+          </div> 
+  
+  
+          <div class="card-button">
+            <a href="/city/{{favorite.city.id}}">
+              View More
+            </a>
+          </div>
+          
+      
+        </div>
+        
+      </div>
+      {% empty %}
+  <p>You have no favorites yet.</p>
+  {% endfor %}
+  {% endblock %}
+  
+    </div>
+    
+    
+  
+      
+  </section>
+  
+
+
+
+    
+    
+   
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+</div>
+  {% include 'footer.html' %}
+
+
+
+  <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script src="{% static 'js/custom.js' %}"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      var synth = window.speechSynthesis;
+      var voices = [];
+      var femaleVoice, googleUSEnglishVoice;
+      var speaking = false; // Correctly initialize the speaking flag
+  
+      function populateVoiceList() {
+          voices = synth.getVoices();
+          femaleVoice = voices.find(voice => voice.name.includes('Female')) || voices[0];
+          googleUSEnglishVoice = voices.find(voice => voice.name.includes('Google US English')) || voices[0];
+      }
+  
+      // Delay voice list population to ensure voices are loaded
+      if (synth.onvoiceschanged !== undefined) {
+          synth.onvoiceschanged = populateVoiceList;
+      } else {
+          populateVoiceList();
+      }
+  
+      // Additional check to populate voices if not already loaded
+      if (voices.length === 0) {
+          populateVoiceList();
+      }
+  
+      var speech = new SpeechSynthesisUtterance(); // Define the speech instance here for global use
+  
+      
+  
+      // Event listener for the second set of buttons
+      document.querySelectorAll('.volume-button i').forEach(function(button) {
+          button.addEventListener('click', function() {
+              var id = this.getAttribute('data-id');
+              var titleText = document.getElementById('title-' + id).textContent;
+              var countryName = document.getElementById('countryname-' + id).textContent;
+              var safetyIndex = document.getElementById('safety-index-' + id).textContent;
+  
+              var textToSpeak = titleText + ", " + countryName + ". " + safetyIndex + " reviews";
+              var utterance = new SpeechSynthesisUtterance(textToSpeak);
+              utterance.voice = googleUSEnglishVoice;
+              utterance.pitch = 1;
+              utterance.rate = 1;
+  
+              if (!synth.speaking) {
+                  synth.speak(utterance);
+              } else {
+                  synth.cancel();
+              }
+          });
+      });
+  });
+  </script>
+
+  
+</body>
+
+</html>

@@ -1,0 +1,80 @@
+<!-- info section -->
+{%load static%}
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
+    <!-- Basic Meta Tags -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
+  
+    <title>FemmeVentures</title>
+  
+    <!-- Slider Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+  
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+  
+    <!-- Custom Styles for the Template -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+    <!-- Responsive Styles -->
+    <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+</head>
+<style> 
+    .layout_padding2-footer {
+        padding-top: 10px;
+    }
+    .footer-container {
+        display: flex;
+        justify-content: center; /* This will space out the children evenly */
+        
+    }
+    
+    .footer-link {
+        margin: 0 20px; /* Adds spacing between the links */
+    }
+    
+    </style> 
+    
+      <section class="info_section  layout_padding2-footer">
+        
+        <!-- footer section -->
+        <footer class=" footer_section">
+          
+            <div class="footer-container">
+                <a href="{% url 'gdpr' %}" class="footer-link"><h6> Privacy Policy</h6></a>
+                <h6 class="footer-link"> | </h6>
+                <a href="mailto:lxa243@student.bham.ac.uk?Body=I%20would%20like%20to%20inquire%20about..." class="footer-link"><h6>Contact us</h6></a>
+                <h6 class="footer-link"> | </h6>
+                <a href="{% url 'aboutus' %}" class="footer-link"><h6> About Us</h6></a>
+    
+            </div>
+          <p style="font-size: 15px;">
+              You are accessing an experimental web application developed by UoBD participants of the Team Project 2024 module.
+    <br>
+            © 2024 FemmeVenture. All rights reserved.
+              
+            </p>
+            
+            {% comment %} javascript for accessability api{% endcomment %}
+            <script src="https://cdn.userway.org/widget.js" 
+            data-account="mo3SxqE5nz"
+            data-position="3">
+    </script>
+        </footer>
+        <!-- footer section -->
+    
+      </section>
+    
+      <!-- end info section -->
+    
+    
+    
+    

@@ -1,0 +1,379 @@
+
+<!DOCTYPE html>
+{% load static %}
+<title> Community Saftey | FemmeVenture </title> 
+
+{% include 'nav.html' %}
+
+
+<html>
+
+
+
+
+  <!-- Hero Area Ends -->
+
+
+  
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/site.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
+    <style>
+
+        
+
+       .card {
+        
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* This distributes space around items evenly */
+    align-items: center; /* This centers items on the cross axis */
+    text-align: center; /* This centers the text within the container */
+    padding: 20px; /* Adjust as necessary */
+    box-sizing: border-box; /* Makes sure padding doesn't affect the total width/height */
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    overflow: hidden; /* Ensures nothing spills out of the card */
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; /* This will spread out the cards evenly */
+    gap: 20px; /* Space between cards */
+}
+
+.card img {
+    width: 100%; /* Makes the image take the full width of the card */
+    height: auto; /* Keeps the image aspect ratio */
+    margin-bottom: 15px; /* Adds some space below the image */
+}
+
+.card h3 {
+    margin: 0;
+    padding: 0;
+    font-size: 18px; /* Adjust as necessary */
+    text-align: left; /* Aligns text to the left */
+    margin-bottom: 15px; /* Adds some space below the heading */
+}
+
+.card p {
+    margin-bottom: 20px; /* Adds some space below the paragraph */
+}
+
+.card-button a {
+    display: flex;
+    padding: 10px 15px; /* Adjust as necessary */
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    background-color: #E53935; /* Adjust to match your color scheme */
+    border-radius: 5px;
+    font-weight: bold;
+    width: 100%; /* Ensures the button container takes full width */
+    display: flex;
+    justify-content: center;
+}
+
+      
+
+        section {
+            background-color: #dabfa1;
+            color: #383d64;
+            padding: 4rem 0;
+        }
+
+        h2 {
+            color: #944c6b;
+        }
+
+        a.btn {
+            display: inline-block;
+            background-color: #944c6b;
+            color: #dabfa1;
+            padding: 0.75rem 1.5rem;
+            margin-top: 1rem;
+            text-decoration: none;
+            border-radius: 2rem;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        a.btn:hover {
+            background-color: #383d64;
+        }
+
+        
+
+        .card h3 {
+            color: #944c6b;
+        }
+
+        .safety-index {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .star {
+            color: #FFD700;
+            margin-right: 0.2rem;
+            cursor: pointer;
+        }
+
+        .card img {
+  width: 100%; /* makes image take full width of the card */
+  height: 200px; /* set a fixed height */
+  object-fit: cover; /* this will make sure images cover the area without stretching */
+  border-radius: 0.5rem; /* optional: to have rounded corners for images */
+}
+
+
+        .city-image {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 1rem;
+            border-radius: 0.5rem;
+        }
+
+        /* Enable horizontal scrolling */
+        .container {
+            overflow-x: auto;
+        }
+
+        /* Search feature styles */
+        .search-container {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .search-input {
+            width: 70%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border-radius: 1.5rem; /* More rounded */
+            border: 1px solid #944c6b; /* Border color */
+        }
+
+        .search-btn {
+            background-color: #944c6b;
+            color: #dabfa1;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            border-radius: 1.5rem; /* More rounded */
+            transition: background-color 0.3s ease-in-out;
+            border: 1px solid #944c6b; /* Border color */
+        }
+
+        .search-btn:hover {
+            background-color: #383d64;
+        }
+
+        /* Review Form styles */
+        /* .review-form {
+            mt: 8;
+            p: 4;
+        } */
+        /* .review-form label {
+            block:
+            mb: 2;
+        } */
+
+        .review-form input,
+        .review-form textarea,
+        /* .review-form button {
+            w-full;
+            p: 2;
+            border;
+            mb: 4;
+        } */
+
+        /* .review-form button {
+            btn;
+        } */
+
+        /* Rating Stars styles */
+        .rating-container {
+            display: flex;
+            align-items: center;
+            /* mb: 4; */
+        }
+
+        .rating-container .star {
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .rating-container .star:hover {
+            color: #FFD700;
+        }
+
+        /* Selected Rating styles */
+        .selected-rating {
+            /* ml: 2; */
+            font-weight: bold;
+        }
+    </style>
+    <title>FemmeVenture - safetyresource</title>
+</head>
+
+<body>
+
+    
+    <section>
+    
+        <div class="container mx-auto text-center">
+            <h2 class="text-4xl font-semibold my-8">Community Safety Stories:</h2>
+        </div>
+
+            <div class="card-container">
+                {% for safetyresource in resources %}
+                <div class="card">
+                  <img src="{{ safetyresource.card_img.url }}" alt="" />
+                  <div class="card-content">
+                    <h1>{{ safetyresource.title }}</h1>
+                    <p> {{ safetyresource.description }}</p>
+                    
+                    {% if safetyresource.link %}
+                    <div class="card-button">
+                        <a href="{{ safetyresource.link }}">
+                          View More
+                        </a>
+                    {% endif %}
+                
+                  </div>
+                  <div class="card-button">
+                    <button class="like-button" data-title="{{ safetyresource.title }}" data-category="{{ safetyresource.category }}" onclick="likeResource(this)">
+                        ❤ 
+                    </button>
+                    <span class="like-count">{{ safetyresource.likes.count }}</span> 
+                </div>
+                </div>
+                </div>
+                {% endfor %}
+
+            
+              </div>
+                <!-- Add other cards as necessary for your sections -->
+            
+    </section>
+
+    <script>
+
+        function likeResource(button) {
+        var title = button.getAttribute('data-title');
+        var category = button.getAttribute('data-category');
+        var likeSpan = button.nextElementSibling; // Assuming like count span follows the button
+    
+        // Making sure to send a POST request
+        fetch(`/like_resource/${encodeURIComponent(title)}/${encodeURIComponent(category)}/`, {
+            method: 'POST', // Change to POST
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'), // Ensuring CSRF token is sent
+                'Content-Type': 'application/json'
+            },
+            credentials: 'same-origin'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.likes) {
+                likeSpan.textContent = data.likes + ' Likes'; // Update the like count
+            } else {
+                console.error('Error:', data.error);
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+    
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                let cookie = cookies[i].trim();
+                if (cookie.startsWith(name + '=')) {
+                    cookieValue = cookie.substring(name.length + 1);
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    
+    
+        </script>
+
+    <!-- Review Form Script -->
+    <script>
+        let selectedRating = 0;
+
+        function setRating(rating, containerId) {
+            selectedRating = rating;
+
+            // Update star colors based on rating
+            const container = document.getElementById(containerId);
+            for (let i = 1; i <= 5; i++) {
+                const starElement = container.querySelector(`.star:nth-child(${i})`);
+                if (i <= rating) {
+                    starElement.style.color = '#FFD700';
+                } else {
+                    starElement.style.color = '#ccc';
+                }
+            }
+
+            // Display the selected rating
+            document.getElementById('selectedRatingText').innerText = `Selected Rating: ${selectedRating}`;
+        }
+
+        function submitReview() {
+            const title = document.getElementById('reviewTitle').value;
+            const content = document.getElementById('reviewContent').value;
+
+            if (selectedRating === 0) {
+                alert('Please select a rating before submitting the review.');
+                return;
+            }
+
+            // Display a simple alert for demonstration purposes
+            alert(`Review Submitted!\nTitle: ${title}\nContent: ${content}\nRating: ${selectedRating}`);
+            
+            // You can also send the data to your server using AJAX or other methods
+            // Example:
+            // const formData = { title, content, rating: selectedRating };
+            // fetch('your-api-endpoint', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //     },
+            //     body: JSON.stringify(formData),
+            // })
+            // .then(response => response.json())
+            // .then(data => console.log(data))
+            // .catch(error => console.error('Error:', error));
+        }
+    </script>
+
+</body>
+
+
+
+  <!-- info section -->
+
+  
+
+  <!-- end info section -->
+
+
+  
+
+</body>
+
+</html>
+
+</div>
+
+{% include 'footer.html' %}

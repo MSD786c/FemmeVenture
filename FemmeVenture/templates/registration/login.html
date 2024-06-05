@@ -1,0 +1,174 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+  
+  <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
+    <!-- Basic Meta Tags -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
+  
+    <title>Login | FemmeVenture</title>
+  
+   
+    <!-- Custom Styles for the Template -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+    
+  </head>
+
+  
+  
+  
+  
+  <title>Login</title>
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f0f0f0;
+    }
+
+    .container {
+      display: flex;
+      width: 100%; /* Set to desired width */
+      max-width: 1200px; /* Maximum width of the container */
+      min-height: 500px; /* Minimum height of the container */
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Optional shadow for styling */
+      border-radius: 20px; /* Rounded corners */
+      overflow: hidden; /* Ensures the child elements do not overflow */
+
+    }
+
+    .welcome-section {
+      font-size: 25px; /* Adjust the size for the welcome heading */
+      flex: 1; /* Take up half the space of the container */
+      background-image: url("{% static "images/log.png" %}");
+      background-size: 150% 100%;
+      background-repeat: no-repeat;
+      color: white;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+    }
+
+    .femmeventure-label {
+      position: absolute; /* Absolute positioning within the welcome-section */
+      bottom: 1px; /* Distance from the bottom of the welcome-section */
+      width: 80%; /* Full width to center the text */
+      text-align: center; /* Center the text */
+    }
+
+    .login-section {
+      flex: 1; /* Take up the other half */
+      background-color: #fff; /* Background color for the login section */
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start; /* Aligns form to the left */
+    }
+
+    h1, h2 {
+      margin: 0;
+    }
+
+    form {
+      width: 100%; /* Full width of the login section */
+      max-width: 300px; /* Maximum width of the form */
+    }
+
+    label {
+      display: block;
+      font-size: 15px;
+      padding: 10px;
+      color: #000000;
+    }
+    input[type="text"],
+    input[type="password"] {
+      background: transparent;
+      width: 18rem;
+      height: 1.5rem; 
+      font-size: 0.9rem;
+      padding: 5px;
+      border: 2px solid rgba(116,116,116,0.2);
+      border-radius: 5px;
+    }
+
+
+    
+    button[type="submit"] {
+      display: block; /* Will allow margin auto to center the button */
+      margin-top: 2rem;
+      margin-left: auto; /* Centers the button */
+      margin-right: auto; /* Centers the button */
+      width: 19rem;
+      height: 2.4rem;
+      font-weight: bold;
+      background-color: #db4566;
+      color: #ffffff;
+      border: 1px solid #db4566;
+      border-radius: 5px;
+      -webkit-transition: all .3s;
+      transition: all .3s;
+      text-transform: uppercase;
+      
+    }
+    button[type="submit"]:hover {
+      background-color: transparent;
+      color: #db4566;
+    }
+  </style>
+</head>
+
+
+<body>
+  
+  <div class="container">
+    <div class="welcome-section">
+      <h1>Welcome Back!</h1>
+      <p>Please log into your account.</p>
+      <!-- Additional content here -->
+
+      <div class="femmeventure-label">
+        <h6>FemmeVenture</h6>
+      </div>
+    </div>
+    <div class="login-section">
+      <h2>Login</h2>
+      <br> 
+      <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          {{ form }}
+        </div>
+        <button type="submit">Login</button>
+      </form>
+
+      <p> New User? <a href={% url 'signup' %}>Signup</a> </p>
+    </div>
+  </div>
+  {% comment %} javascript for accessability api{% endcomment %} 
+  <script src="https://cdn.userway.org/widget.js" 
+            data-account="mo3SxqE5nz"
+            data-position="3">
+    </script>
+
+</body>
+</html>

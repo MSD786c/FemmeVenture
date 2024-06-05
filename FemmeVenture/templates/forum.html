@@ -1,0 +1,785 @@
+<!DOCTYPE html>{% load static %}
+{% include 'nav.html' %}
+<html>
+
+  
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/site.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <title>FemmeVenture - Forum</title>
+    <style>
+       
+
+        
+
+        
+
+        
+        section {
+            background-color: #dabfa1;
+            color: #383d64;
+            padding: 4rem 0;
+        }
+
+        h2 {
+            color: #944c6b;
+        }
+
+        a.btn {
+            display: inline-block;
+            background-color: #944c6b;
+            color: #dabfa1;
+            padding: 0.75rem 1.5rem;
+            margin-top: 1rem;
+            text-decoration: none;
+            border-radius: 2rem;
+            transition: background-color 0.3s ease-in-out;
+        }
+       
+        
+        .nav-button {
+            background: #a675a1;
+            color: #dabfa1;
+            padding: 10px 20px;
+            margin: 0 10px;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 20px;
+        }
+        .nav-button.active {
+            background: #7c2a82;
+        }
+        .sidebar {
+            background: #fff;
+            padding: 20px;
+            width: 150px;
+            height: 100vh;
+            position: fixed;
+        }
+        .content {
+            margin-left: 50px;
+            padding: 20px;
+            text-align: center;
+            
+        }
+        .post {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .post h2 {
+            color: #333;
+        }
+        .post img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .sidebar {
+          background: #fff;
+          padding: 20px;
+          width: 100px;
+          height: 100vh;
+          overflow-y: auto;
+         }
+        
+         .skip-nav {
+             position: fixed;
+             top: -40px; /* Adjust this value as needed to hide the link off-screen */
+             left: 20px;
+             background-color: #fff;
+             z-index: 9999;
+             padding: 10px;
+             border: 1px solid #ccc;
+             text-decoration: none;
+             color: #333;
+             opacity: 0;
+             transition: opacity 0.3s ease-in-out;
+          }
+
+          .skip-nav:focus {
+            top: 20px; /* Adjust this value to position the link where you want it to appear */
+            opacity: 1;
+          }
+
+          body {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px; /* Base font size */
+          }
+          .text-resize-header {
+            position: absolute; /* Position the header absolutely within the .heading class */
+            bottom: 10px; /* Adjust distance from the bottom */
+            right: 10px; /* Adjust distance from the right */
+            left: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 5px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+          }
+
+          .text-resize-header h2 {
+            font-size: 14px;
+            margin-bottom: 3px;
+          }
+
+          .text-resize-btn {
+            margin-right: 5px;
+            padding: 3px 8px; /* Reduced padding */
+            font-size: 12px;
+          }
+
+          .dropdown {
+            position: fixed;
+            top: 50%;
+            left: 10px; /* Adjust the left position as needed */
+            transform: translateY(-50%);
+            z-index: 999; /* Ensure the dropdown appears above other content */
+          }
+
+          .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 120px;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+            padding: 12px 16px;
+            z-index: 1;
+          }
+
+          .dropdown:hover .dropdown-content {
+            display: block;
+          }
+
+          .dropdown-item {
+            cursor: pointer;
+          }
+
+        /* Responsive design */
+          @media (max-width: 768px) {
+            .container {
+              flex-direction: column;
+            }
+
+            .sidebar,
+            .content {
+            width: 100%;
+            }
+            }
+
+         /* Adjust font sizes for better readability on smaller screens */
+            body {
+               font-size: 14px; /* Adjust base font size */
+            }
+
+          /* Hide certain elements or reduce their size to conserve space */
+            .navbar-nav {
+               display: none; /* Hide navigation links */
+            }
+
+          /* Adjust the layout of individual posts */
+            .post {
+               padding: 20px; /* Adjust padding */
+               margin-bottom: 10px; /* Adjust margin */
+               border: 2px solid #ccc; /* Add border styling */
+            }
+          
+
+          /* Allow overflow */
+          .container {
+            overflow: auto; /* Allow overflow with scrollbar */
+          }
+          .heading {
+            text-align: center; /* Centers the text */
+            color: rgb(21, 2, 2); /* Sets the text color to white; adjust as needed */
+            padding: 100px 100px 50px; /* Increased padding to make the div larger; adjust as needed */
+            background-image: url("{% static 'images/Pink sunrise sky over the ocean.jpeg' %}"); /* Sets the background image */
+            background-size: 100%; /* Zooms out the background image */
+            background-position: center; /* Centers the background image */
+            background-repeat: no-repeat; /* Ensures the image does not repeat */
+            border-radius: 8px; /* Optional: if you want rounded corners */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Optional: if you want a shadow for the div */
+            margin-top: -70px;
+            font-size: 32px;
+            font-family: 'Montserrat', sans-serif; 
+
+          }
+
+          .small-profile-logo {
+            width: 50px; /* Adjust the width as needed */
+            height: auto; /* Maintain aspect ratio */
+          }
+
+          
+
+        /* Flex container styles */
+        
+        .search-container {
+          display: flex;
+          align-items: center;
+          margin-right: 20px; /* Add margin to the right */ /
+        }
+
+.search-container,
+.filter-container {
+  margin-right: 10px; /* Add some space between the search and filter */
+}
+
+#search-input {
+  width: 200px; /* Adjust width of search bar */
+  padding: 5px; /* Adjust padding */
+  font-size: 14px; /* Adjust font size */
+  margin-right: 25px;
+}
+
+#search-btn {
+  padding: 10px 10px; /* Adjust padding */
+  font-size: 14px; /* Adjust font size */
+  margin-right: 25px;
+}
+
+
+.pagination {
+  text-align: center; /* Horizontally center align the pagination buttons */
+  bottom: 20px; /* Adjust as needed to set the distance from the bottom */
+  left: 10%;
+  transform: translateX(47%);
+}
+
+.pagination button {
+    margin: 0 5px;
+    background-color: #944c6b;
+    color: #dabfa1;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.pagination button:hover {
+    background-color: #7c2a82;
+}
+.like-btn,
+.reply-btn {
+    background-color: rgb(207, 47, 73);
+    color: #fff; /* Set text color to white for better contrast */
+    /* Add any other styles you want for these buttons */
+}
+
+    </style>
+</head>
+<div class="container">
+  <!-- Sidebar and Content Area -->
+  <div class="heading">
+    <p>Connect, Share, Explore - Your Adventure Awaits in our Forum!</p>
+    <p>Welcome to the Forum!</p>
+    <p>Share your travel experiences, tips,</p>
+    <p>and stories with fellow adventurers.</p>
+    <div class="content">
+      <a href="{% url 'post_create' %}" class="btn btn-primary new-post-btn" tabindex="1">Create Post</a>
+      <!-- Existing posts -->
+    </div>
+    
+    
+    
+    <!-- Add other header items -->
+  </div>
+
+  <div class="search-container">
+    <input type="text" id="search-input" placeholder="Search by keyword...">
+    <button id="search-btn">Search</button>
+</div>
+
+
+
+  
+  <div class="content">
+    <!-- Posts Content -->
+    
+    <div class="post" tabindex="0" data-post-id="{{ post.id }}" data-initial-likes="{{ post.likes.count }}">
+      <p>@golaniyra</p>
+      <p>12 January 2024 | Thimphu, Bhutan</p>
+      <h2>Met amazing people!</h2>
+      <p>Lost in the serenity of Bhutan with my amazing ladies...</p>
+      <button class="like-btn" data-liked="{{ post.is_liked }}">
+        {% if post.is_liked %}
+          Unlike
+        {% else %}
+          Like
+        {% endif %}
+      </button>
+      <span class="like-count">120</span>
+      <button class="reply-btn">Reply</button> <!-- Add a button to trigger the reply form -->
+      <div class="reply-form-container" style="display: none;"> <!-- Hide the reply form initially -->
+      <form class="reply-form">
+         {% csrf_token %}
+         <input type="hidden" name="post_id" value="{{ post.id }}"> <!-- Add hidden field for post_id -->
+         <textarea name="reply_content" placeholder="Write your reply here..." required></textarea>
+         <button type="submit">Submit Reply</button>
+      </form>
+      <div class="previous-replies" style="display: none;">
+        <!-- Container to display previous replies -->
+        {% for reply in post.replies %}
+        <div class="reply">
+            <img src="{% static 'images/images.png' %}" class="profile-logo small-profile-logo" alt="Profile Logo">
+            {{ reply.user.username }} | {{ reply.created_at }}
+            <p>{{ reply.content }}</p>
+            {% if reply.user == request.user %}
+            <button class="edit-reply-btn">Edit</button>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+      </div>
+    </div>
+
+    <div class="post" tabindex="0" data-post-id="{{ post.id }}" data-initial-likes="{{ post.likes.count }}">
+      <p>@ayatnavi</p>
+      <p>07 February 2024 | Cairo, Egypt</p>
+      <h2>Had a wonderful experience travelling to Egypt</h2>
+      <p>It was such a beautiful place and there were soo many nice people there</p>
+      <button class="like-btn" data-liked="{{ post.is_liked }}">
+        {% if post.is_liked %}
+          Unlike
+        {% else %}
+          Like
+        {% endif %}
+      </button>
+      <span class="like-count">112</span>
+      <button class="reply-btn">Reply</button> <!-- Add a button to trigger the reply form -->
+      <div class="reply-form-container" style="display: none;"> <!-- Hide the reply form initially -->
+      <form class="reply-form">
+         {% csrf_token %}
+         <input type="hidden" name="post_id" value="{{ post.id }}"> <!-- Add hidden field for post_id -->
+         <textarea name="reply_content" placeholder="Write your reply here..." required></textarea>
+         <button type="submit">Submit Reply</button>
+      </form>
+      <div class="previous-replies" style="display: none;">
+        <!-- Container to display previous replies -->
+        {% for reply in post.replies %}
+        <div class="reply">
+            <img src="{% static 'images/images.png' %}" class="profile-logo small-profile-logo" alt="Profile Logo">
+            {{ reply.user.username }} | {{ reply.created_at }}
+            <p>{{ reply.content }}</p>
+            {% if reply.user == request.user %}
+            <button class="edit-reply-btn">Edit</button>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+      </div>
+    </div>
+
+    <div class="post" tabindex="0" data-post-id="{{ post.id }}" data-initial-likes="{{ post.likes.count }}">
+      <p>@lunaa</p>
+      <p>23 February 2024 | Milan, Italy</p>
+      <h2>Beautiful place</h2>
+      <p>Its a really beautiful place and lived every moment like a dream</p>
+      <button class="like-btn" data-liked="{{ post.is_liked }}">
+        {% if post.is_liked %}
+          Unlike
+        {% else %}
+          Like
+        {% endif %}
+      </button>
+      <span class="like-count">76</span>
+      <button class="reply-btn">Reply</button> <!-- Add a button to trigger the reply form -->
+      <div class="reply-form-container" style="display: none;"> <!-- Hide the reply form initially -->
+      <form class="reply-form">
+         {% csrf_token %}
+         <input type="hidden" name="post_id" value="{{ post.id }}"> <!-- Add hidden field for post_id -->
+         <textarea name="reply_content" placeholder="Write your reply here..." required></textarea>
+         <button type="submit">Submit Reply</button>
+      </form>
+      <div class="previous-replies" style="display: none;">
+        <!-- Container to display previous replies -->
+        {% for reply in post.replies %}
+        <div class="reply">
+            <img src="{% static 'images/images.png' %}" class="profile-logo small-profile-logo" alt="Profile Logo">
+            {{ reply.user.username }} | {{ reply.created_at }}
+            <p>{{ reply.content }}</p>
+            {% if reply.user == request.user %}
+            <button class="edit-reply-btn">Edit</button>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+      </div>
+    </div>
+
+    <div class="post" tabindex="0" data-post-id="{{ post.id }}" data-initial-likes="{{ post.likes.count }}">
+      <p>@mira_ali</p>
+      <p>26 January 2024 | Istanbul, Turkey</p>
+      <h2>Wonderful Experience</h2>
+      <p>What a beautiful place it was. </p>
+      <button class="like-btn" data-post-id="1" data-liked="false">Like</button>
+      <span class="like-count">47</span>
+      <button class="reply-btn">Reply</button> <!-- Add a button to trigger the reply form -->
+      <div class="reply-form-container" style="display: none;"> <!-- Hide the reply form initially -->
+      <form class="reply-form">
+         {% csrf_token %}
+         <input type="hidden" name="post_id" value="{{ post.id }}"> <!-- Add hidden field for post_id -->
+         <textarea name="reply_content" placeholder="Write your reply here..." required></textarea>
+         <button type="submit">Submit Reply</button>
+      </form>
+      <div class="previous-replies" style="display: none;">
+        <!-- Container to display previous replies -->
+        {% for reply in post.replies %}
+        <div class="reply">
+            <img src="{% static 'images/images.png' %}" class="profile-logo small-profile-logo" alt="Profile Logo">
+            {{ reply.user.username }} | {{ reply.created_at }}
+            <p>{{ reply.content }}</p>
+            {% if reply.user == request.user %}
+            <button class="edit-reply-btn">Edit</button>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+      </div>
+    </div>
+
+    <div class="post" tabindex="0" data-post-id="{{ post.id }}" data-initial-likes="{{ post.likes.count }}">
+      <p>@roseember</p>
+      <p>16 December 2023 | Baku, Azerbaijan</p>
+      <h2>Best place to visit </h2>
+      <p>Visited the city during the best period of the year and it has been such a wonderful trip.</p>
+      <button class="like-btn" data-liked="{{ post.is_liked }}">
+        {% if post.is_liked %}
+          Unlike
+        {% else %}
+          Like
+        {% endif %}
+      </button>
+      <span class="like-count">84</span>
+      <button class="reply-btn">Reply</button> <!-- Add a button to trigger the reply form -->
+      <div class="reply-form-container" style="display: none;"> <!-- Hide the reply form initially -->
+      <form class="reply-form">
+         {% csrf_token %}
+         <input type="hidden" name="post_id" value="{{ post.id }}"> <!-- Add hidden field for post_id -->
+         <textarea name="reply_content" placeholder="Write your reply here..." required></textarea>
+         <button type="submit">Submit Reply</button>
+      </form>
+      <div class="previous-replies" style="display: none;">
+        <!-- Container to display previous replies -->
+        {% for reply in post.replies %}
+        <div class="reply">
+            <img src="{% static 'images/images.png' %}" class="profile-logo small-profile-logo" alt="Profile Logo">
+            {{ reply.user.username }} | {{ reply.created_at }}
+            <p>{{ reply.content }}</p>
+            {% if reply.user == request.user %}
+            <button class="edit-reply-btn">Edit</button>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+      </div>
+    </div>
+
+    <div class="post" tabindex="0" data-post-id="{{ post.id }}" data-initial-likes="{{ post.likes.count }}">
+      <p>@mitalirai</p>
+      <p>12 December 2023 | Cape Town, South Africa</p>
+      <h2>Best trip </h2>
+      <p>It was a really beautiful place and such loving people there.</p>
+      <button class="like-btn" data-liked="{{ post.is_liked }}">
+        {% if post.is_liked %}
+          Unlike
+        {% else %}
+          Like
+        {% endif %}
+      </button>
+      <span class="like-count">132</span>
+      <button class="reply-btn">Reply</button> <!-- Add a button to trigger the reply form -->
+      <div class="reply-form-container" style="display: none;"> <!-- Hide the reply form initially -->
+      <form class="reply-form">
+         {% csrf_token %}
+         <input type="hidden" name="post_id" value="{{ post.id }}"> <!-- Add hidden field for post_id -->
+         <textarea name="reply_content" placeholder="Write your reply here..." required></textarea>
+         <button type="submit">Submit Reply</button>
+      </form>
+      <div class="previous-replies" style="display: none;">
+        <!-- Container to display previous replies -->
+        {% for reply in post.replies %}
+        <div class="reply">
+            <img src="{% static 'images/images.png' %}" class="profile-logo small-profile-logo" alt="Profile Logo">
+            {{ reply.user.username }} | {{ reply.created_at }}
+            <p>{{ reply.content }}</p>
+            {% if reply.user == request.user %}
+            <button class="edit-reply-btn">Edit</button>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+      </div>
+    </div>
+
+    <div class="post" tabindex="0" data-post-id="{{ post.id }}" data-initial-likes="{{ post.likes.count }}">
+      <p>@anitarao</p>
+      <p>09 November 2023 | Barcelona, Spain</p>
+      <h2>A really nice city </h2>
+      <p>Had a wonderful time exploring Barcelona and other nearby cities. Its been a really nice experience</p>
+      <button class="like-btn" data-liked="{{ post.is_liked }}">
+        {% if post.is_liked %}
+          Unlike
+        {% else %}
+          Like
+        {% endif %}
+      </button>
+      <span class="like-count">102</span>
+      <button class="reply-btn">Reply</button> <!-- Add a button to trigger the reply form -->
+      <div class="reply-form-container" style="display: none;"> <!-- Hide the reply form initially -->
+      <form class="reply-form">
+         {% csrf_token %}
+         <input type="hidden" name="post_id" value="{{ post.id }}"> <!-- Add hidden field for post_id -->
+         <textarea name="reply_content" placeholder="Write your reply here..." required></textarea>
+         <button type="submit">Submit Reply</button>
+      </form>
+      <div class="previous-replies" style="display: none;">
+        <!-- Container to display previous replies -->
+        {% for reply in post.replies %}
+        <div class="reply">
+            <img src="{% static 'images/images.png' %}" class="profile-logo small-profile-logo" alt="Profile Logo">
+            {{ reply.user.username }} | {{ reply.created_at }}
+            <p>{{ reply.content }}</p>
+            {% if reply.user == request.user %}
+            <button class="edit-reply-btn">Edit</button>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+      </div>
+    </div>
+
+    <div class="post" tabindex="0" data-post-id="{{ post.id }}" data-initial-likes="{{ post.likes.count }}">
+      <p>@lillyy</p>
+      <p>05 September 2023 | Antalya, Turkey</p>
+      <h2>Beautiful place </h2>
+      <p>Been a really nice place to explore and had a delightful trip.</p>
+      <button class="like-btn" data-liked="{{ post.is_liked }}">
+        {% if post.is_liked %}
+          Unlike
+        {% else %}
+          Like
+        {% endif %}
+      </button>
+      <span class="like-count">97</span>
+      <button class="reply-btn">Reply</button> <!-- Add a button to trigger the reply form -->
+      <div class="reply-form-container" style="display: none;"> <!-- Hide the reply form initially -->
+      <form class="reply-form">
+         {% csrf_token %}
+         <input type="hidden" name="post_id" value="{{ post.id }}"> <!-- Add hidden field for post_id -->
+         <textarea name="reply_content" placeholder="Write your reply here..." required></textarea>
+         <button type="submit">Submit Reply</button>
+      </form>
+      <div class="previous-replies" style="display: none;">
+        <!-- Container to display previous replies -->
+        {% for reply in post.replies %}
+        <div class="reply">
+            <img src="{% static 'images/images.png' %}" class="profile-logo small-profile-logo" alt="Profile Logo">
+            {{ reply.user.username }} | {{ reply.created_at }}
+            <p>{{ reply.content }}</p>
+            {% if reply.user == request.user %}
+            <button class="edit-reply-btn">Edit</button>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+      </div>
+    </div>
+    <!-- Repeat the above div for each post -->
+  </div>
+
+  <div class="pagination">
+    <button id="prev-page">&lt;&lt;</button>
+    <button id="next-page">&gt;&gt;</button>
+</div>
+
+<div id="editReplyModal" class="modal">
+  <div class="modal-content">
+      <span class="close">&times;</span>
+      <form id="edit-reply-form">
+          {% csrf_token %}
+          <textarea id="edited-reply-content" name="edited_reply_content" required></textarea>
+          <button type="submit">Submit</button>
+      </form>
+  </div>
+</div>
+
+<div>
+</div>
+</div>
+</div>
+  <a href="#main-content" class="skip-nav">Skip to main content</a>
+  {% include 'footer.html' %}
+
+  
+
+  <!-- JavaScripts -->
+  <script>
+    $(document).ready(function() {
+        // Function to handle keyboard navigation
+        function handleKeyboardNavigation(event) {
+            var keyCode = event.keyCode || event.which;
+
+            // Check if the pressed key is the arrow up or down key
+            if (keyCode === 38 || keyCode === 40) {
+                event.preventDefault();
+
+                // Find all posts
+                var posts = $('.post');
+                var focusedPost = $(document.activeElement);
+
+                // Find the index of the focused post
+                var index = posts.index(focusedPost);
+
+                // Determine the index of the next post based on the key pressed
+                var nextIndex = keyCode === 38 ? index - 1 : index + 1;
+
+                // Ensure the next index is within bounds
+                if (nextIndex >= 0 && nextIndex < posts.length) {
+                    // Focus on the next post
+                    posts.eq(nextIndex).focus();
+                }
+            }
+        }
+        
+        // Bind keydown event listener to the document
+        $(document).keydown(function(event) {
+            handleKeyboardNavigation(event);
+        });
+
+        // Toggle reply form visibility
+        $('.reply-btn').click(function() {
+        var replyFormContainer = $(this).siblings('.reply-form-container');
+        replyFormContainer.toggle();
+
+        // Ensure previous replies are visible
+        if (replyFormContainer.is(':visible')) {
+            replyFormContainer.find('.previous-replies').show();
+        }
+    });
+
+    // Submit reply form
+    $('.reply-form').submit(function(event) {
+        event.preventDefault();
+        var form = $(this);
+        var postData = form.serialize();
+
+        // Simulate form submission
+        console.log('Reply submitted:', postData);
+        // You can add your logic to handle the reply submission here
+        // For example, you can use AJAX to submit the reply and update the UI
+        // Upon successful submission, update the reply count and optionally display a success message
+        var postOwner = $(this).closest('.post').find('p:first').text(); // Assuming the first <p> contains the username
+        alert('Your reply has been successfuly submitted! ' );
+        // Get username of the user who submitted the reply
+        // Replace this with the actual username
+        // Get current date and time
+        var currentDate = new Date();
+        var dateString = currentDate.toDateString();
+        var timeString = currentDate.toLocaleTimeString();
+        var profileLogoUrl = "{% static 'images/images.png' %}"
+        // Increment reply count
+        var replyCount = form.closest('.post').find('.reply-count');
+        var currentReplies = parseInt(replyCount.text());
+        var newReplies = currentReplies + 1;
+        replyCount.text(newReplies);
+
+        // Append submitted reply to previous replies
+        var previousRepliesContainer = form.siblings('.previous-replies');
+        var replyContent = form.find('textarea').val();
+        var replyHtml = '<div class="reply"><img src="' + profileLogoUrl + '" class="profile-logo small-profile-logo" alt="Profile Logo">' + dateString + ' ' + timeString + '<br>' + replyContent + '</div>';
+        previousRepliesContainer.append(replyHtml);
+
+        // Clear reply form
+        form.find('textarea').val('');
+    });
+        // Increment likes count
+        $('.like-btn').click(function() {
+            var btn = $(this);
+            var likeCount = btn.siblings('.like-count');
+            var currentLikes = parseInt(likeCount.text());
+            var newLikes = btn.data('liked') ? currentLikes - 1 : currentLikes + 1;
+
+            // Update like count and button text
+            likeCount.text(newLikes);
+            btn.data('liked', !btn.data('liked'));
+            btn.text(btn.data('liked') ? 'Unlike' : 'Like');
+        });
+    
+        
+
+    
+
+$('#search-btn').click(function() {
+            var keyword = $('#search-input').val().toLowerCase();
+            $('.post').each(function() {
+                var postContent = $(this).text().toLowerCase();
+                if (postContent.includes(keyword)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+ 
+        var postsPerPage = 5; // Number of posts per page
+  var currentPage = 1; // Current page
+
+  function showPage(pageNumber) {
+    var startIndex = (pageNumber - 1) * postsPerPage;
+    var endIndex = startIndex + postsPerPage;
+
+    $('.post').hide();
+    $('.post').slice(startIndex, endIndex).show();
+  }
+
+  // Show the first page initially
+  showPage(currentPage);
+
+  // Next page button click event
+  $('#next-page').click(function() {
+    if (currentPage < getTotalPages()) {
+      currentPage++;
+      showPage(currentPage);
+    }
+  });
+
+  // Previous page button click event
+  $('#prev-page').click(function() {
+    if (currentPage > 1) {
+      currentPage--;
+      showPage(currentPage);
+    }
+  });
+
+  function getTotalPages() {
+    return Math.ceil($('.post').length / postsPerPage);
+  }
+
+
+  $('.content').on('click', '.edit-reply-btn', function() {
+        var replyContent = $(this).siblings('p').text();
+        $('#edited-reply-content').val(replyContent);
+        $('#editReplyModal').show();
+        var editedReply = $(this).siblings('p');
+        $('#edit-reply-form').submit(function(event) {
+            event.preventDefault();
+            var editedContent = $('#edited-reply-content').val();
+            editedReply.text(editedContent);
+            $('#editReplyModal').hide();
+        });
+    });
+
+    });
+</script>
+</body>
+
+</html>

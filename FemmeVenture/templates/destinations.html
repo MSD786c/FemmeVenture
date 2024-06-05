@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+{% load static %}
+<title> {{cityObj.title}} | FemmeVenture</title> 
+
+{% include 'nav.html' %}
+
+
+<html>
+
+
+    <head>
+
+      <style>
+
+        /* for submit form for destinations page */ 
+
+        /* Destination Page*/
+.primary-color {
+  color: #db4f66;
+}
+
+.submit-button {
+  display: inline-block;
+  padding: 10px 35px;
+  background-color: #db4566;
+  color: #ffffff;
+  border: 1px solid #db4566;
+  border-radius: 5px;
+  -webkit-transition: all .3s;
+  transition: all .3s;
+  margin-top: 3px;
+}
+
+.submit-button:hover {
+  background-color: transparent;
+  color: #db4566;
+}
+
+.submitform {
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  align-items: center; /* Center children horizontally */
+}
+
+/* saftey index avg*/
+
+
+      .safetyavg {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #db4566;
+        color: #ffffff;
+        border: 1px solid #db4566;
+        border-radius: 30px;
+        -webkit-transition: all .3s;
+        transition: all .3s;
+        margin-top: 3px;
+      }
+      
+      .safetyavg .stars-wrapper {
+        display: flex;
+        align-items: center; /* This will vertically center the items in the list */
+        list-style-type: none; /* Remove default list styling */
+        padding: 0; /* Remove default padding */
+        margin: 0; /* Remove default margin */
+      }
+      
+      .safetyavg .stars-wrapper .star-item,
+      .safetyavg .stars-wrapper .rating-number {
+        display: inline-block; /* Display items inline */
+        margin-right: 5px; /* Add some space between the star and the number */
+        font-size: 20px;
+      }
+      
+      .review-count-align {
+        display: block; /* May not be necessary if already a block due to the d-flex class */
+        margin-bottom: -8px; /* Adjust this value to align the text with the pink box */
+      }
+      
+      .favourites .heart-item{
+        font-size: 30px ;
+        margin-top: -9px;
+        margin-left: -60px;
+      }
+
+
+
+      .content-container {
+        display: flex; /* Enables flexbox */
+        gap: 15px;
+    }
+    
+    .content-container button {
+        font-size: 24px; /* Adjust the size of the icon as needed */
+        margin-top: 15px; /* Pull the icon closer to the text by giving it a negative margin */
+
+    }
+    
+    .content-container h2 {
+        margin: 0; /* Removes default margin from h2 */
+    }
+
+    button.fa-solid {
+      background: none; /* Remove background */
+      border: none; /* Remove border */
+      padding: 0; /* Remove padding */
+      margin: 0; /* Remove margin */
+  }
+
+
+  .volume-button{
+    position: absolute; /* Position the button absolutely within the review box */
+  top: 0; /* Align to the top of the review box */
+  right: 0; /* Align to the right of the review box */
+  border: none; /* Remove border */
+  background: none; /* Remove background if desired */
+  margin: 8px; 
+
+  }
+  .volume-buttonn{
+    position: absolute; /* Position the button absolutely within the review box */
+    top: 0; /* Align to the top of the review box */
+    right: 0; /* Align to the right of the review box */
+    border: none; /* Remove border */
+    background: none; /* Remove background if desired */
+    margin: 8px; 
+  }
+
+
+    
+.fa-solid.fa-microphone {
+  position: absolute; /* Position the button absolutely within the review box */
+    right: 0; /* Align to the right of the review box */
+    border: none; /* Remove border */
+    background: none; /* Remove background if desired */
+    margin-right: 13px; 
+
+  font-size: 20px; 
+  color: black; 
+  
+}
+.fa-microphone.active {
+  color: red; // Change to red when active
+}
+
+    </style>
+
+    </head>
+    <!-- end header section -->
+
+    {% if messages %}
+  {% for message in messages %}
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  {% endfor %}
+{% endif %}
+
+    
+<section class="py-4 destination-content">
+  <img src="{{cityObj.main_img.url}}" alt="" class="img-fluid breadcrumb-image">
+
+  
+  <div class="row my-4">
+    <div class="col-xl-5 mb-4 mb-xl-0">
+      <div class="testimonial-content">
+        <div class="d-flex justify-content-sm-between align-items-sm-center mb-3 flex-wrap">
+          <div class="listen">
+            <div class="content-container">
+            <h1 class="font-weight-bold display-4 m-0" style="color: #db4f66;">{{cityObj.title}}</h1>
+            <button class="one fa-sharp fa-solid fa-volume-high" style="color: #db4566;"> </button> 
+            </div>
+
+            <h5 style="color: #db4f66;">{{cityObj.countryname}}</h5>
+            
+          </div>
+          <!-- <div class="favourites">
+            <ul class="heart-item"><i class="fa-regular fa-heart" style="color: #000000;"></i></ul>
+        </div> 
+      -->
+
+      <div class="d-flex align-items-center gap-5">
+        <div class="text-sm-center d-flex align-items-end gap-5">
+            <div class="listen2">
+                <h5>Safety Index</h5>
+                <div class="safetyavg">
+                    <ul class="list-unstyled stars-wrapper">
+                        <li class="star-item"><i class="fa fa-star" style="color: #ffffff;"></i></li>
+                        <li class="rating-number">{{ cityObj.rate_average|floatformat:1 }}</li>
+                    </ul>
+                </div>
+            </div>
+            <span class="review-count-align"> <p> ({{ cityObj.rate_total }}) </p></span>
+        </div>
+    </div>
+        </div>
+        
+       
+     {% if request.user.profile.id in cityObj.reviewers %}
+            <br>
+            <br>
+
+          <div class="listen1.5">
+            <div class="alert alert-info" role="alert">
+              Thanks! You have already submitted your review for this city! 
+    <!-- ... other code for displaying the review ... -->
+    
+    <form action="{% url 'delete_review' cityObj.id %}" method="post" style="float: right;">
+      {% csrf_token %}
+      <button type="submit" class="fa-solid fa-rotate-left" style="float: right;" title="Delete Review"></button>
+
+    </form>
+
+             
+            </div>
+          </div>
+
+
+            <br> 
+            {% elif request.user.profile.first_name == "" %}
+            
+            <br>
+            <br> 
+            <div class="listen1.5">
+            <div class="alert alert-danger" role="alert">
+              Please update your <a href="{%url 'profilecustom' %}" style=" color: #A30000;"><b>profile</b></a> to leave a review.
+            </div>
+          </div> 
+
+            <br> 
+        {% else %}
+
+
+        <div class="d-flex align-items-center gap-10 flex-wrap">
+
+          <div class="listen1.5">
+
+          <h6 class="m-0">How safe was your experience?</h6>
+        </div>
+
+          <div class="list-unstyled stars-wrapper empty-stars">
+              {% for i in "12345" %}
+                  <i onclick="setRating({{ i }})" onmouseover="setRating({{ i }})" onmouseout="resetRating()" data-count="{{ i }}" class="fa fa-star outlined-star"></i>
+              {% endfor %}
+          </div>
+      </div>
+
+
+    <!-- Error message for the star rating -->
+    {% if form.value.errors %}
+      <div class="error-message">{{ form.value.errors.as_text }}</div>
+    {% endif %}
+
+
+      
+      <form id="review-form" class="form" action="{% url 'city' cityObj.id %}" method="POST">
+        
+          {% csrf_token %}
+          <!-- Hidden input for the value -->
+
+          
+          <input type="hidden" name="value" id="star-value" value="">
+          <!-- ... rest of your form fields ... -->
+
+          
+
+          {% for field in form %}
+              {% if field.name != 'value' %}
+                  <div class="form-group">
+                      <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+
+                      {{ field }} 
+                      <button type="button" onclick="voice()" id="toggleVoice" class="fa-solid fa-microphone"></button>
+
+
+                  </div>
+              {% endif %}
+          {% endfor %}
+          
+          <input class="submit-button" type="submit" value="Add Review"/>
+
+      </form>
+
+
+
+      {% endif %}
+
+
+
+
+
+      
+        <br> 
+
+       <h5 class="font-weight-bold m-0" style="color: #db4f66;">Reviews:</h5>
+
+
+     
+                      {% for review in cityObj.review_set.all %}
+                      {% if review.body %}
+                          <div class="testimonial-item">
+                           <div class=""> <a href="{% url 'profCust:profile' pk=review.owner.user.id %}"> <img src={{review.owner.profile_image.url}} alt="" class="img-fluid"> </a> </div>     <div class="testimonial-meta">
+                             <div class="listenReviews">
+                                 <div class="d-flex gap-10">
+
+                                  <button class="volume-button"> <i class="two fa-sharp fa-solid fa-volume-high" style="color: #000000;" data-name-id="name-{{ forloop.counter }}" data-body-id="body-{{ forloop.counter }}"> </i> </button>
+
+                                  
+                                  <div class="listen3" id="name-{{ forloop.counter }}">
+                                         <a > <h6>{{ review.owner.first_name }}</h6> </a> 
+                                  </div> 
+                                         <ul class="list-unstyled stars-wrapper">
+                                           {% if review.value == 1 %}
+                                           <i class="fa fa-star filled-star"></i>
+                                           <i class="fa fa-star"></i>
+                                           <i class="fa fa-star"></i>
+                                           <i class="fa fa-star"></i>
+                                           <i class="fa fa-star"></i>
+                                       {% elif review.value == 2 %}
+                                         <i class="fa fa-star filled-star"></i>
+                                         <i class="fa fa-star filled-star"></i>
+                                           <i class="fa fa-star"></i>
+                                           <i class="fa fa-star"></i>
+                                           <i class="fa fa-star"></i>
+                                       {% elif review.value == 3 %}
+                                           <i class="fa fa-star filled-star"></i>
+                                           <i class="fa fa-star filled-star"></i>
+                                           <i class="fa fa-star filled-star"></i>
+                                             <i class="fa fa-star"></i>
+                                             <i class="fa fa-star"></i>
+                                       {% elif review.value == 4 %}
+                                             <i class="fa fa-star filled-star"></i>
+                                             <i class="fa fa-star filled-star"></i>
+                                             <i class="fa fa-star filled-star"></i>
+                                             <i class="fa fa-star filled-star"></i>
+                                             <i class="fa fa-star"></i>
+           
+                                       {% elif review.value == 5 %}
+                                               <i class="fa fa-star filled-star"></i>
+                                               <i class="fa fa-star filled-star"></i>
+                                               <i class="fa fa-star filled-star"></i>
+                                               <i class="fa fa-star filled-star"></i>
+                                               <i class="fa fa-star filled-star"></i>
+                                               {% endif %}
+                                         </ul>
+           
+                                         <!-- <button class="two fa-sharp fa-solid fa-volume-high" style="color: #db4566;"> </button> --> 
+                                     </div>
+
+                                     <div class="listen4" id="body-{{ forloop.counter }}">   
+                                        <p>{{ review.body|linebreaksbr }}</p>
+                                     </div> 
+           
+                                 </div>
+           
+           
+                              </div>
+                          </div>
+                      {% endif %}
+                  {% endfor %}
+           
+                       
+        
+
+
+      </div>
+    </div>
+    <div class="col-xl">
+      <div class="ventures-content">
+        <h1>Top Ventures</h1>
+        {% for venture in ventures %}
+            <div class="destination-item" style="background: linear-gradient(to left, rgba(0, 0, 0, 0.2),rgba(0, 0, 0, 0.7)), url({{venture.venture_img.url}});">
+                <button class="volume-buttonn"> 
+                    <i class="three fa-sharp fa-solid fa-volume-high" style="color: #ffffff;"></i> 
+                </button>
+                <a href="/city/venture/{{venture.id}}">
+                    <h1>{{ venture.title }}</h1>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+    
+    </div>
+  </div>
+</section>
+  </div>
+  <!-- end hero area -->
+
+ 
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  {% include 'footer.html' %}
+
+
+
+  
+
+<script>
+  $(".empty-stars i").hover(function () {
+    $(this).prevAll().addClass('filled-star').removeClass('outlined-star');
+    $(this).addClass('filled-star').removeClass('outlined-star');
+    $(this).nextAll().addClass('outlined-star').removeClass('filled-star');
+  });
+</script>
+
+
+
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var closeButtons = document.querySelectorAll('.alert .close[data-dismiss="alert"]');
+    closeButtons.forEach(function (button) {
+      button.addEventListener('click', function (event) {
+        event.preventDefault();
+        var alert = button.closest('.alert');
+        alert.classList.remove('show');
+        alert.addEventListener('transitionend', function() {
+          alert.style.display = 'none';
+        });
+      });
+    });
+  });
+  </script>
+
+
+
+    <!-- star review --> 
+
+  <script>
+    
+    // Function to reset the star display to the current rating
+    function resetRating() {
+        // Get the current rating from the hidden input
+        const currentRating = document.getElementById('star-value').value || 0;
+        setStars(currentRating);
+    }
+    
+    // Function to set the rating when a star is clicked
+    function setRating(rating) {
+        // Set the hidden input to the rating
+        document.getElementById('star-value').value = rating;
+        // Update the stars display
+        setStars(rating);
+    }
+    
+    // Helper function to update stars display
+    function setStars(rating) {
+        // Iterate over each star and fill it in if it's less than or equal to the rating
+        document.querySelectorAll('.fa-star').forEach((star, index) => {
+            star.classList.toggle('filled', index < rating);
+        });
+    }
+    
+    // Initial reset to show default rating
+    resetRating();
+    </script>
+  
+
+
+        <!-- text to speech  --> 
+
+  
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+          let synth = window.speechSynthesis;
+          let voices = [];
+          let speech = new SpeechSynthesisUtterance();
+          let selectedVoice;
+      
+          // Function to set the preferred voice
+          function populateVoiceList() {
+              voices = synth.getVoices();
+              selectedVoice = voices.find(voice => voice.name.includes('Female')) || voices[0];
+              speech.voice = selectedVoice;
+          }
+      
+          // Ensure voices are loaded
+          if (synth.onvoiceschanged !== undefined) {
+              synth.onvoiceschanged = populateVoiceList;
+          } else {
+              populateVoiceList();
+          }
+      
+          // Function to handle speech synthesis
+          function handleSpeech(textToSpeak) {
+              if (!synth.speaking) {
+                  speech.text = textToSpeak;
+                  synth.speak(speech);
+              } else {
+                  synth.cancel();
+              }
+          }
+      
+          // Bind listeners to all related buttons
+          // First set of buttons: aggregate text from multiple sources
+          document.querySelectorAll(".one.fa-sharp.fa-solid.fa-volume-high").forEach(button => {
+              button.addEventListener("click", () => {
+                  let textToSpeak = '';
+                  document.querySelectorAll(".listen, .listen2, .listen1\\.5").forEach(element => {
+                      textToSpeak += element.textContent + ' ';
+                  });
+                  handleSpeech(textToSpeak );
+                  
+              });
+          });
+      
+          // Second set of buttons: speech from specific attributes
+          document.querySelectorAll(".two.fa-sharp.fa-solid.fa-volume-high").forEach(button => {
+              button.addEventListener("click", () => {
+                  const nameId = button.getAttribute('data-name-id');
+                  const bodyId = button.getAttribute('data-body-id');
+                  const textToSpeak = document.getElementById(nameId).textContent + " " + document.getElementById(bodyId).textContent;
+                  handleSpeech(textToSpeak);
+              });
+          });
+      
+          // Third set of buttons: next sibling's text content
+          document.querySelectorAll('.volume-buttonn').forEach(button => {
+              button.addEventListener("click", () => {
+                  const textToSpeak = button.nextElementSibling.textContent;
+                  handleSpeech(textToSpeak);
+              });
+          });
+      
+          // Reset when speech ends
+          speech.onend = () => {
+              synth.cancel();
+          };
+      });
+      </script>
+      
+              <!-- speech to text  --> 
+
+
+      <script>
+        var recognition;
+        var isListening = false;
+        var finalTranscript = ''; // Stores final recognized text
+        var textField = document.getElementById("id_body"); // Reference to the textarea
+      
+        window.onload = function() {
+          recognition = new webkitSpeechRecognition();
+          recognition.continuous = true;
+          recognition.interimResults = true;
+          recognition.lang = "en-GB";
+      
+          recognition.onresult = function(event) {
+            var interimTranscript = ' ';
+      
+            // Loop through results
+            for (var i = event.resultIndex; i < event.results.length; ++i) {
+              if (event.results[i].isFinal) {
+                finalTranscript += event.results[i][0].transcript;
+              } else {
+                interimTranscript += event.results[i][0].transcript;
+              }
+            }
+      
+            // Update the textarea with final and interim results
+            textField.value = finalTranscript + interimTranscript;
+          };
+      
+          var toggleButton = document.getElementById("toggleVoice");
+          toggleButton.addEventListener('click', function() {
+            if (isListening) {
+              recognition.stop();
+              toggleButton.classList.remove('active');
+              // Reset the transcript only if the button is clicked to turn off voice recognition
+              finalTranscript = textField.value; // Update the final transcript to the current text field content
+            } else {
+              recognition.start();
+              toggleButton.classList.add('active');
+              finalTranscript = textField.value; // Start with current text, allowing edits to be retained
+            }
+            isListening = !isListening;
+          });
+        }
+      
+        // Optional: Add an event listener to track changes in the textarea
+        textField.addEventListener('input', function() {
+          // Update finalTranscript every time the user makes changes to the text
+          finalTranscript = this.value;
+        });
+      </script>
+      
+     
+  
+</body>
+
+</html>

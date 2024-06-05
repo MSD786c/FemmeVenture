@@ -1,0 +1,560 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html>
+	{%include 'nav.html'%}
+	<body>
+
+<style>
+    .chat {
+        margin-top: auto;
+        margin-bottom: auto;
+      }
+      .card {
+        height: 90%;
+        border-radius: 15px !important;
+        background-color: rgba(224, 173, 222, 0.251) !important;
+      }
+      .contacts_body {
+        padding: 0.75rem 0 !important;
+        overflow-y: auto;
+        white-space: nowrap;
+      }
+      .msg_card_body {
+        overflow-y: auto;
+        max-height: 65%;
+        padding-bottom: 20px;
+      }
+      .card-header {
+        border-radius: 15px 15px 0 0 !important;
+        border-bottom: 0 !important;
+      }
+      .card-footer {
+        border-radius: 0 0 15px 15px !important;
+        border-top: 0 !important;
+        bottom: 0;
+        position: absolute;
+        width: 100%;
+      }
+      .container {
+        align-content: center;
+      }
+      .search {
+        border-radius: 15px 0 0 15px !important;
+        background-color: rgba(169, 117, 181, 0.51) !important;
+        border: 0 !important;
+        color: white !important;
+      }
+      .search:focus {
+        box-shadow: none !important;
+        outline: 0px !important;
+      }
+      .type_msg {
+        background-color: rgba(169, 117, 181, 0.51) !important;
+        border: 0 !important;
+        color: white !important;
+        height: 60px !important;
+        overflow-y: auto;
+      }
+      .type_msg:focus {
+        box-shadow: none !important;
+        outline: 0px !important;
+      }
+      .attach_btn {
+        border-radius: 15px 0 0 15px !important;
+        background-color: rgba(0, 0, 0, 0.3) !important;
+        border: 0 !important;
+        color: white !important;
+        cursor: pointer;
+      }
+      .send_btn {
+        border-radius: 0 15px 15px 0 !important;
+        background-color: rgba(96, 55, 135, 1) !important;
+        border: 0 !important;
+        color: white !important;
+        cursor: pointer;
+      }
+      .search_btn {
+        border-radius: 0 15px 15px 0 !important;
+        background-color: rgba(96, 55, 135, 1) !important;
+        border: 0 !important;
+        color: white !important;
+        cursor: pointer;
+      }
+      .contacts {
+        list-style: none;
+        padding: 0;
+      }
+      .contacts li {
+        width: 100% !important;
+        padding: 5px 10px;
+        margin-bottom: 15px !important;
+      }
+      .active {
+        background-color: rgba(0, 0, 0, 0.3);
+      }
+      .user_img {
+        height: 70px;
+        width: 70px;
+        border: 1.5px solid #f5f6fa;
+      }
+      .user_img_msg {
+        height: 40px;
+        width: 40px;
+        border: 1.5px solid #f5f6fa;
+      }
+      .img_cont {
+        position: relative;
+        height: 70px;
+        width: 70px;
+      }
+      .img_cont_msg {
+        height: 40px;
+        width: 40px;
+      }
+      .online_icon {
+        position: absolute;
+        height: 15px;
+        width: 15px;
+        background-color: #4cd137;
+        border-radius: 50%;
+        bottom: 0.2em;
+        right: 0.4em;
+        border: 1.5px solid white;
+      }
+      .offline {
+        background-color: #c23616 !important;
+      }
+      .user_info {
+        margin-top: auto;
+        margin-bottom: auto;
+        margin-left: 15px;
+      }
+      .user_info span {
+        font-size: 20px;
+        color: rgba(96, 55, 135, 1);
+      }
+      .user_info p {
+        font-size: 10px;
+        color: rgba(96, 55, 135, 1);
+      }
+      .video_cam {
+        margin-left: 50px;
+        margin-top: 5px;
+      }
+      .video_cam span {
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+        margin-right: 20px;
+      }
+      .msg_cotainer {
+        margin-top: auto;
+        margin-bottom: auto;
+        margin-left: 10px;
+        border-radius: 25px;
+        background-color: #c2a3d9;
+        padding: 10px;
+        position: relative;
+        min-width: 70px;
+        text-align: center;
+      }
+      .msg_cotainer_send {
+        min-width: 70px;
+        text-align: center;
+        margin-top: auto;
+        margin-bottom: auto;
+        margin-right: 10px;
+        border-radius: 25px;
+        background-color: #cc83ba;
+        padding: 10px;
+        position: relative;
+      }
+      .msg_time {
+        position: absolute;
+        left: 0;
+        bottom: -15px;
+        color: rgba(96, 55, 135, 1);
+        font-size: 10px;
+      }
+      .msg_time_send {
+        position: absolute;
+        right: 0;
+        bottom: -15px;
+        color: rgba(96, 55, 135, 1);
+        font-size: 10px;
+      }
+      .msg_head {
+        position: relative;
+      }
+      #action_menu_btn {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        color: white;
+        cursor: pointer;
+        font-size: 20px;
+      }
+      .action_menu {
+        z-index: 1;
+        position: absolute;
+        padding: 15px 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border-radius: 15px;
+        top: 30px;
+        right: 15px;
+        display: none;
+      }
+      .action_menu ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .action_menu ul li {
+        width: 100%;
+        padding: 10px 15px;
+        margin-bottom: 5px;
+      }
+      .action_menu ul li i {
+        padding-right: 10px;
+      }
+      .action_menu ul li:hover {
+        cursor: pointer;
+        background-color: rgba(0, 0, 0, 0.2);
+      }
+      @media (max-width: 576px) {
+        .contacts_card {
+          margin-bottom: 15px !important;
+        }
+      }
+      
+      .received {
+        justify-content: flex-start;
+      }
+      
+      .replied {
+        justify-content: flex-end;
+      }
+      
+      .is_active{
+        display: block !important;
+      }
+      
+      .hide{
+        display: none;
+      }
+      
+      /* Hide scrollbar for Chrome, Safari and Opera */
+      .msg_card_body::-webkit-scrollbar {
+        display: none;
+      }
+      
+      /* Hide scrollbar for IE, Edge and Firefox */
+      .msg_card_body {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+      }
+      
+      .messages-wrapper{
+        height: 100%;
+      }
+</style>    
+
+
+    {% if user.is_authenticated %}
+<!--        <h1 style="text-align: end; padding-right: 10px">Logged in as : {{ user.username }}</h1>-->
+        <input type="hidden" id="logged-in-user" value="{{ user.id }}">
+    {% endif %}
+		<div class="container-fluid h-100">
+			<div class="row justify-content-center h-100 ">
+				<div class="col-md-4 col-xl-3 chat h-100 mt-4">
+                    <div class="card mb-sm-3 mb-md-0 contacts_card" style="height: 75vh; width:100%">
+					<div class="card-header">
+                        <form action="{% url 'ChatSearchBar' %}" method="GET">
+                            <div class="input-group">
+                             
+                              <input type="text" placeholder="Search..." value="{{ search_keyword }}" name="search_keyword" class="form-control search">
+                                <div class="input-group-prepend">
+                                    <button class="input-group-text search_btn"><i class="fas fa-search"></i></button>
+                                </div>
+                            </div>
+                        </form>
+					</div>
+					<div class="card-body contacts_body">
+						<ui class="contacts">
+                            {% for thread in Threads %}
+
+                            {% if thread.first_person == request.user %}
+                                <input type="hidden" id="logged_in_user_image" value="
+                                {% if thread.first_person_profile %}
+                                    {% if thread.first_person_profile.profile_image %}
+                                        {{ thread.first_person_profile.profile_image.url }}
+                                    {% else %}
+                                        {% static 'images/user_img.png' %}
+                                    {% endif %}
+                                {% else %}
+                                    {% static 'images/user_img.png' %}
+                                {% endif %}">
+
+                                <input type="hidden" id="another_user_image" value="
+                                {% if thread.second_person_profile %}
+                                    {% if thread.second_person_profile.profile_image %}
+                                        {{ thread.second_person_profile.profile_image.url }}
+                                    {% else %}
+                                        {% static 'images/user_img.png' %}
+                                    {% endif %}
+                                {% else %}
+                                    {% static 'images/user_img.png' %}
+                                {% endif %}">
+
+                            {% else %}
+
+
+                            <input type="hidden" id="logged_in_user_image" value="{% if thread.second_person_profile %}{% if thread.second_person_profile.profile_image %}{{ thread.second_person_profile.profile_image.url }}{% else %}{% static 'images/user_img.png' %}{% endif %}{% else %}{% static 'images/user_img.png' %}{% endif %}">
+
+                            <input type="hidden" id="another_user_image" value="{% if thread.first_person_profile %}{% if thread.first_person_profile.profile_image %}{{ thread.first_person_profile.profile_image.url }}{% else %}{% static 'images/user_img.png' %}{% endif %}{% else %}{% static 'images/user_img.png' %}{% endif %}">
+
+                            {% endif %}
+
+
+
+                                <li class="{% if forloop.first %}active{% endif %} contact-li" chat-id="chat_{{ thread.id }}" style="cursor: pointer">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            {% if thread.first_person == request.user %}
+
+                                                <img src="{% if thread.second_person_profile %}{% if thread.second_person_profile.profile_image %}{{ thread.second_person_profile.profile_image.url }}{% else %}{% static 'images/user_img.png' %}{% endif %}{% else %}{% static 'images/user_img.png' %}{% endif %}" class="rounded-circle user_img">
+                                            {% else %}
+
+                                                <img src="{% if thread.first_person_profile %}{% if thread.first_person_profile.profile_image %}{{ thread.first_person_profile.profile_image.url }}{% else %}{% static 'images/user_img.png' %}{% endif %}{% else %}{% static 'images/user_img.png' %}{% endif %}" class="rounded-circle user_img">
+                                            {% endif %}
+
+                                            <span class="online_icon"></span>
+                                        </div>
+                                        <div class="user_info">
+                                            {% if thread.first_person == user %}
+                                                <span>{{ thread.second_person.username }}</span>
+                                            {% else %}
+                                                <span>{{ thread.first_person.username }}</span>
+                                            {% endif %}
+{#                                          #}
+
+                                        </div>
+                                    </div>
+                                </li>
+                            {% empty %}
+                            <li class="{% if forloop.first %}active{% endif %} contact-li" chat-id="chat_{{ thread.id }}" style="cursor: pointer">
+                                    <div class="d-flex bd-highlight ">
+                                        <div class="user_info">
+                                            No Chat Found
+                                        </div>
+                                    </div>
+                            </li>
+                            {% endfor %}
+
+						</ui>
+					</div>
+					<div class="card-footer"></div>
+				</div></div>
+				<div class="col-md-8 col-xl-6 chat h-100 mt-4">
+					<div class="card" style="width:100%; height: 75vh; ">
+                        {% for thread in Threads %}
+                            <div class="messages-wrapper  {% if forloop.first %}hide is_active{% else %}hide{% endif %}" chat-id="chat_{{ thread.id }}" other-user-id="
+                                        {% if thread.first_person == user %}
+                                            {{ thread.second_person.id }}
+                                        {% else %}
+                                            {{ thread.first_person.id }}
+                                        {% endif %}
+                                    ">
+                                <div class="card-header msg_head">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            {% if thread.first_person == request.user %}
+                                                <img src="{% if thread.second_person_profile %}{% if thread.second_person_profile.profile_image %}{{ thread.second_person_profile.profile_image.url }}{% else %}{% static 'images/user_img.png' %}{% endif %}{% else %}{% static 'images/user_img.png' %}{% endif %}" class="rounded-circle user_img">
+                                            {% else %}
+                                                <img src="{% if thread.first_person_profile %}{% if thread.first_person_profile.profile_image %}{{ thread.first_person_profile.profile_image.url }}{% else %}{% static 'images/user_img.png' %}{% endif %}{% else %}{% static 'images/user_img.png' %}{% endif %}" class="rounded-circle user_img">
+                                            {% endif %}
+
+                                            <span class="online_icon"></span>
+                                        </div>
+                                        <div class="user_info">
+                                             {% if thread.first_person == user %}
+                                                    <span>{{ thread.second_person.username }}</span>
+                                             {% else %}
+                                                <span>{{ thread.first_person.username }}</span>
+                                             {% endif %}
+                                            <p>{{ thread.chatmessage_thread.all.count }} messages</p>
+                                        </div>
+                                    </div>
+                                    <span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
+                                    <div class="action_menu">
+                                        <ul>
+                                            <li><i class="fas fa-user-circle"></i> View profile</li>
+                                            <li><i class="fas fa-users"></i> Add to close friends</li>
+                                            <li><i class="fas fa-plus"></i> Add to group</li>
+                                            <li><i class="fas fa-ban"></i> Block</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="card-body msg_card_body">
+                           
+                                    <!------- messages ------->
+
+                                    {% for chat in thread.chatmessage_thread.all %}
+                                        {% if chat.user == user %}
+                                            <div class="d-flex mb-4 replied">
+                                                <div class="msg_cotainer_send">
+                                                    {{ chat.message }}
+                                                    <span class="msg_time_send">{{ chat.timestamp|date:"d D" }}, {{ chat.timestamp|time:"H:i" }}</span>
+                                                </div>
+                                            <div class="img_cont_msg">
+
+                                                {% if chat.thread.first_person == request.user %}
+
+                                                    <img src="{% if chat.thread.first_person_profile %}{% if chat.thread.first_person_profile.profile_image %}{{ chat.thread.first_person_profile.profile_image.url }}{% else %}{% static 'images/user_img.png' %}{% endif %}{% else %}{% static 'images/user_img.png' %}{% endif %}" class="rounded-circle user_img">
+                                                {% else %}
+
+                                                    <img src="{% if chat.thread.second_person_profile %}{% if chat.thread.second_person_profile.profile_image %}{{ chat.thread.second_person_profile.profile_image.url }}{% else %}{% static 'images/user_img.png' %}{% endif %}{% else %}{% static 'images/user_img.png' %}{% endif %}" class="rounded-circle user_img">
+                                                {% endif %}
+
+                                            </div>
+                                        </div>
+                                        {% else %}
+                                          <div class="d-flex mb-4 received">
+            <div class="img_cont_msg">
+                <!-- Display the profile image of the sender -->
+                {% if chat.thread.first_person == request.user %}
+                <img src="{% if chat.thread.second_person_profile %}{% if chat.thread.second_person_profile.profile_image %}{{ chat.thread.second_person_profile.profile_image.url }}{% else %}{% static 'images/user_img.png' %}{% endif %}{% else %}{% static 'images/user_img.png' %}{% endif %}" class="rounded-circle user_img">
+            {% else %}
+                <img src="{% if chat.thread.first_person_profile %}{% if chat.thread.first_person_profile.profile_image %}{{ chat.thread.first_person_profile.profile_image.url }}{% else %}{% static 'images/user_img.png' %}{% endif %}{% else %}{% static 'images/user_img.png' %}{% endif %}" class="rounded-circle user_img">
+            {% endif %}
+        </div>
+        <div class="msg_cotainer">
+            <!-- Display the received message -->
+            {{ chat.message }}
+            <span class="msg_time">{{ chat.timestamp|date:"d D" }}, {{ chat.timestamp|time:"H:i" }}</span>
+        </div>
+        <!-- Add button for text-to-speech -->
+        <button class="fa-sharp fa-solid fa-volume-high text_to_speech_button" style="color: #603787; border:0;" onclick="speakMessage('{{ chat.message }}')"></button>
+    </div>
+{% endif %}
+{% endfor %}
+
+
+                                    <!------- messages ------->
+                                </div>
+
+					        </div>
+                        {% endfor %}
+                        <div class="card-footer">
+                                <form id="send-message-form">
+                                    <div class="input-group">
+                                        <div class="input-group-append">
+                                          
+                                        </div>
+                                                              <button type="button" onclick="voice()" id="toggleVoice" class="fa-solid fa-microphone"  ></button>
+                                                              <input type="text" name="" id="input-message" class="form-control type_msg" placeholder="Type your message...">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-secondary" type="submit">
+                                                <span class="input-group-text send_btn">
+                                                    <i class="fas fa-location-arrow"></i>
+                                                </span>
+                                            </button>
+
+                                        </div>
+                                </div>
+                                </form>
+                            </div>
+                    </div>
+				</div>
+			</div>
+		</div>
+  </div>
+        {%include 'footer.html'%}
+        <script src="{% static 'js/messages.js' %}"></script>
+        
+
+        <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.js' %}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+        <script src="{% static 'js/custom.js' %}"></script>
+
+<script> 
+    function speakContactName(name) {
+        let speech = new SpeechSynthesisUtterance();
+        let voices = window.speechSynthesis.getVoices();
+        
+        // Set the female voice once the voices have loaded
+        window.speechSynthesis.onvoiceschanged = function() {
+            voices = window.speechSynthesis.getVoices();
+            speech.voice = voices.find(voice => voice.name.includes('Female'));
+        };
+        
+        // Set the text to speak as the contact name
+        speech.text = name;
+        
+        // Speak the contact name
+        window.speechSynthesis.speak(speech);
+    }
+</script>
+<script>
+function voice() {
+    const recognition = new webkitSpeechRecognition();
+    recognition.lang = 'en-US';
+    recognition.start();
+    
+    recognition.onresult = function(event) {
+        const transcript = event.results[0][0].transcript;
+        document.getElementById("input-message").value = transcript;
+    }
+}
+</script>
+
+<script>
+// Function to speak the message
+function speakMessage(message) {
+    let speech = new SpeechSynthesisUtterance();
+    let voices = window.speechSynthesis.getVoices();
+    
+    // Set the female voice once the voices have loaded
+    window.speechSynthesis.onvoiceschanged = function() {
+        voices = window.speechSynthesis.getVoices();
+        speech.voice = voices.find(voice => voice.name.includes('Female'));
+    };
+    
+    // Set the text to speak as the message
+    speech.text = message;
+    
+    // Speak the message
+    window.speechSynthesis.speak(speech);
+}
+
+// Function to add event listener to new received messages
+function addTextToSpeechListener() {
+    // Get all elements with the class 'msg_cotainer' (received messages)
+    let receivedMessages = document.querySelectorAll('.received .msg_cotainer');
+    
+    // Loop through each received message
+    receivedMessages.forEach(function(message) {
+        // Add click event listener to the message container
+        message.addEventListener('click', function() {
+            // Get the message text content
+            let messageContent = this.textContent.trim();
+            
+            // Speak the message content
+            speakMessage(messageContent);
+        });
+    });
+}
+
+// Call the function to add event listeners to new received messages
+addTextToSpeechListener();
+</script>
+
+
+
+	</body>
+</html>

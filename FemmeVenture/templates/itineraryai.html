@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+{% load static %}
+<title>ItineraryAI | FemmeVenture</title>
+
+
+{% include 'nav.html' %}
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>ChatBot</title>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+
+
+   <!-- Font Awesome -->
+<link
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+rel="stylesheet"
+/>
+<!-- Google Fonts -->
+<link
+href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+rel="stylesheet"
+/>
+<!-- MDB -->
+<link
+href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.1.0/mdb.min.css"
+rel="stylesheet"
+/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+</head>
+<body>
+
+
+<style>
+body {
+   background-position: center center;
+   background-repeat:  no-repeat;
+   background-attachment: fixed;
+   background-size:  cover;
+   background-color: #ffffff;
+   align: center;
+ }
+
+
+
+
+#chat4 .form-control {
+   border-color: transparent;
+}
+
+
+#chat4 .form-control:focus {
+   border-color: transparent;
+   box-shadow: inset 0px 0px 0px 1px transparent;
+}
+
+
+.divider:after,
+.divider:before {
+   content: "";
+   flex: 1;
+   height: 1px;
+   background: #eee;
+}
+#scroll::-webkit-scrollbar{
+   background-color: rgba(0, 0, 0, 0.108); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(5px);
+   width: 0px;
+   height: 0px;
+   color: #eee;
+}
+
+
+pre::-webkit-scrollbar{
+   background-color: rgba(0, 0, 0, 0.108); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(5px);
+   width: 0px;
+   height: 0px;
+}
+
+
+div {
+   position: relative; /* Set position to relative for the container */
+}
+
+
+pre {
+    overflow-x: scroll; /* Enable horizontal scrolling */
+   width: 68vw;
+ /* white-space: pre-wrap; Preserve line breaks */
+}
+
+
+pre button {
+   position: absolute;
+   top: 1px;
+   left: calc(68vw - 2rem); /* Adjust the position of the button */
+   font-size: 0.9rem;
+   padding: 0.5rem; /* Changed to a positive value */
+   background-color: rgb(50, 50, 50);
+   border-radius: 50px;
+   border: none;
+}
+
+
+.form{
+   width: 100%;
+}
+#questionInput{
+   background-color: rgba(253, 253, 253, 0.532);
+   -webkit-backdrop-filter: blur(8px);
+   backdrop-filter: blur(5px);
+   border: 2px solid rgb(255, 255, 255);
+   border-radius: 45px;
+   height: 40px;
+}
+
+
+.tooltip-inner {
+   background-color: rgb(100, 100, 100);
+   border-radius: 2px;
+   position: relative;
+   padding: 2px 10px;
+   font-size: small;
+}
+
+
+.tooltip-inner::before {
+   content: "";
+   position: absolute;
+   bottom: 100%;
+   left: 50%;
+   transform: translateX(-50%);
+   border-width: 6px;
+   border-style: solid;
+   border-color: transparent transparent rgb(100, 100, 100) transparent;
+}
+#scroll {
+       margin: 4px, 4px;
+       padding: 4px;
+       width: 100%;
+       height: 57.0vh;
+       overflow-x: auto;
+       /* overflow-y: auto; */
+       text-align: justify;
+       /* border: 1px solid rgb(14, 119, 163); */
+       border-radius: 3px;
+   }
+   #scroll::-webkit-scrollbar {
+   width: 5px;
+   height: 0px;
+   }
+
+
+   /* Track */
+   #scroll::-webkit-scrollbar-track {
+   box-shadow: inset 0 0 7px rgb(219, 219, 219);
+   border-radius: 10px;
+   }
+
+
+   /* Handle */
+   #scroll::-webkit-scrollbar-track {
+   box-shadow: inset 0 0 7px rgb(255, 255, 255);
+   border-radius: 10px;
+   }
+
+
+   /* Handle */
+   #scroll::-webkit-scrollbar-thumb {
+   background: rgb(215, 215, 215);
+   border-radius: 10px;
+   }
+
+
+   /* Handle on hover */
+   #scroll::-webkit-scrollbar-thumb:hover {
+   background: rgb(159, 159, 159);
+   }
+   pre {
+           /* background-color: #dcdcdc; */
+           padding: 1em;
+           width: 100%;
+           overflow-x: auto;
+           border-radius: 5px;
+           border: 1px solid #ddd;
+       }
+
+
+       code {
+           font-family: 'Courier New', Courier, monospace;
+           font-size: 14px;
+       }
+       .loader-container {
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ margin-top: 5px;
+ margin-bottom: 10px;
+}
+.loader {
+ width: 120px;
+ height: 20px;
+ -webkit-mask: linear-gradient(90deg,#000 70%,#0000 0) left/20% 100%;
+ background:
+  linear-gradient(#000 0 0) left -25% top 0 /20% 100% no-repeat
+  rgb(226, 229, 205);
+ animation: l7 1s infinite steps(6);
+}
+@keyframes l7 {
+   100% {background-position: right -25% top 0}
+}00% {background-position: 0 0}
+
+
+.speak {
+   padding: 8px;  // Adjusted for better visual balance
+   color: white;
+   border: none;
+   text-align: center;
+   text-decoration: none;
+   display: inline-block;
+   font-size: 16px; // Font size could be adjusted if the icon looks too big or small
+   margin: 4px 2px;
+   cursor: pointer;
+   border-radius: 50%; // Makes the button rounded
+   width: 40px; // Ensures the button is nicely circular
+   height: 40px; // Ensures the button is nicely circular
+   line-height: 24px; // Adjust this to vertically center the icon if needed
+   align-items: center;
+   justify-content: center;
+   display: flex;
+}
+.heading {
+   width: 100%; /* Set the width to 100% */
+   text-align: center;
+   color: white;
+   padding: 100px 50px;
+   background-image: url('{% static "images/buddylogo.png" %}');
+   background-size: 120%;
+   background-position: center;
+   background-repeat: no-repeat;
+   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+   border-radius: 0 0 15px 15px;
+   margin-bottom: 20px;
+}
+ .heading h2 {
+   font-size: 36px; /* Adjust the size of the font for h2 as necessary */
+   font-weight: bold; /* Makes the font bold */
+   margin: 0 0 10px 0; /* Spacing between h2 and h3; adjust as necessary */
+}
+ .heading h3 {
+   font-size: 24px; /* Adjust the size of the font for h3 as necessary */
+   font-weight: normal; /* Normal weight for h3 */
+   margin: 0 0 20px 0; /* Spacing below h3; adjust as necessary */
+   color: #fff; /* Sets the text color to white */
+}
+.cool{
+   background-color: #000000;
+   margin-bottom: 20px; /* Adjust the value as needed */
+
+
+
+
+}
+.submitbtn{
+   text-align: left; /* Align the content to the left */
+   padding: 0.75rem 1rem; /* Adjust padding as needed */
+   margin-left: 20px; /* Add margin to move the button to the right */
+   border-radius: 8px; // Makes the button rounded
+   background-color: #383d64;
+ 
+}
+
+
+.form-control {
+   display: flex; /* Use flexbox to align items */
+   align-items: center; /* Align items vertically */
+   justify-content: space-between; /
+   flex: 4; /* Take up remaining space */
+   margin-right: 20px; /* Add margin between input field and button */
+   border-radius: 8px; // Makes the button rounded
+
+
+}
+.heado{
+   text-align: center;
+   margin-top: 7px;
+   color: white;
+}
+
+
+.ms-1{
+   color: #383d64;
+}
+.rounded-circle{
+
+
+   margin-right: 20px; /* Add margin to move the button to the right */
+}
+.row{
+   border-radius: 8px; // Makes the button rounded
+   width: 80%;
+
+
+}
+.form{
+   border-radius: 8px; // Makes the button rounded
+
+
+}
+.cool{
+   width: 100%;
+}
+#voiceInput {
+    /* Your custom CSS styles for the voice input button */
+    color: #383d64; /* Text color */
+    border: none; /* No border */
+    padding: 10px 20px; /* Padding */
+    font-size: 16px; /* Font size */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Cursor style */
+    margin-left: 20px;
+}
+
+#voiceInput:hover {
+    background-color: #bd83b8; /* Darker green background color on hover */
+}
+
+</style>
+<section>
+   <div class="heading">
+       <button class="speak" aria-label="Listen"><i class="fas fa-volume-up"></i></button>
+
+
+       <h2 >Itinerary AI</h2>
+       <h3 >Let us help you craft your perfect trip!</h3>
+   </div>
+<div class="container">
+ 
+
+
+   <div class="row" style" align: center;">
+   <div class ="cool" style="align: center; border-radius: 8px; background-color: #cea0AA; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(5px);" class="modal-content con mt-4 mb-4">
+       <div class ="moheader" style="background-color: rgba(161, 161, 161, 0.108); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(5px); border-radius: 5px 5px 0px 0px;" class="modal-header  shadow-5">
+         <div class="heado">
+           <a class="text-dark" href="javascript:history.back()"></a>
+           <h2 class="ms-1 "><img class="ms-2" src="https://play-lh.googleusercontent.com/7Ak4Ye7wNUtheIvSKnVgGL_OIZWjGPZNV6TP_3XLxHC-sDHLSE45aDg41dFNmL5COA=w240-h480-rw" alt="Header Image" style="border-radius: 50%; max-height: 60px; max-width: 70px;">
+               Itinerary Ai</h2>
+           <button class="speak" aria-label="Listen"><i class="fas fa-volume-up"></i></button>
+
+
+         </div>
+     </div>
+       <div style="background-color: rgba(161, 161, 161, 0.108); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(5px);" class="modal-body">
+         <div style="background-color: transparent;" id="chat4">
+           <div id="scroll" class="card-body my-3" data-mdb-perfect-scrollbar="true"
+             style="position: relative; height: 66vh">
+             {% if chats %}
+           {% for chat in chats %}
+           <div class ="chatCard" id="chatCard">
+               <div  class="d-flex flex-row justify-content-end mb-3">
+                   <div>
+                       <div style="background-color: #1b1b1b8e; font-size: smaller; border-radius: 20px 0px 20px 20px;" class="small p-2 me-2 mb-1 text-white ms-auto">{{ chat.text_input }}</div>
+                   </div>
+                   <img class="rounded-circle mb-1" src="https://play-lh.googleusercontent.com/7Ak4Ye7wNUtheIvSKnVgGL_OIZWjGPZNV6TP_3XLxHC-sDHLSE45aDg41dFNmL5COA=w240-h480-rw"
+                        alt="avatar 1" style="width: 40px; height: 100%;">
+               </div>
+               <div id="response_data" class="d-flex flex-row justify-content-start mb-3">
+                   <img src="https://play-lh.googleusercontent.com/7Ak4Ye7wNUtheIvSKnVgGL_OIZWjGPZNV6TP_3XLxHC-sDHLSE45aDg41dFNmL5COA=w240-h480-rw"
+                        alt="avatar 1" style="width:  40px; height: 100%;">
+                   <div>
+                       <div id="chatArea" class="small p-2 ms-2 mb-1 me-auto text-dark" style="background-color: #ffffffb8; font-size: smaller; border-radius: 0px 20px 20px 20px;">{{ chat.gemini_output | safe }}</div>
+                   </div>
+               </div>
+             </div>
+           {% endfor %}
+             {% endif %}
+           </div>
+           <div class="loader-container">
+             <div style="color: #242424b1;" class="d-flex align-items-center me-3" id="loading">
+             </div>
+           </div>
+           <div class="card-footer text-muted d-flex justify-content-start align-items-center p-3">
+             <img class="rounded-circle" src="https://storage.googleapis.com/pai-images/535d530a440c4342803957b27aff159a.jpeg"
+               alt="avatar 3" style="width: 40px; height: 100%;">
+               <form id="chatForm"class="form" onsubmit="askQuestion(event)">
+                   <input class="form-control " type="text" id="userText" name="text" placeholder="Start with 'Hello' then 'I would like to go to x for y days'">
+               </form>
+               <button id="voiceInput" class="speak" aria-label="Voice Input"><i class="fas fa-microphone"></i></button>
+               
+             <span id="submitBtn" class="submitbtn" style="background-color: #383d64; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(5px)" type="submit" class="ms-3 link-danger btn btn-floating" href=""><i style ="color: #bd83b8" class="fas fa-paper-plane"></i></span>
+           </div>
+         </div>
+       </div>
+     </div>
+</div>
+</div>
+
+
+</section>
+
+
+<!-- MDB -->
+<script
+ type="text/javascript"
+ src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.1.0/mdb.umd.min.js"
+></script>
+<!-- jquery -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/markdown-it/dist/markdown-it.min.js"></script>
+   
+<script>
+   let chatCard = document.querySelector('#scroll');
+   chatCard.scrollTop = chatCard.scrollHeight;
+
+
+   document.addEventListener('DOMContentLoaded', function(){
+       document.querySelector('#submitBtn').addEventListener('click', () => chat_ajax());
+   });
+
+
+   function myFunction() {
+       document.getElementById("userText").disabled = true;
+       document.querySelector('#userText').setAttribute('placeholder', 'Please wait, your result will come soon...');
+   }
+   function enableUserText() {
+   // Enable the input field
+   document.getElementById("userText").disabled = false;
+   document.querySelector('#userText').setAttribute('placeholder', 'Ask your question');
+}
+
+
+
+
+   function chat_ajax() {
+       const md = new markdownit({ html: true });
+       let text = document.querySelector('#userText').value;
+       let html = md.renderInline(text);
+       let chatCard = document.querySelector('#scroll');
+      
+       // Append user's message to chat card
+       chatCard.innerHTML += `
+           <div class="d-flex flex-row justify-content-end mb-3">
+               <div>
+                   <div style="background-color: #1b1b1b8e; font-size: smaller; border-radius: 20px 0px 20px 20px;" class="small p-2 me-2 mb-1 text-white ms-auto">${text}</div>
+               </div>
+               <img class="rounded-circle mb-1" src="https://storage.googleapis.com/pai-images/535d530a440c4342803957b27aff159a.jpeg" alt="avatar 1" style="width: 40px; height: 100%;">
+           </div>
+       `;
+       chatCard.scrollTop = chatCard.scrollHeight;
+       console.log(text);
+
+
+       document.querySelector('#userText').value = null;
+
+
+       var loading = document.querySelector('#loading');
+       myFunction();
+       loading.innerHTML = `
+           <div class="loader">
+           </div>
+       `;
+       chatCard.scrollTop = chatCard.scrollHeight;
+       $.ajax({
+           type: 'POST',
+           url: '/ask_question/',
+           data: {
+               'text': text,
+               csrfmiddlewaretoken: '{{ csrf_token }}',
+           },
+           success: function(res) {
+             var response = md.render(res.data.text); // Render Markdown content
+             var chatCard = document.getElementById('scroll');
+             var typingSpeed = 15; // Set the typing speed in milliseconds
+             // Create response_data div
+             var responseDataDiv = document.createElement('div');
+             responseDataDiv.id = 'response_data';
+             responseDataDiv.classList.add('d-flex', 'flex-row', 'justify-content-start', 'mb-3');
+             chatCard.appendChild(responseDataDiv);
+            
+             // Create avatar image
+             var avatarImg = document.createElement('img');
+             avatarImg.src = "https://play-lh.googleusercontent.com/7Ak4Ye7wNUtheIvSKnVgGL_OIZWjGPZNV6TP_3XLxHC-sDHLSE45aDg41dFNmL5COA=w240-h480-rw";
+             avatarImg.alt = "avatar 1";
+             avatarImg.style.width = '40px';
+             avatarImg.style.height = '100%';
+             avatarImg.classList.add('rounded-circle'); // Add the 'rounded-circle' class
+             responseDataDiv.appendChild(avatarImg);
+            
+             // Create chatArea div
+             var chatAreaDiv = document.createElement('div');
+             chatAreaDiv.id = 'chatArea';
+             chatAreaDiv.classList.add('small', 'p-2', 'ms-2', 'mb-1', 'me-auto', 'text-dark');
+             chatAreaDiv.style.backgroundColor = '#ffffffb8';
+             chatAreaDiv.style.fontSize = 'smaller';
+             chatAreaDiv.style.borderRadius = '0px 20px 20px 20px';
+             chatAreaDiv.innerHTML = response;
+             responseDataDiv.appendChild(chatAreaDiv);
+             // chatAreaDiv.innerHTML += response
+             loading.innerHTML = '';
+             chatCard.scrollTop = chatCard.scrollHeight;
+             enableUserText();
+
+
+         },
+
+
+
+
+           error: function() {
+               console.log("There was an error!");
+           }
+       });
+   }
+  
+</script>
+<script> document.addEventListener('DOMContentLoaded', function(){
+   document.querySelector('#submitBtn').addEventListener('click', () => chat_ajax());
+   document.querySelector('#userText').addEventListener('keydown', function(event) {
+       if (event.key === "Enter") {
+           event.preventDefault(); // Prevent the default form submission behavior
+           chat_ajax(); // Call the function to send the message
+       }
+   });
+});
+</script>
+<script>
+   document.addEventListener("DOMContentLoaded", function() {
+       var synth = window.speechSynthesis;
+       var currentUtterance = null; // Track the current speech
+  
+       // Function to toggle text speech
+       function toggleSpeech(text, element) {
+           // Check if already speaking
+           if (synth.speaking) {
+               if (currentUtterance && currentUtterance.text === text) {
+                   // If the same button is pressed while speaking, cancel the speech
+                   synth.cancel();
+                   element.setAttribute('aria-label', 'Listen'); // Reset the aria-label to 'Listen'
+                   return;
+               }
+               // If a different button was pressed, stop current and start new
+               synth.cancel();
+           }
+  
+           // Prepare new speech
+           currentUtterance = new SpeechSynthesisUtterance(text);
+           currentUtterance.onend = function() {
+               element.setAttribute('aria-label', 'Listen'); // Reset the aria-label when speech ends
+           };
+           currentUtterance.onerror = function() {
+               element.setAttribute('aria-label', 'Listen'); // Reset the aria-label on error
+           };
+  
+           // Start speaking
+           synth.speak(currentUtterance);
+           element.setAttribute('aria-label', 'Stop Listening'); // Change aria-label to 'Stop Listening'
+       }
+  
+       // Add event listeners to the 'speak' buttons
+       document.querySelectorAll('.row .speak, .heading .speak, .message.received .speak').forEach(button => {
+           button.addEventListener('click', function() {
+               var text = this.parentNode.textContent; // Get all text in the car div
+               toggleSpeech(text, this);
+           });
+       });
+   }); 
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const voiceInputButton = document.getElementById('voiceInput');
+        const userTextInput = document.getElementById('userText');
+
+        if ('webkitSpeechRecognition' in window) {
+            const recognition = new webkitSpeechRecognition();
+
+            recognition.continuous = false;
+            recognition.interimResults = false;
+
+            recognition.onresult = function(event) {
+                const result = event.results[0][0].transcript;
+                userTextInput.focus(); // Focus on the input field
+                userTextInput.value = result; // Insert the text into the input field
+            };
+
+            recognition.onerror = function(event) {
+                console.error('Speech recognition error:', event.error);
+            };
+
+            voiceInputButton.addEventListener('click', function() {
+                recognition.start();
+            });
+        } else {
+            console.error('Speech recognition not supported in this browser.');
+        }
+    });
+</script>
+
+
+
+</body>
+</html>
+</div>
+{% include 'footer.html' %}
+
